@@ -11,7 +11,8 @@
     "./types": "./src/types/index.ts",
     "./constants": "./src/constants/index.ts",
     "./schemas": "./src/schemas/index.ts",
-    "./utils": "./src/utils/index.ts"
+    "./utils": "./src/utils/index.ts",
+    "./provider-data": "./src/provider-data.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

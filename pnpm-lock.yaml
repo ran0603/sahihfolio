@@ -226,6 +226,9 @@ importers:
 
   packages/database:
     dependencies:
+      '@sahihfolio/shared':
+        specifier: workspace:*
+        version: link:../shared
       drizzle-orm:
         specifier: ^0.45.4
         version: 0.45.4(@cloudflare/workers-types@5.20260917.1)(@electric-sql/pglite@0.3.15)(@libsql/client@0.17.4)(@types/pg@8.20.4)(pg@8.23.0)(postgres@3.4.9)(prisma@8.0.0-rc.15(@types/node@26.6.1)(@types/react@19.3.0)(@vercel/nft@1.11.0(rollup@4.55.1)(supports-color@7.2.0))(magicast@0.5.5)(pg@8.23.0)(rollup@4.55.1)(supports-color@7.2.0)(typanion@3.14.0)(typescript@5.9.3)(vite@8.3.0(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.1))(ws@8.21.3))
