@@ -10,14 +10,14 @@ describe("getReviewState", () => {
   });
 
   it("returns current within the review window", () => {
-    expect(
-      getReviewState(new Date("2026-09-01T00:00:00Z"), 90, now),
-    ).toBe("current");
+    expect(getReviewState(new Date("2026-09-01T00:00:00Z"), 90, now)).toBe(
+      "current",
+    );
   });
 
   it("returns needs_review after the review window", () => {
-    expect(
-      getReviewState(new Date("2026-06-01T00:00:00Z"), 90, now),
-    ).toBe("needs_review");
+    expect(getReviewState(new Date("2026-06-01T00:00:00Z"), 90, now)).toBe(
+      "needs_review",
+    );
   });
 });

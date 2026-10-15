@@ -65,7 +65,15 @@ export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   style,
   ...props
 }) => (
-  <div style={{ color: "#344054", fontSize: "0.875rem", lineHeight: "1.5", ...style }} {...props}>
+  <div
+    style={{
+      color: "#344054",
+      fontSize: "0.875rem",
+      lineHeight: "1.5",
+      ...style,
+    }}
+    {...props}
+  >
     {children}
   </div>
 );

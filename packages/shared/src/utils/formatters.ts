@@ -18,8 +18,14 @@ export function formatPercent(value: number, decimals: number = 2): string {
   return `${(value * 100).toFixed(decimals)}%`;
 }
 
-export function formatDate(date: string | Date | number, locale: string = "en-US"): string {
-  const d = typeof date === "string" || typeof date === "number" ? new Date(date) : date;
+export function formatDate(
+  date: string | Date | number,
+  locale: string = "en-US",
+): string {
+  const d =
+    typeof date === "string" || typeof date === "number"
+      ? new Date(date)
+      : date;
   return new Intl.DateTimeFormat(locale, {
     year: "numeric",
     month: "short",

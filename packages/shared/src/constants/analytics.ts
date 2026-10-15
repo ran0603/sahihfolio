@@ -11,4 +11,5 @@ export const ANALYTICS_EVENTS = {
   REPORT_SHARED: "report_shared",
 } as const;
 
-export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];
+export type AnalyticsEvent =
+  (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];

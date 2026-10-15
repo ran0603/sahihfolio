@@ -9,11 +9,7 @@ export const sourceTypeEnum = pgEnum("source_type", [
   "other",
 ]);
 
-export const confidenceEnum = pgEnum("confidence", [
-  "high",
-  "medium",
-  "low",
-]);
+export const confidenceEnum = pgEnum("confidence", ["high", "medium", "low"]);
 
 export const sources = pgTable("sources", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -25,4 +21,3 @@ export const sources = pgTable("sources", {
     .notNull()
     .defaultNow(),
 });
-

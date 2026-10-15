@@ -45,7 +45,10 @@ describe("finderIntakeSchema", () => {
 
   it("accepts productInterest 'all' and 'unsure'", () => {
     for (const v of ["all", "unsure"]) {
-      const result = finderIntakeSchema.safeParse({ countryCode: "GB", productInterest: v });
+      const result = finderIntakeSchema.safeParse({
+        countryCode: "GB",
+        productInterest: v,
+      });
       expect(result.success).toBe(true);
     }
   });
@@ -63,22 +66,34 @@ describe("finderIntakeSchema", () => {
   });
 
   it("rejects an invalid investorType", () => {
-    const result = finderIntakeSchema.safeParse({ countryCode: "SG", investorType: "expert" });
+    const result = finderIntakeSchema.safeParse({
+      countryCode: "SG",
+      investorType: "expert",
+    });
     expect(result.success).toBe(false);
   });
 
   it("rejects an invalid productInterest", () => {
-    const result = finderIntakeSchema.safeParse({ countryCode: "SG", productInterest: "crypto" });
+    const result = finderIntakeSchema.safeParse({
+      countryCode: "SG",
+      productInterest: "crypto",
+    });
     expect(result.success).toBe(false);
   });
 
   it("rejects negative startingAmount", () => {
-    const result = finderIntakeSchema.safeParse({ countryCode: "SG", startingAmount: -100 });
+    const result = finderIntakeSchema.safeParse({
+      countryCode: "SG",
+      startingAmount: -100,
+    });
     expect(result.success).toBe(false);
   });
 
   it("rejects negative recurringContribution", () => {
-    const result = finderIntakeSchema.safeParse({ countryCode: "SG", recurringContribution: -50 });
+    const result = finderIntakeSchema.safeParse({
+      countryCode: "SG",
+      recurringContribution: -50,
+    });
     expect(result.success).toBe(false);
   });
 });

@@ -25,7 +25,7 @@ Set up the Sahihfolio monorepo with pnpm workspaces and Turborepo.
 - Workspace packages can import shared code.
 - Root commands run through Turborepo.
 
-***
+---
 
 ### Issue 2 — Configure Next.js web application
 
@@ -50,7 +50,7 @@ Create the primary Next.js application for the public product and internal admin
 - `/admin` renders a protected placeholder layout.
 - Build passes locally and in CI.
 
-***
+---
 
 ### Issue 3 — Set up CI pipeline and branch protection
 
@@ -74,7 +74,7 @@ Add GitHub Actions CI and protect the `main` branch.
 - Direct pushes to `main` are blocked.
 - Failing lint, typecheck, test, or build blocks merge.
 
-***
+---
 
 ### Issue 4 — Create shared package for types and validation
 
@@ -99,7 +99,7 @@ Create `@sahihfolio/shared` for domain types, Zod schemas, constants, and utilit
 - Shared schemas have unit tests.
 - No duplicated domain enums exist in `apps/web`.
 
-***
+---
 
 ## Epic 2: Database and data foundation
 
@@ -125,7 +125,7 @@ Create `@sahihfolio/database` with PostgreSQL, Drizzle ORM, migrations, and seed
 - Schema changes can be generated and applied.
 - Database connection is not hardcoded.
 
-***
+---
 
 ### Issue 6 — Implement country and provider schema
 
@@ -151,7 +151,7 @@ Implement the initial data model for countries and investing providers.
 - Published providers can be filtered by country and product type.
 - Every provider has at least one source and review date.
 
-***
+---
 
 ### Issue 7 — Implement source and review metadata
 
@@ -175,7 +175,7 @@ Ensure every material data claim is traceable to a source and review event.
 - Stale records display a “needs review” state in admin.
 - Admin edits are recorded with actor, timestamp, and changed fields.
 
-***
+---
 
 ### Issue 8 — Seed initial provider research dataset
 
@@ -200,7 +200,7 @@ Research and enter the first provider dataset manually. Do not scrape or auto-ge
 - No provider is published with unsupported claims.
 - Seed data covers all launch countries.
 
-***
+---
 
 ## Epic 3: Halal options finder
 
@@ -227,7 +227,7 @@ Create the landing page for the Global Halal Investing Options Finder.
 - CTA routes to `/find`.
 - Mobile layout is usable.
 
-***
+---
 
 ### Issue 10 — Build guided intake form
 
@@ -254,7 +254,7 @@ Build the multi-step intake flow that collects the user’s country and preferen
 - Invalid or missing required fields show clear errors.
 - Form works on mobile and with keyboard navigation.
 
-***
+---
 
 ### Issue 11 — Implement deterministic matching engine
 
@@ -280,7 +280,7 @@ Build a transparent matching service that returns eligible provider options.
 - Every result explains why it appeared.
 - No provider unavailable in the user’s country is returned.
 
-***
+---
 
 ### Issue 12 — Build results page
 
@@ -308,7 +308,7 @@ Create the results experience for the options finder.
 - Every material claim links to a source.
 - Page is responsive and accessible.
 
-***
+---
 
 ### Issue 13 — Add save, share, and email capture
 
@@ -333,7 +333,7 @@ Allow users to save and share results after receiving value.
 - Shared links do not expose sensitive financial data.
 - User can unsubscribe from future emails.
 
-***
+---
 
 ### Issue 14 — Add options-finder analytics
 
@@ -357,7 +357,7 @@ Instrument the finder to measure demand, completion, and value delivery.
 - No personally identifiable financial data is sent to analytics.
 - Team can see completion and save rates.
 
-***
+---
 
 ## Epic 4: Admin and trust layer
 
@@ -384,7 +384,7 @@ Protect the admin area with authentication and role-based access.
 - Only authorized roles can publish or archive records.
 - Admin actions are logged.
 
-***
+---
 
 ### Issue 16 — Build country and provider admin CRUD
 
@@ -409,7 +409,7 @@ Create internal tools to manage countries and providers.
 - Invalid records cannot be published.
 - Admin can preview the public result presentation.
 
-***
+---
 
 ### Issue 17 — Create methodology page
 
@@ -434,7 +434,7 @@ Explain how Sahihfolio researches, sources, reviews, and presents information.
 - Page uses accurate, non-overclaiming language.
 - Page is discoverable from product surfaces.
 
-***
+---
 
 ### Issue 18 — Create disclosures page
 
@@ -459,7 +459,7 @@ Create a clear disclosures page for affiliate relationships, editorial policy, a
 - Legal and religious-advice limitations are clearly stated.
 - Page is linked in the site footer and product flows.
 
-***
+---
 
 ## Epic 5: Shariah Screening Report
 
@@ -486,7 +486,7 @@ Create the database model for securities, methodologies, and Shariah-screening r
 - Published reports are versioned rather than overwritten.
 - A report cannot be published without reviewer and review date.
 
-***
+---
 
 ### Issue 20 — Build screening-ratio calculation module
 
@@ -512,7 +512,7 @@ Implement explicit, testable calculations for Shariah-screening ratios.
 - Each displayed ratio includes its formula and inputs.
 - Invalid input does not produce a misleading pass/fail result.
 
-***
+---
 
 ### Issue 21 — Build screening-report admin workflow
 
@@ -539,7 +539,7 @@ Create the internal workflow for creating, reviewing, and publishing screening r
 - Publishing creates a new immutable version.
 - Admin can preview the exact public report.
 
-***
+---
 
 ### Issue 22 — Build public screening-report search
 
@@ -564,7 +564,7 @@ Let users find a security and open its screening report.
 - Search returns relevant securities quickly.
 - User can distinguish published, under-review, and unavailable reports.
 
-***
+---
 
 ### Issue 23 — Build public screening-report page
 
@@ -592,7 +592,7 @@ Create the public, read-only Shariah Screening Report page.
 - Report does not use unsupported “halal” or “haram” claims.
 - Page is mobile-friendly and accessible.
 
-***
+---
 
 ### Issue 24 — Add report save, share, and update requests
 
@@ -617,7 +617,7 @@ Allow users to save or share a report and request a data review.
 - Update requests do not expose private user data.
 - Admin can see which reports users request for review.
 
-***
+---
 
 ## Epic 6: Launch readiness
 
@@ -644,7 +644,7 @@ Ensure the MVP meets Sahihfolio’s accessibility and mobile standards.
 - No critical mobile layout defects.
 - Forms are usable without a mouse.
 
-***
+---
 
 ### Issue 26 — Write product documentation
 
@@ -670,7 +670,7 @@ Document how to develop, deploy, and maintain Sahihfolio.
 - Deployment and content-review steps are reproducible.
 - Documentation reflects the actual monorepo structure.
 
-***
+---
 
 ### Issue 27 — Prepare MVP launch checklist
 
@@ -700,11 +700,11 @@ Create and complete the launch readiness checklist.
 
 ## Suggested milestone ordering
 
-1. **Platform:** Issues 1–4.  
-2. **Data foundation:** Issues 5–8.  
-3. **Options finder:** Issues 9–14.  
-4. **Admin and trust:** Issues 15–18.  
-5. **Screening report:** Issues 19–24.  
+1. **Platform:** Issues 1–4.
+2. **Data foundation:** Issues 5–8.
+3. **Options finder:** Issues 9–14.
+4. **Admin and trust:** Issues 15–18.
+5. **Screening report:** Issues 19–24.
 6. **Launch:** Issues 25–27.
 
 For the first release, prioritize issues 1–18 and 25–27. Treat the Shariah Screening Report epic as the first post-finder feature unless early user research shows report demand is stronger than options-finder demand.

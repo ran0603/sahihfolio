@@ -15,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <body
+        style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      >
         <header
           style={{
             backgroundColor: "#0B1F3A",
@@ -34,11 +36,25 @@ export default function RootLayout({
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-              <Link href="/" style={{ fontSize: "1.25rem", fontWeight: "700", letterSpacing: "-0.5px" }}>
+              <Link
+                href="/"
+                style={{
+                  fontSize: "1.25rem",
+                  fontWeight: "700",
+                  letterSpacing: "-0.5px",
+                }}
+              >
                 Sahih<span style={{ color: "#10B981" }}>folio</span>
               </Link>
-              <nav style={{ display: "flex", gap: "16px", fontSize: "0.875rem" }}>
-                <Link href="/finder" style={{ color: "#E4E7EC", hover: { color: "#FFFFFF" } } as any}>
+              <nav
+                style={{ display: "flex", gap: "16px", fontSize: "0.875rem" }}
+              >
+                <Link
+                  href="/finder"
+                  style={
+                    { color: "#E4E7EC", hover: { color: "#FFFFFF" } } as any
+                  }
+                >
                   Options Finder
                 </Link>
                 <Link href="/screening-report" style={{ color: "#E4E7EC" }}>
@@ -64,7 +80,15 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main style={{ flex: 1, maxWidth: "1200px", margin: "0 auto", padding: "32px 24px", width: "100%" }}>
+        <main
+          style={{
+            flex: 1,
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "32px 24px",
+            width: "100%",
+          }}
+        >
           {children}
         </main>
 
@@ -80,11 +104,14 @@ export default function RootLayout({
         >
           <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
             <p>
-              <strong>Disclaimer:</strong> Sahihfolio provides research and educational tools. We do not provide
-              individual financial advice or formal religious rulings. Verify all terms with providers and qualified
-              advisors.
+              <strong>Disclaimer:</strong> Sahihfolio provides research and
+              educational tools. We do not provide individual financial advice
+              or formal religious rulings. Verify all terms with providers and
+              qualified advisors.
             </p>
-            <p style={{ marginTop: "8px" }}>© {new Date().getFullYear()} Sahihfolio. All rights reserved.</p>
+            <p style={{ marginTop: "8px" }}>
+              © {new Date().getFullYear()} Sahihfolio. All rights reserved.
+            </p>
           </div>
         </footer>
       </body>

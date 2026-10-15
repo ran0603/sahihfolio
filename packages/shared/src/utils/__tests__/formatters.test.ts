@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { formatCurrency, formatPercent, formatDate, formatNumber } from "../formatters";
+import {
+  formatCurrency,
+  formatPercent,
+  formatDate,
+  formatNumber,
+} from "../formatters";
 
 describe("formatCurrency", () => {
   it("formats USD with two decimal places", () => {

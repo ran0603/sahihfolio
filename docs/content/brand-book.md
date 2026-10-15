@@ -23,14 +23,14 @@ The brand promise is not “we tell you what is halal.” It is:
 
 ### Positioning
 
-| Element | Definition |
-|---|---|
-| Category | Halal-investing research and decision-support tool |
-| Primary audience | Muslim retail investors researching global investing options |
-| Core benefit | Clear, sourced, country-aware comparisons and ongoing portfolio clarity |
-| Personality | Knowledgeable, transparent, calm, practical |
-| Difference | Practical decision support, not just a ticker-by-ticker compliance verdict |
-| Promise | Useful information, clearly sourced, regularly reviewed |
+| Element          | Definition                                                                 |
+| ---------------- | -------------------------------------------------------------------------- |
+| Category         | Halal-investing research and decision-support tool                         |
+| Primary audience | Muslim retail investors researching global investing options               |
+| Core benefit     | Clear, sourced, country-aware comparisons and ongoing portfolio clarity    |
+| Personality      | Knowledgeable, transparent, calm, practical                                |
+| Difference       | Practical decision support, not just a ticker-by-ticker compliance verdict |
+| Promise          | Useful information, clearly sourced, regularly reviewed                    |
 
 ### Brand values
 
@@ -55,12 +55,12 @@ They value practical guidance, transparent sourcing, and a calm interface.
 
 ### Secondary personas
 
-| Persona | Need | Sahihfolio’s role |
-|---|---|---|
-| Self-directed investor | Compare brokers, ETFs, and screening tools | Structured research and comparison |
-| Long-term saver | Understand recurring-investment options and costs | Clear fee and suitability context |
-| Experienced investor | Track holdings and compliance changes over time | Organized portfolio research workflow |
-| Islamic-finance educator | Share reliable explanations with an audience | Citable, well-sourced educational material |
+| Persona                  | Need                                              | Sahihfolio’s role                          |
+| ------------------------ | ------------------------------------------------- | ------------------------------------------ |
+| Self-directed investor   | Compare brokers, ETFs, and screening tools        | Structured research and comparison         |
+| Long-term saver          | Understand recurring-investment options and costs | Clear fee and suitability context          |
+| Experienced investor     | Track holdings and compliance changes over time   | Organized portfolio research workflow      |
+| Islamic-finance educator | Share reliable explanations with an audience      | Citable, well-sourced educational material |
 
 ## Voice and tone
 
@@ -68,24 +68,24 @@ They value practical guidance, transparent sourcing, and a calm interface.
 
 Sahihfolio speaks like a knowledgeable, respectful friend who has done the research—not like a salesperson, scholar issuing fatwas, or a trading influencer.
 
-| Principle | Do | Avoid |
-|---|---|---|
-| Clear | “This platform charges a 0.5% currency-conversion fee.” | “Ultra-low-cost global access!” |
-| Honest | “We could not verify current availability for this country.” | Hiding uncertainty |
+| Principle  | Do                                                                      | Avoid                             |
+| ---------- | ----------------------------------------------------------------------- | --------------------------------- |
+| Clear      | “This platform charges a 0.5% currency-conversion fee.”                 | “Ultra-low-cost global access!”   |
+| Honest     | “We could not verify current availability for this country.”            | Hiding uncertainty                |
 | Respectful | “Screening methodologies can differ; review the basis before deciding.” | “This stock is definitely halal.” |
-| Practical | “Compare trading fees, FX fees, and withdrawal costs.” | Generic financial jargon |
-| Calm | “Here are the options and trade-offs.” | “Don’t miss out!” |
+| Practical  | “Compare trading fees, FX fees, and withdrawal costs.”                  | Generic financial jargon          |
+| Calm       | “Here are the options and trade-offs.”                                  | “Don’t miss out!”                 |
 
 ### Tone by context
 
-| Context | Tone |
-|---|---|
-| Product UI | Short, direct, reassuring |
-| Educational content | Clear, structured, source-led |
-| Marketing | Helpful and specific, never hype-driven |
-| Error messages | Plain, non-blaming, action-oriented |
-| Social media | Useful, respectful, conversational |
-| Compliance disclosures | Formal, unambiguous |
+| Context                | Tone                                    |
+| ---------------------- | --------------------------------------- |
+| Product UI             | Short, direct, reassuring               |
+| Educational content    | Clear, structured, source-led           |
+| Marketing              | Helpful and specific, never hype-driven |
+| Error messages         | Plain, non-blaming, action-oriented     |
+| Social media           | Useful, respectful, conversational      |
+| Compliance disclosures | Formal, unambiguous                     |
 
 ### Writing rules
 
@@ -155,12 +155,12 @@ Design guidance:
 
 ### Logo usage
 
-| Rule | Guidance |
-|---|---|
-| Clear space | Leave space equal to the height of the “S” on all sides |
-| Minimum size | 120px wide for the full wordmark |
-| Backgrounds | Use on plain, high-contrast backgrounds |
-| Color | Use Deep Navy, Ink Navy, or white depending on background |
+| Rule          | Guidance                                                     |
+| ------------- | ------------------------------------------------------------ |
+| Clear space   | Leave space equal to the height of the “S” on all sides      |
+| Minimum size  | 120px wide for the full wordmark                             |
+| Backgrounds   | Use on plain, high-contrast backgrounds                      |
+| Color         | Use Deep Navy, Ink Navy, or white depending on background    |
 | Modifications | Do not stretch, outline, add shadows, or recolor arbitrarily |
 
 ## Color palette
@@ -169,49 +169,49 @@ The palette separates **brand**, **interface**, **data**, and **financial meanin
 
 ### Primary brand palette
 
-| Token | Name | Hex | Use |
-|---|---|---:|---|
-| `brand-900` | Deep Navy | `#0B1F3A` | Sidebar, headers, primary brand surfaces, primary buttons |
-| `brand-700` | Slate Blue | `#2D4B73` | Links, secondary buttons, active filters, selected navigation |
-| `accent-primary` | Emerald | `#10B981` | Primary actions, “Analyze”, “Add to watchlist”, selected states |
-| `accent-secondary` | Teal | `#14B8A6` | Charts, data highlights, portfolio score |
-| `accent-premium` | Gold | `#D4A017` | Premium tiers, high-conviction signals, advanced features—sparingly |
+| Token              | Name       |       Hex | Use                                                                 |
+| ------------------ | ---------- | --------: | ------------------------------------------------------------------- |
+| `brand-900`        | Deep Navy  | `#0B1F3A` | Sidebar, headers, primary brand surfaces, primary buttons           |
+| `brand-700`        | Slate Blue | `#2D4B73` | Links, secondary buttons, active filters, selected navigation       |
+| `accent-primary`   | Emerald    | `#10B981` | Primary actions, “Analyze”, “Add to watchlist”, selected states     |
+| `accent-secondary` | Teal       | `#14B8A6` | Charts, data highlights, portfolio score                            |
+| `accent-premium`   | Gold       | `#D4A017` | Premium tiers, high-conviction signals, advanced features—sparingly |
 
 ### Light-mode interface palette
 
-| Token | Name | Hex | Use |
-|---|---|---:|---|
-| `bg` | Off-White | `#F7F9FC` | App background |
-| `surface` | White | `#FFFFFF` | Cards, tables, panels, forms |
-| `border` | Cool Gray | `#E4E7EC` | Dividers, table borders, input borders |
-| `text-primary` | Ink Navy | `#101828` | Primary text |
-| `text-muted` | Slate Gray | `#667085` | Labels, metadata, captions, secondary text |
+| Token          | Name       |       Hex | Use                                        |
+| -------------- | ---------- | --------: | ------------------------------------------ |
+| `bg`           | Off-White  | `#F7F9FC` | App background                             |
+| `surface`      | White      | `#FFFFFF` | Cards, tables, panels, forms               |
+| `border`       | Cool Gray  | `#E4E7EC` | Dividers, table borders, input borders     |
+| `text-primary` | Ink Navy   | `#101828` | Primary text                               |
+| `text-muted`   | Slate Gray | `#667085` | Labels, metadata, captions, secondary text |
 
 ### Dark-mode interface palette
 
 Use dark mode for power users, portfolio monitoring, and extended screening sessions. Base the interface on blue-gray rather than pure black, with slightly lighter elevated surfaces.
 
-| Token | Name | Hex | Use |
-|---|---|---:|---|
-| `bg` | Terminal Base | `#0D1117` | App background |
-| `surface` | Panel | `#161B26` | Cards, tables, panels |
+| Token              | Name           |       Hex | Use                                         |
+| ------------------ | -------------- | --------: | ------------------------------------------- |
+| `bg`               | Terminal Base  | `#0D1117` | App background                              |
+| `surface`          | Panel          | `#161B26` | Cards, tables, panels                       |
 | `surface-elevated` | Elevated Panel | `#1D2433` | Modals, dropdowns, popovers, sticky headers |
-| `border` | Slate Border | `#2A3243` | Dividers, table borders, input borders |
-| `text-primary` | Primary Text | `#F2F4F7` | Primary text |
-| `text-muted` | Muted Text | `#98A2B3` | Labels, metadata, captions |
-| `accent-primary` | Emerald Bright | `#34D399` | Primary actions and selected states |
-| `accent-secondary` | Teal Bright | `#2DD4BF` | Charts and data highlights |
+| `border`           | Slate Border   | `#2A3243` | Dividers, table borders, input borders      |
+| `text-primary`     | Primary Text   | `#F2F4F7` | Primary text                                |
+| `text-muted`       | Muted Text     | `#98A2B3` | Labels, metadata, captions                  |
+| `accent-primary`   | Emerald Bright | `#34D399` | Primary actions and selected states         |
+| `accent-secondary` | Teal Bright    | `#2DD4BF` | Charts and data highlights                  |
 
 ### Semantic financial colors
 
 Do **not** use green or red decoratively. Reserve them for financial meaning so users can scan a screener quickly. Pair every color with an icon, arrow, or text label; color alone is not accessible or reliable for all users.
 
-| Meaning | Light mode | Dark mode | Label / icon pattern |
-|---|---:|---:|---|
-| Positive return / buy signal | `#039855` | `#34D399` | Up arrow + “+4.2%” |
-| Negative return / risk flag | `#D92D20` | `#F87171` | Down arrow + “-2.8%” |
-| Warning / elevated risk | `#DC6803` | `#FDB022` | Alert icon + “High volatility” |
-| Neutral / no signal | `#667085` | `#98A2B3` | Dash + “Insufficient data” |
+| Meaning                      | Light mode | Dark mode | Label / icon pattern           |
+| ---------------------------- | ---------: | --------: | ------------------------------ |
+| Positive return / buy signal |  `#039855` | `#34D399` | Up arrow + “+4.2%”             |
+| Negative return / risk flag  |  `#D92D20` | `#F87171` | Down arrow + “-2.8%”           |
+| Warning / elevated risk      |  `#DC6803` | `#FDB022` | Alert icon + “High volatility” |
+| Neutral / no signal          |  `#667085` | `#98A2B3` | Dash + “Insufficient data”     |
 
 ### Color usage rules
 
@@ -229,41 +229,41 @@ Do **not** use green or red decoratively. Reserve them for financial meaning so 
 
 ```css
 :root {
-  --brand-900: #0B1F3A;
-  --brand-700: #2D4B73;
-  --accent-primary: #10B981;
-  --accent-secondary: #14B8A6;
-  --accent-premium: #D4A017;
+  --brand-900: #0b1f3a;
+  --brand-700: #2d4b73;
+  --accent-primary: #10b981;
+  --accent-secondary: #14b8a6;
+  --accent-premium: #d4a017;
 
-  --bg: #F7F9FC;
-  --surface: #FFFFFF;
-  --border: #E4E7EC;
+  --bg: #f7f9fc;
+  --surface: #ffffff;
+  --border: #e4e7ec;
 
   --text-primary: #101828;
   --text-muted: #667085;
 
   --positive: #039855;
-  --negative: #D92D20;
-  --warning: #DC6803;
+  --negative: #d92d20;
+  --warning: #dc6803;
   --neutral: #667085;
 }
 
-[data-theme='dark'] {
-  --bg: #0D1117;
-  --surface: #161B26;
-  --surface-elevated: #1D2433;
-  --border: #2A3243;
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --surface: #161b26;
+  --surface-elevated: #1d2433;
+  --border: #2a3243;
 
-  --text-primary: #F2F4F7;
-  --text-muted: #98A2B3;
+  --text-primary: #f2f4f7;
+  --text-muted: #98a2b3;
 
-  --accent-primary: #34D399;
-  --accent-secondary: #2DD4BF;
+  --accent-primary: #34d399;
+  --accent-secondary: #2dd4bf;
 
-  --positive: #34D399;
-  --negative: #F87171;
-  --warning: #FDB022;
-  --neutral: #98A2B3;
+  --positive: #34d399;
+  --negative: #f87171;
+  --warning: #fdb022;
+  --neutral: #98a2b3;
 }
 ```
 
@@ -283,15 +283,15 @@ For Arabic content, use a high-quality Arabic companion typeface such as **IBM P
 
 ### Type scale
 
-| Style | Size / line height | Weight | Use |
-|---|---:|---:|---|
-| Display | 40–56px / 1.1 | 700 | Landing headlines |
-| H1 | 32–40px / 1.2 | 700 | Page titles |
-| H2 | 24–28px / 1.3 | 600 | Section titles |
-| H3 | 18–20px / 1.4 | 600 | Card and sub-section titles |
-| Body | 16–18px / 1.6 | 400 | Main content |
-| Small | 14px / 1.5 | 400 | Metadata, captions |
-| Label | 12–13px / 1.4 | 600 | Form labels, badges |
+| Style   | Size / line height | Weight | Use                         |
+| ------- | -----------------: | -----: | --------------------------- |
+| Display |      40–56px / 1.1 |    700 | Landing headlines           |
+| H1      |      32–40px / 1.2 |    700 | Page titles                 |
+| H2      |      24–28px / 1.3 |    600 | Section titles              |
+| H3      |      18–20px / 1.4 |    600 | Card and sub-section titles |
+| Body    |      16–18px / 1.6 |    400 | Main content                |
+| Small   |         14px / 1.5 |    400 | Metadata, captions          |
+| Label   |      12–13px / 1.4 |    600 | Form labels, badges         |
 
 ### Typography rules
 
@@ -319,16 +319,16 @@ Use a 4px base scale:
 
 ### Components
 
-| Component | Light mode | Dark mode |
-|---|---|---|
-| Primary button | Deep Navy `#0B1F3A` or Emerald `#10B981`, depending on hierarchy | Emerald `#34D399` with dark text |
-| Secondary button | Slate Blue `#2D4B73` outline or subtle fill | Slate-blue outline on panel surface |
-| Cards | White `#FFFFFF`, 1px Cool Gray border, subtle shadow, 12–16px radius | Panel `#161B26`, 1px Slate Border |
-| Tables | White surface, Cool Gray row dividers, sticky header | Panel surface, Slate Border dividers, elevated sticky header |
-| Forms | White inputs, Cool Gray borders, visible emerald focus state | Panel inputs, Slate Border, visible emerald focus state |
-| Badges | Small, rounded, semantic: Verified, Updated, Needs review | Same semantics with dark-mode-safe colors |
-| Alerts | Amber for caution; red for errors; green only for confirmed success | Amber, red, and green bright variants |
-| Source links | Slate Blue, underlined on hover, external-link icon | Teal or light blue, underlined on hover |
+| Component        | Light mode                                                           | Dark mode                                                    |
+| ---------------- | -------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Primary button   | Deep Navy `#0B1F3A` or Emerald `#10B981`, depending on hierarchy     | Emerald `#34D399` with dark text                             |
+| Secondary button | Slate Blue `#2D4B73` outline or subtle fill                          | Slate-blue outline on panel surface                          |
+| Cards            | White `#FFFFFF`, 1px Cool Gray border, subtle shadow, 12–16px radius | Panel `#161B26`, 1px Slate Border                            |
+| Tables           | White surface, Cool Gray row dividers, sticky header                 | Panel surface, Slate Border dividers, elevated sticky header |
+| Forms            | White inputs, Cool Gray borders, visible emerald focus state         | Panel inputs, Slate Border, visible emerald focus state      |
+| Badges           | Small, rounded, semantic: Verified, Updated, Needs review            | Same semantics with dark-mode-safe colors                    |
+| Alerts           | Amber for caution; red for errors; green only for confirmed success  | Amber, red, and green bright variants                        |
+| Source links     | Slate Blue, underlined on hover, external-link icon                  | Teal or light blue, underlined on hover                      |
 
 ### Data presentation
 
@@ -416,15 +416,15 @@ Every screen should make the next useful action obvious:
 
 ### Terminology
 
-| Use | Avoid |
-|---|---|
-| Shariah screening | Islamic filter |
-| Screening methodology | Halal algorithm |
-| Provider | Vendor / app |
-| Available in your country | Worldwide |
-| Informational result | Guaranteed match |
-| Last reviewed | Updated sometime |
-| Verify with provider | Trust us |
+| Use                       | Avoid            |
+| ------------------------- | ---------------- |
+| Shariah screening         | Islamic filter   |
+| Screening methodology     | Halal algorithm  |
+| Provider                  | Vendor / app     |
+| Available in your country | Worldwide        |
+| Informational result      | Guaranteed match |
+| Last reviewed             | Updated sometime |
+| Verify with provider      | Trust us         |
 
 ### Source formatting
 
@@ -462,13 +462,13 @@ Before publishing a claim, confirm:
 
 ### Channel guidance
 
-| Channel | Approach |
-|---|---|
-| SEO / AEO | Answer specific questions clearly, with sources and update dates |
-| Email | Practical research updates, not daily hype |
-| Social | Short explanations, comparisons, and checklists |
-| Partnerships | Work with educators and communities that value transparency |
-| Paid ads | Specific, calm value propositions; no get-rich promises |
+| Channel      | Approach                                                         |
+| ------------ | ---------------------------------------------------------------- |
+| SEO / AEO    | Answer specific questions clearly, with sources and update dates |
+| Email        | Practical research updates, not daily hype                       |
+| Social       | Short explanations, comparisons, and checklists                  |
+| Partnerships | Work with educators and communities that value transparency      |
+| Paid ads     | Specific, calm value propositions; no get-rich promises          |
 
 ### Do not say
 
@@ -513,20 +513,20 @@ Before publishing a claim, confirm:
 
 ## Quick reference
 
-| Element | Standard |
-|---|---|
-| Brand promise | Informed halal-investing decisions with clarity |
-| Personality | Calm, credible, practical, transparent |
-| Brand identity | Navy research terminal with emerald intelligence |
-| Primary brand color | Deep Navy `#0B1F3A` |
-| Primary action accent | Emerald `#10B981` light / `#34D399` dark |
-| Data accent | Teal `#14B8A6` light / `#2DD4BF` dark |
-| Premium accent | Gold `#D4A017`, reserved for premium |
-| Light background | Off-White `#F7F9FC` |
-| Dark background | Terminal Base `#0D1117` |
-| Positive / negative | `#039855` / `#D92D20` light; `#34D399` / `#F87171` dark |
-| Typeface | Inter, IBM Plex Sans, or Source Sans 3 |
-| Tone | Clear, respectful, evidence-led |
-| Core CTA | “Find my options” |
-| Compliance stance | Informational, sourced, not advice |
-| Visual mood | Modern financial research, not trading hype |
+| Element               | Standard                                                |
+| --------------------- | ------------------------------------------------------- |
+| Brand promise         | Informed halal-investing decisions with clarity         |
+| Personality           | Calm, credible, practical, transparent                  |
+| Brand identity        | Navy research terminal with emerald intelligence        |
+| Primary brand color   | Deep Navy `#0B1F3A`                                     |
+| Primary action accent | Emerald `#10B981` light / `#34D399` dark                |
+| Data accent           | Teal `#14B8A6` light / `#2DD4BF` dark                   |
+| Premium accent        | Gold `#D4A017`, reserved for premium                    |
+| Light background      | Off-White `#F7F9FC`                                     |
+| Dark background       | Terminal Base `#0D1117`                                 |
+| Positive / negative   | `#039855` / `#D92D20` light; `#34D399` / `#F87171` dark |
+| Typeface              | Inter, IBM Plex Sans, or Source Sans 3                  |
+| Tone                  | Clear, respectful, evidence-led                         |
+| Core CTA              | “Find my options”                                       |
+| Compliance stance     | Informational, sourced, not advice                      |
+| Visual mood           | Modern financial research, not trading hype             |

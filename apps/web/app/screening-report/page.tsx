@@ -1,19 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { Badge, Card, CardHeader, CardTitle, CardContent, DisclaimerBanner } from "@sahihfolio/ui";
+import {
+  Badge,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  DisclaimerBanner,
+} from "@sahihfolio/ui";
 
 export default function ScreeningReportPage() {
   const [ticker, setTicker] = useState("AAPL");
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div
+      style={{
+        maxWidth: "800px",
+        margin: "0 auto",
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "2rem", fontWeight: "700", color: "#0B1F3A", marginBottom: "8px" }}>
+        <h1
+          style={{
+            fontSize: "2rem",
+            fontWeight: "700",
+            color: "#0B1F3A",
+            marginBottom: "8px",
+          }}
+        >
           Shariah Screening Report
         </h1>
         <p style={{ color: "#667085" }}>
-          Evidence-led breakdown of stock & ETF compliance, financial ratios, and methodology criteria.
+          Evidence-led breakdown of stock & ETF compliance, financial ratios,
+          and methodology criteria.
         </p>
       </div>
 
@@ -49,22 +72,41 @@ export default function ScreeningReportPage() {
       </div>
 
       <Card>
-        <CardHeader style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <CardHeader
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <div>
             <CardTitle>Apple Inc. (AAPL)</CardTitle>
-            <span style={{ fontSize: "0.8125rem", color: "#667085" }}>NASDAQ • Information Technology • United States</span>
+            <span style={{ fontSize: "0.8125rem", color: "#667085" }}>
+              NASDAQ • Information Technology • United States
+            </span>
           </div>
           <Badge variant="compliant">Screened Compliant</Badge>
         </CardHeader>
         <CardContent>
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "16px" }}
+          >
             <div>
-              <h4 style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0B1F3A", marginBottom: "4px" }}>
+              <h4
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "#0B1F3A",
+                  marginBottom: "4px",
+                }}
+              >
                 Methodology & Assessment
               </h4>
               <p style={{ fontSize: "0.875rem", color: "#344054" }}>
-                Evaluated under AAOIFI Standard No. 21 guidelines. Non-permissible revenue ratio (Apple Card interest)
-                is ~1.5%, well within the 5% threshold. Debt to market-cap ratio is 3.8% (threshold: &lt;30%).
+                Evaluated under AAOIFI Standard No. 21 guidelines.
+                Non-permissible revenue ratio (Apple Card interest) is ~1.5%,
+                well within the 5% threshold. Debt to market-cap ratio is 3.8%
+                (threshold: &lt;30%).
               </p>
             </div>
 
@@ -77,7 +119,8 @@ export default function ScreeningReportPage() {
                 color: "#667085",
               }}
             >
-              <strong>Data Source:</strong> SEC Form 10-K filing • <strong>Reviewed:</strong> October 2026 •{" "}
+              <strong>Data Source:</strong> SEC Form 10-K filing •{" "}
+              <strong>Reviewed:</strong> October 2026 •{" "}
               <strong>Reviewer:</strong> Sahihfolio Research Desk
             </div>
           </div>

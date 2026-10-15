@@ -32,6 +32,7 @@ sahihfolio/
 ## Package Responsibilities
 
 ### 1. `apps/web`
+
 - Primary Next.js 16 App Router application.
 - Contains public routes:
   - `/`: Home landing page introducing the free tools.
@@ -43,6 +44,7 @@ sahihfolio/
   - `/admin/screening`: Editorial review queue for Shariah screening reports.
 
 ### 2. `packages/database`
+
 - PostgreSQL integration using Drizzle ORM.
 - Tables:
   - `countries`: Country profiles, regulatory notices, supported providers, currency.
@@ -52,15 +54,18 @@ sahihfolio/
 - Pre-packaged seed data for immediate local development.
 
 ### 3. `packages/shared`
+
 - Pure TypeScript domain layer shared between apps and packages.
 - Zod validation schemas for forms and APIs.
 - Domain enums, constants, and formatting utilities (currency, percentage, dates).
 
 ### 4. `packages/ui`
+
 - Shared React component library built on Sahihfolio brand design tokens.
 - Accessible components: `Button`, `Badge`, `Card`, `Input`, `Select`, `DisclaimerBanner`.
 
 ### 5. `packages/config`
+
 - Centralized configurations for TypeScript, ESLint, Tailwind CSS, and Prettier.
 
 ## CI/CD Pipeline

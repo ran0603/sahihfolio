@@ -5,13 +5,25 @@ export const countries = pgTable("countries", {
   name: varchar("name", { length: 100 }).notNull(),
   currency: varchar("currency", { length: 3 }).notNull(), // ISO 4217, e.g. "USD"
   region: varchar("region", { length: 50 }).notNull(),
-  regulatoryNotes: jsonb("regulatory_notes").$type<string[]>().default([]).notNull(),
-  supportedProviders: jsonb("supported_providers").$type<string[]>().default([]).notNull(),
+  regulatoryNotes: jsonb("regulatory_notes")
+    .$type<string[]>()
+    .default([])
+    .notNull(),
+  supportedProviders: jsonb("supported_providers")
+    .$type<string[]>()
+    .default([])
+    .notNull(),
   restrictions: jsonb("restrictions").$type<string[]>().default([]).notNull(),
   sourceUrls: jsonb("source_urls").$type<string[]>().default([]).notNull(),
-  lastReviewedAt: timestamp("last_reviewed_at", { withTimezone: true }).defaultNow().notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  lastReviewedAt: timestamp("last_reviewed_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export type CountryRow = typeof countries.$inferSelect;

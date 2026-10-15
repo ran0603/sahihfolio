@@ -22,7 +22,8 @@ export default function NotFound() {
           transform: "translateX(-50%)",
           width: "420px",
           height: "320px",
-          background: "radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(11, 31, 58, 0.05) 50%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(11, 31, 58, 0.05) 50%, transparent 70%)",
           filter: "blur(40px)",
           pointerEvents: "none",
           zIndex: 0,
@@ -43,15 +44,25 @@ export default function NotFound() {
         }}
       >
         {/* Visual Badge & Illustration */}
-        <div className="float-animation" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+        <div
+          className="float-animation"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "12px",
+          }}
+        >
           <div
             style={{
               width: "128px",
               height: "128px",
               borderRadius: "28px",
-              background: "linear-gradient(135deg, #0B1F3A 0%, #162B47 50%, #10B981 100%)",
+              background:
+                "linear-gradient(135deg, #0B1F3A 0%, #162B47 50%, #10B981 100%)",
               padding: "2px",
-              boxShadow: "0 20px 30px -10px rgba(11, 31, 58, 0.25), 0 0 20px rgba(16, 185, 129, 0.2)",
+              boxShadow:
+                "0 20px 30px -10px rgba(11, 31, 58, 0.25), 0 0 20px rgba(16, 185, 129, 0.2)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -69,17 +80,50 @@ export default function NotFound() {
               }}
             >
               {/* Halal Finance Navigation Astrolabe / Compass SVG */}
-              <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="68"
+                height="68"
+                viewBox="0 0 68 68"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 {/* Outer dashed Shariah perimeter ring */}
-                <circle cx="34" cy="34" r="28" stroke="#10B981" strokeWidth="1.5" strokeDasharray="3 3" strokeOpacity="0.6" />
+                <circle
+                  cx="34"
+                  cy="34"
+                  r="28"
+                  stroke="#10B981"
+                  strokeWidth="1.5"
+                  strokeDasharray="3 3"
+                  strokeOpacity="0.6"
+                />
                 {/* Concentric inner coordinate ring */}
-                <circle cx="34" cy="34" r="20" stroke="#2D4B73" strokeWidth="1" strokeOpacity="0.5" />
+                <circle
+                  cx="34"
+                  cy="34"
+                  r="20"
+                  stroke="#2D4B73"
+                  strokeWidth="1"
+                  strokeOpacity="0.5"
+                />
                 <circle cx="34" cy="34" r="3" fill="#10B981" />
                 {/* Compass Star / Crosshair Needles */}
-                <path d="M34 11L37.5 30.5L34 34L30.5 30.5L34 11Z" fill="#10B981" />
-                <path d="M34 57L30.5 37.5L34 34L37.5 37.5L34 57Z" fill="#2D4B73" />
-                <path d="M11 34L30.5 30.5L34 34L30.5 37.5L11 34Z" fill="#2D4B73" />
-                <path d="M57 34L37.5 37.5L34 34L37.5 30.5L57 34Z" fill="#34D399" />
+                <path
+                  d="M34 11L37.5 30.5L34 34L30.5 30.5L34 11Z"
+                  fill="#10B981"
+                />
+                <path
+                  d="M34 57L30.5 37.5L34 34L37.5 37.5L34 57Z"
+                  fill="#2D4B73"
+                />
+                <path
+                  d="M11 34L30.5 30.5L34 34L30.5 37.5L11 34Z"
+                  fill="#2D4B73"
+                />
+                <path
+                  d="M57 34L37.5 37.5L34 34L37.5 30.5L57 34Z"
+                  fill="#34D399"
+                />
                 {/* Orbital Verification Nodes */}
                 <circle cx="48" cy="20" r="2" fill="#D4A017" />
                 <circle cx="20" cy="48" r="2" fill="#10B981" />
@@ -139,8 +183,9 @@ export default function NotFound() {
               lineHeight: 1.6,
             }}
           >
-            The research page, screening report, or provider profile you requested cannot be found.
-            It may have been moved, renamed, or is currently undergoing Shariah re-audit.
+            The research page, screening report, or provider profile you
+            requested cannot be found. It may have been moved, renamed, or is
+            currently undergoing Shariah re-audit.
           </p>
         </div>
 
@@ -232,10 +277,20 @@ export default function NotFound() {
               borderBottom: "1px solid #E4E7EC",
             }}
           >
-            <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#475467", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+            <span
+              style={{
+                fontSize: "0.8125rem",
+                fontWeight: 700,
+                color: "#475467",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+              }}
+            >
               Explore Verified Research Hubs
             </span>
-            <span style={{ fontSize: "0.75rem", color: "#98A2B3" }}>Verified Shariah Datasets</span>
+            <span style={{ fontSize: "0.75rem", color: "#98A2B3" }}>
+              Verified Shariah Datasets
+            </span>
           </div>
 
           <div
@@ -260,7 +315,9 @@ export default function NotFound() {
                 boxShadow: "0 1px 3px rgba(16, 24, 40, 0.05)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
                 <div
                   style={{
                     width: "36px",
@@ -273,20 +330,60 @@ export default function NotFound() {
                     color: "#039855",
                   }}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <circle cx="12" cy="12" r="10" />
                     <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
                   </svg>
                 </div>
                 <div>
-                  <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#0B1F3A" }}>Options Finder</h3>
-                  <span style={{ fontSize: "0.6875rem", color: "#039855", fontWeight: 600 }}>By Country of Residence</span>
+                  <h3
+                    style={{
+                      fontSize: "0.9375rem",
+                      fontWeight: 700,
+                      color: "#0B1F3A",
+                    }}
+                  >
+                    Options Finder
+                  </h3>
+                  <span
+                    style={{
+                      fontSize: "0.6875rem",
+                      color: "#039855",
+                      fontWeight: 600,
+                    }}
+                  >
+                    By Country of Residence
+                  </span>
                 </div>
               </div>
-              <p style={{ fontSize: "0.8125rem", color: "#667085", lineHeight: 1.5, margin: 0 }}>
-                Find vetted brokers, robo-advisors, and UCITS ETFs accessible from your jurisdiction.
+              <p
+                style={{
+                  fontSize: "0.8125rem",
+                  color: "#667085",
+                  lineHeight: 1.5,
+                  margin: 0,
+                }}
+              >
+                Find vetted brokers, robo-advisors, and UCITS ETFs accessible
+                from your jurisdiction.
               </p>
-              <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#10B981", marginTop: "auto" }}>
+              <span
+                style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 600,
+                  color: "#10B981",
+                  marginTop: "auto",
+                }}
+              >
                 Search routes →
               </span>
             </Link>
@@ -306,7 +403,9 @@ export default function NotFound() {
                 boxShadow: "0 1px 3px rgba(16, 24, 40, 0.05)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
                 <div
                   style={{
                     width: "36px",
@@ -319,7 +418,16 @@ export default function NotFound() {
                     color: "#175CD3",
                   }}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                     <polyline points="14 2 14 8 20 8" />
                     <line x1="16" y1="13" x2="8" y2="13" />
@@ -328,14 +436,45 @@ export default function NotFound() {
                   </svg>
                 </div>
                 <div>
-                  <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#0B1F3A" }}>Screening Reports</h3>
-                  <span style={{ fontSize: "0.6875rem", color: "#175CD3", fontWeight: 600 }}>AAOIFI / DJIM Methodologies</span>
+                  <h3
+                    style={{
+                      fontSize: "0.9375rem",
+                      fontWeight: 700,
+                      color: "#0B1F3A",
+                    }}
+                  >
+                    Screening Reports
+                  </h3>
+                  <span
+                    style={{
+                      fontSize: "0.6875rem",
+                      color: "#175CD3",
+                      fontWeight: 600,
+                    }}
+                  >
+                    AAOIFI / DJIM Methodologies
+                  </span>
                 </div>
               </div>
-              <p style={{ fontSize: "0.8125rem", color: "#667085", lineHeight: 1.5, margin: 0 }}>
-                Review financial screening ratios, debt-to-market-cap metrics, and primary SEC sources.
+              <p
+                style={{
+                  fontSize: "0.8125rem",
+                  color: "#667085",
+                  lineHeight: 1.5,
+                  margin: 0,
+                }}
+              >
+                Review financial screening ratios, debt-to-market-cap metrics,
+                and primary SEC sources.
               </p>
-              <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#10B981", marginTop: "auto" }}>
+              <span
+                style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 600,
+                  color: "#10B981",
+                  marginTop: "auto",
+                }}
+              >
                 Inspect reports →
               </span>
             </Link>
@@ -355,7 +494,9 @@ export default function NotFound() {
                 boxShadow: "0 1px 3px rgba(16, 24, 40, 0.05)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
                 <div
                   style={{
                     width: "36px",
@@ -368,7 +509,16 @@ export default function NotFound() {
                     color: "#5925DC",
                   }}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <rect x="3" y="3" width="7" height="7" />
                     <rect x="14" y="3" width="7" height="7" />
                     <rect x="14" y="14" width="7" height="7" />
@@ -376,14 +526,45 @@ export default function NotFound() {
                   </svg>
                 </div>
                 <div>
-                  <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#0B1F3A" }}>Admin Console</h3>
-                  <span style={{ fontSize: "0.6875rem", color: "#5925DC", fontWeight: 600 }}>Catalog & Audits</span>
+                  <h3
+                    style={{
+                      fontSize: "0.9375rem",
+                      fontWeight: 700,
+                      color: "#0B1F3A",
+                    }}
+                  >
+                    Admin Console
+                  </h3>
+                  <span
+                    style={{
+                      fontSize: "0.6875rem",
+                      color: "#5925DC",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Catalog & Audits
+                  </span>
                 </div>
               </div>
-              <p style={{ fontSize: "0.8125rem", color: "#667085", lineHeight: 1.5, margin: 0 }}>
-                Manage provider entries, inspect screening verification queues, and system parameters.
+              <p
+                style={{
+                  fontSize: "0.8125rem",
+                  color: "#667085",
+                  lineHeight: 1.5,
+                  margin: 0,
+                }}
+              >
+                Manage provider entries, inspect screening verification queues,
+                and system parameters.
               </p>
-              <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#10B981", marginTop: "auto" }}>
+              <span
+                style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 600,
+                  color: "#10B981",
+                  marginTop: "auto",
+                }}
+              >
                 Open console →
               </span>
             </Link>
@@ -406,20 +587,45 @@ export default function NotFound() {
             maxWidth: "680px",
           }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#667085" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#667085"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <circle cx="12" cy="12" r="10" />
             <line x1="12" y1="16" x2="12" y2="12" />
             <line x1="12" y1="8" x2="12.01" y2="8" />
           </svg>
           <span>
-            Looking for a specific stock ticker or brokerage? You can search directly in the{" "}
-            <Link href="/screening-report" style={{ color: "#10B981", fontWeight: 600, textDecoration: "underline" }}>
+            Looking for a specific stock ticker or brokerage? You can search
+            directly in the{" "}
+            <Link
+              href="/screening-report"
+              style={{
+                color: "#10B981",
+                fontWeight: 600,
+                textDecoration: "underline",
+              }}
+            >
               Screening Reports
             </Link>{" "}
             or check our{" "}
-            <Link href="/finder" style={{ color: "#10B981", fontWeight: 600, textDecoration: "underline" }}>
+            <Link
+              href="/finder"
+              style={{
+                color: "#10B981",
+                fontWeight: 600,
+                textDecoration: "underline",
+              }}
+            >
               Options Finder
-            </Link>.
+            </Link>
+            .
           </span>
         </div>
       </div>

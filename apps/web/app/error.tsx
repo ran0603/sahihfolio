@@ -67,7 +67,8 @@ Stack: ${error.stack || "N/A"}`;
           transform: "translateX(-50%)",
           width: "440px",
           height: "300px",
-          background: "radial-gradient(circle, rgba(220, 104, 3, 0.1) 0%, rgba(217, 45, 32, 0.05) 50%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(220, 104, 3, 0.1) 0%, rgba(217, 45, 32, 0.05) 50%, transparent 70%)",
           filter: "blur(44px)",
           pointerEvents: "none",
           zIndex: 0,
@@ -88,15 +89,25 @@ Stack: ${error.stack || "N/A"}`;
         }}
       >
         {/* Visual Badge & Warning Emblem */}
-        <div className="float-animation" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+        <div
+          className="float-animation"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "12px",
+          }}
+        >
           <div
             style={{
               width: "120px",
               height: "120px",
               borderRadius: "28px",
-              background: "linear-gradient(135deg, #0B1F3A 0%, #1D2939 50%, #B54708 100%)",
+              background:
+                "linear-gradient(135deg, #0B1F3A 0%, #1D2939 50%, #B54708 100%)",
               padding: "2px",
-              boxShadow: "0 20px 30px -10px rgba(11, 31, 58, 0.25), 0 0 25px rgba(220, 104, 3, 0.15)",
+              boxShadow:
+                "0 20px 30px -10px rgba(11, 31, 58, 0.25), 0 0 25px rgba(220, 104, 3, 0.15)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -114,7 +125,13 @@ Stack: ${error.stack || "N/A"}`;
               }}
             >
               {/* Alert / Shield SVG */}
-              <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 60 60"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 {/* Shield boundary */}
                 <path
                   d="M30 8L48 15V28C48 39.5 40.5 49.5 30 52C19.5 49.5 12 39.5 12 28V15L30 8Z"
@@ -124,10 +141,20 @@ Stack: ${error.stack || "N/A"}`;
                   fill="rgba(247, 144, 9, 0.08)"
                 />
                 {/* Exclamation Symbol */}
-                <path d="M30 22V32" stroke="#FDB022" strokeWidth="2.5" strokeLinecap="round" />
+                <path
+                  d="M30 22V32"
+                  stroke="#FDB022"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
                 <circle cx="30" cy="39" r="1.75" fill="#FDB022" />
                 {/* Shariah Ledger Line */}
-                <path d="M22 44C24.5 45.2 27.2 45.8 30 45.8C32.8 45.8 35.5 45.2 38 44" stroke="#DC6803" strokeWidth="1.5" strokeLinecap="round" />
+                <path
+                  d="M22 44C24.5 45.2 27.2 45.8 30 45.8C32.8 45.8 35.5 45.2 38 44"
+                  stroke="#DC6803"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
               </svg>
             </div>
           </div>
@@ -184,8 +211,9 @@ Stack: ${error.stack || "N/A"}`;
               lineHeight: 1.6,
             }}
           >
-            An unexpected error occurred while processing Shariah screening metrics or provider data.
-            Our telemetry monitors exceptions to keep research accurate and verified.
+            An unexpected error occurred while processing Shariah screening
+            metrics or provider data. Our telemetry monitors exceptions to keep
+            research accurate and verified.
           </p>
         </div>
 
@@ -230,7 +258,9 @@ Stack: ${error.stack || "N/A"}`;
               strokeLinecap="round"
               strokeLinejoin="round"
               style={{
-                animation: isRetrying ? "rotateSlow 0.8s linear infinite" : "none",
+                animation: isRetrying
+                  ? "rotateSlow 0.8s linear infinite"
+                  : "none",
               }}
             >
               <polyline points="23 4 23 10 17 10" />
@@ -312,12 +342,29 @@ Stack: ${error.stack || "N/A"}`;
                 borderBottom: showDiagnostics ? "1px solid #E4E7EC" : "none",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#667085" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#667085"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M12 20h9" />
                   <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                 </svg>
-                <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "#344054" }}>
+                <span
+                  style={{
+                    fontSize: "0.875rem",
+                    fontWeight: 600,
+                    color: "#344054",
+                  }}
+                >
                   Technical Diagnostic Details
                 </span>
                 {error.digest && (
@@ -356,7 +403,9 @@ Stack: ${error.stack || "N/A"}`;
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   style={{
-                    transform: showDiagnostics ? "rotate(180deg)" : "rotate(0deg)",
+                    transform: showDiagnostics
+                      ? "rotate(180deg)"
+                      : "rotate(0deg)",
                     transition: "transform 0.2s ease",
                   }}
                 >
@@ -366,7 +415,13 @@ Stack: ${error.stack || "N/A"}`;
             </button>
 
             {showDiagnostics && (
-              <div style={{ padding: "18px", backgroundColor: "#0F172A", color: "#F8FAFC" }}>
+              <div
+                style={{
+                  padding: "18px",
+                  backgroundColor: "#0F172A",
+                  color: "#F8FAFC",
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
@@ -375,7 +430,14 @@ Stack: ${error.stack || "N/A"}`;
                     marginBottom: "12px",
                   }}
                 >
-                  <span style={{ fontSize: "0.75rem", color: "#94A3B8", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                  <span
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "#94A3B8",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.5px",
+                    }}
+                  >
                     Stack / Error Trace
                   </span>
                   <button
@@ -395,7 +457,14 @@ Stack: ${error.stack || "N/A"}`;
                       transition: "all 0.15s ease",
                     }}
                   >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                     </svg>
@@ -405,7 +474,8 @@ Stack: ${error.stack || "N/A"}`;
 
                 <div
                   style={{
-                    fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                    fontFamily:
+                      "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
                     fontSize: "0.8125rem",
                     lineHeight: 1.6,
                     color: "#FCA5A5",
@@ -419,7 +489,8 @@ Stack: ${error.stack || "N/A"}`;
                     overflowY: "auto",
                   }}
                 >
-                  {error.message || "An unspecified application error occurred."}
+                  {error.message ||
+                    "An unspecified application error occurred."}
                   {error.digest && `\n\n[Digest Code: ${error.digest}]`}
                   {error.stack && `\n\n${error.stack}`}
                 </div>
@@ -429,9 +500,17 @@ Stack: ${error.stack || "N/A"}`;
         </div>
 
         {/* Reassurance Note */}
-        <p style={{ fontSize: "0.8125rem", color: "#98A2B3", maxWidth: "560px", margin: "8px 0 0" }}>
-          Need assistance? If this error recurs across multiple providers or Shariah methodologies,
-          please check back in a few minutes while our data providers resynchronize.
+        <p
+          style={{
+            fontSize: "0.8125rem",
+            color: "#98A2B3",
+            maxWidth: "560px",
+            margin: "8px 0 0",
+          }}
+        >
+          Need assistance? If this error recurs across multiple providers or
+          Shariah methodologies, please check back in a few minutes while our
+          data providers resynchronize.
         </p>
       </div>
     </div>
