@@ -1,7 +1,14 @@
-import { pgTable, varchar, text, timestamp, jsonb, boolean } from "drizzle-orm/pg-core";
+import { pgTable, varchar, text, timestamp, jsonb, uuid, pgEnum, integer } from "drizzle-orm/pg-core";
+import { users } from "./users";
+
+export const reviewStatusEnum = pgEnum("review_status", [
+  "draft",
+  "needs_review",
+  "reviewed",
+]);
 
 export const providers = pgTable("providers", {
-  id: varchar("id", { length: 50 }).primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   name: varchar("name", { length: 150 }).notNull(),
   slug: varchar("slug", { length: 150 }).unique().notNull(),
   type: varchar("type", { length: 50 }).notNull(), // broker, robo_advisor, managed_portfolio, etf_provider
@@ -35,6 +42,12 @@ export const providers = pgTable("providers", {
   affiliateUrl: text("affiliate_url"),
   status: varchar("status", { length: 20 }).default("published").notNull(),
   lastReviewedAt: timestamp("last_reviewed_at", { withTimezone: true }).defaultNow().notNull(),
+  reviewStatus: reviewStatusEnum("review_status")
+    .notNull()
+    .default("draft"),
+  reviewedBy: uuid("reviewed_by").references(() => users.id),
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+  reviewWindowDays: integer("review_window_days").notNull().default(180),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
