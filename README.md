@@ -112,7 +112,8 @@ The web application will be running at [http://localhost:3000](http://localhost:
 | `pnpm typecheck`  | Run TypeScript type checks across the monorepo           |
 | `pnpm test`       | Run automated test suites                                |
 | `pnpm db:migrate` | Apply pending database migrations                        |
-| `pnpm db:seed`    | Seed initial countries, providers, and screening reports |
+| `pnpm db:seed`    | Seed initial countries, and screening reports |
+| `pnpm db:seed:providers`    | Seed initial providers |
 
 ---
 

@@ -12,11 +12,13 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:migrate": "npx node --import tsx --env-file=.env node_modules/drizzle-kit/index.mjs migrate",
     "db:push": "drizzle-kit push",
-    "db:seed": "tsx src/seed.ts"
+    "db:seed": "tsx src/seed.ts",
+    "db:seed:providers": "tsx src/seed-providers.ts"
   },
   "dependencies": {
+    "@sahihfolio/shared": "workspace:*",
     "drizzle-orm": "^0.45.4",
     "postgres": "^3.4.9"
   },

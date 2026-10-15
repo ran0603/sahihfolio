@@ -1,5 +1,5 @@
 {
-  "id": "c894d792-8420-49e7-821b-3e72b4ae870e",
+  "id": "81f0331e-92bd-4dfc-a1db-b1a76d3936a2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -8,39 +8,33 @@
       "name": "countries",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
         "code": {
           "name": "code",
-          "type": "varchar(2)",
-          "primaryKey": true,
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "name": {
           "name": "name",
-          "type": "varchar(100)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "currency": {
           "name": "currency",
-          "type": "varchar(3)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "region": {
-          "name": "region",
-          "type": "varchar(50)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "regulatory_notes": {
           "name": "regulatory_notes",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'[]'::jsonb"
-        },
-        "supported_providers": {
-          "name": "supported_providers",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true,
@@ -53,19 +47,18 @@
           "notNull": true,
           "default": "'[]'::jsonb"
         },
-        "source_urls": {
-          "name": "source_urls",
-          "type": "jsonb",
+        "status": {
+          "name": "status",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "'[]'::jsonb"
+          "default": "'draft'"
         },
         "last_reviewed_at": {
           "name": "last_reviewed_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
@@ -82,10 +75,34 @@
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "countries_code_idx": {
+          "name": "countries_code_idx",
+          "columns": [
+            {
+              "expression": "code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "countries_code_unique": {
+          "name": "countries_code_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "code"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -96,34 +113,34 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(50)",
+          "type": "uuid",
           "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "name": {
           "name": "name",
-          "type": "varchar(150)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "slug": {
-          "name": "slug",
-          "type": "varchar(150)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "type": {
           "name": "type",
-          "type": "varchar(50)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "countries": {
           "name": "countries",
-          "type": "jsonb",
+          "type": "text[]",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'[]'::jsonb"
+          "notNull": true
         },
         "markets": {
           "name": "markets",
@@ -139,23 +156,12 @@
           "notNull": true,
           "default": "'[]'::jsonb"
         },
-        "halal_screening": {
-          "name": "halal_screening",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
         "fees": {
           "name": "fees",
           "type": "jsonb",
           "primaryKey": false,
-          "notNull": true
-        },
-        "minimum_investment": {
-          "name": "minimum_investment",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'[]'::jsonb"
         },
         "account_requirements": {
           "name": "account_requirements",
@@ -163,6 +169,18 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'[]'::jsonb"
+        },
+        "halal_screening": {
+          "name": "halal_screening",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "minimum_investment": {
+          "name": "minimum_investment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "pros": {
           "name": "pros",
@@ -178,37 +196,24 @@
           "notNull": true,
           "default": "'[]'::jsonb"
         },
-        "website_url": {
-          "name": "website_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "disclosure_url": {
           "name": "disclosure_url",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "affiliate_url": {
-          "name": "affiliate_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "status": {
           "name": "status",
-          "type": "varchar(20)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "'published'"
+          "default": "'draft'"
         },
         "last_reviewed_at": {
           "name": "last_reviewed_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
@@ -225,7 +230,53 @@
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "providers_countries_idx": {
+          "name": "providers_countries_idx",
+          "columns": [
+            {
+              "expression": "countries",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "providers_type_idx": {
+          "name": "providers_type_idx",
+          "columns": [
+            {
+              "expression": "type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "providers_status_idx": {
+          "name": "providers_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {

@@ -1,18 +1,36 @@
-import { pgTable, varchar, text, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { regulatoryNoteSchema, restrictionSchema } from "@sahihfolio/shared/provider-data";
+import { pgTable, varchar, text, timestamp, jsonb, index, uuid } from "drizzle-orm/pg-core";
 
-export const countries = pgTable("countries", {
-  code: varchar("code", { length: 2 }).primaryKey(), // ISO 3166-1 alpha-2, e.g. "US"
-  name: varchar("name", { length: 100 }).notNull(),
-  currency: varchar("currency", { length: 3 }).notNull(), // ISO 4217, e.g. "USD"
-  region: varchar("region", { length: 50 }).notNull(),
-  regulatoryNotes: jsonb("regulatory_notes").$type<string[]>().default([]).notNull(),
-  supportedProviders: jsonb("supported_providers").$type<string[]>().default([]).notNull(),
-  restrictions: jsonb("restrictions").$type<string[]>().default([]).notNull(),
-  sourceUrls: jsonb("source_urls").$type<string[]>().default([]).notNull(),
-  lastReviewedAt: timestamp("last_reviewed_at", { withTimezone: true }).defaultNow().notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
-});
+export const countries = pgTable(
+  "countries",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    code: text("code").notNull().unique(),
+    name: text("name").notNull(),
+    currency: text("currency").notNull(),
+
+    regulatoryNotes: jsonb("regulatory_notes")
+      .$type<(typeof regulatoryNoteSchema._output)[]>()
+      .notNull()
+      .default([]),
+
+    restrictions: jsonb("restrictions")
+      .$type<(typeof restrictionSchema._output)[]>()
+      .notNull()
+      .default([]),
+
+    status: text("status").notNull().default("draft"),
+    lastReviewedAt: timestamp("last_reviewed_at", { withTimezone: true })
+      .notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("countries_code_idx").on(table.code)],
+);
 
 export type CountryRow = typeof countries.$inferSelect;
 export type NewCountryRow = typeof countries.$inferInsert;
