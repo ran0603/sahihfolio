@@ -6,15 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --config .eslintrc.js . --max-warnings 0"
+    "lint": "eslint --config .eslintrc.js . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@sahihfolio/database": "workspace:*",
+    "@sahihfolio/shared": "workspace:*",
+    "@sahihfolio/ui": "workspace:*",
     "next": "16.3.8",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
-    "@sahihfolio/database": "workspace:*",
+    "@sahihfolio/config": "workspace:*",
     "@types/node": "26.6.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

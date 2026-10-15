@@ -1,83 +1,136 @@
-# Turborepo + Prisma ORM starter
+# Sahihfolio
 
-This example helps you quickly set up a Turborepo monorepo with a Next.js app and Prisma ORM. It is community maintained. If you experience a problem, please submit a pull request with a fix. GitHub Issues will be closed.
+> Evidence-led research, Shariah screening methodologies, and sourced comparison of global halal investing routes.
 
-## What's inside?
+---
 
-This Turborepo includes the following packages and apps:
+## Architecture & Structure
 
-- `web`: a [Next.js](https://nextjs.org/) app
-- `@repo/eslint-config`: shared ESLint flat configurations
-- `@repo/database`: [Prisma ORM](https://prisma.io/) for database access
-- `@repo/typescript-config`: shared `tsconfig.json` files
+Sahihfolio is built as a web-first monorepo using **pnpm workspaces** and **Turborepo**:
 
-The example also uses TypeScript, Prettier, PostgreSQL, and Docker Compose.
-
-## Getting started
-
-### 1. Create the project
-
-```sh
-pnpm dlx create-turbo@latest -e with-prisma
-cd my-turborepo
+```
+sahihfolio/
+├─ apps/
+│  └─ web/                     # Next.js public app + admin
+├─ packages/
+│  ├─ database/                # Drizzle schema, migrations, seed data
+│  ├─ shared/                  # Zod schemas, types, constants, utilities
+│  ├─ ui/                      # Shared React components and design tokens
+│  └─ config/                  # ESLint, TypeScript, Tailwind, Prettier configs
+├─ .github/
+│  └─ workflows/
+│     ├─ ci.yml
+│     └─ deploy-preview.yml
+├─ docs/
+│  ├─ product/
+│  ├─ engineering/
+│  └─ content/
+├─ .editorconfig
+├─ .gitignore
+├─ package.json
+├─ pnpm-workspace.yaml
+├─ turbo.json
+└─ README.md
 ```
 
-### 2. Start PostgreSQL
+---
 
-The included [`docker-compose.yml`](./docker-compose.yml) starts a local PostgreSQL server with a database named `turborepo`:
+## Workspace Packages & Apps
 
-```sh
-docker compose up -d
+| Package / App | Description | Technologies |
+|---|---|---|
+| [`apps/web`](./apps/web) | Next.js App Router public portal (`/`, `/finder`, `/screening-report`) + `/admin` review console | Next.js 16, React 19, TypeScript |
+| [`packages/database`](./packages/database) | PostgreSQL models, migrations, and seed scripts | Drizzle ORM, Postgres.js, Drizzle Kit |
+| [`packages/shared`](./packages/shared) | Shared domain types, Zod validation schemas, constants, and formatting utilities | TypeScript, Zod |
+| [`packages/ui`](./packages/ui) | Reusable React UI component library based on Sahihfolio brand tokens | React 19, TypeScript, Brand Tokens |
+| [`packages/config`](./packages/config) | Shared tooling configs (TypeScript, ESLint, Tailwind CSS, Prettier) | TypeScript, ESLint 9/10, Tailwind CSS |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js**: `>= 24.21.0` (or `22.x` / LTS)
+- **pnpm**: `12.4.2` (`corepack enable pnpm`)
+- **PostgreSQL**: `16+`
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/ran0603/sahihfolio.git
+cd sahihfolio
+
+# Install workspace dependencies
+pnpm install
 ```
 
-To change the database name, update `POSTGRES_DB` in [`docker-compose.yml`](./docker-compose.yml).
+### Environment Variables
 
-### 3. Configure environment variables
+Copy the example environment file:
 
-Copy the example environment file into the database package and web app:
-
-```sh
-cp .env.example packages/database/.env
-cp .env.example apps/web/.env
+```bash
+cp .env.example .env
 ```
 
-Update `DATABASE_URL` in those files if you changed the database name or use a hosted database.
+Ensure your `DATABASE_URL` is configured:
 
-### 4. Create the database schema
-
-Emit the Prisma ORM contract, then initialize an empty database:
-
-```sh
-pnpm generate
-pnpm --filter @repo/database exec prisma db init
+```env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/sahihfolio"
 ```
 
-After editing the contract, apply development changes with `pnpm db:push`. Use `pnpm --filter @repo/database exec prisma migration plan` to create a migration and `pnpm db:migrate:deploy` to apply committed migrations.
+### Database Setup & Seeding
 
-### 5. Seed the database
+```bash
+# Run migrations or push schema
+pnpm --filter @sahihfolio/database db:push
 
-Edit [`packages/database/src/seed.ts`](./packages/database/src/seed.ts), then run:
-
-```sh
-pnpm db:seed
+# Seed initial countries, providers, and sample reports
+pnpm --filter @sahihfolio/database db:seed
 ```
 
-### 6. Build and run the application
+### Local Development
 
-```sh
-pnpm build
+Start all workspace applications and watchers concurrently with Turborepo:
+
+```bash
 pnpm dev
 ```
 
-Open `http://localhost:3000` in your browser.
+The web application will be running at [http://localhost:3000](http://localhost:3000).
 
-For a detailed walkthrough, see the [Prisma ORM documentation](https://www.prisma.io/docs/orm).
+---
 
-## Useful links
+## Available Scripts
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration options](https://turborepo.dev/docs/reference/configuration)
-- [CLI usage](https://turborepo.dev/docs/reference/command-line-reference)
+| Command | Purpose |
+|---|---|
+| `pnpm dev` | Run all apps and packages in dev mode |
+| `pnpm build` | Build all apps and packages for production |
+| `pnpm lint` | Lint workspace source code with ESLint |
+| `pnpm typecheck` | Run TypeScript type checks across the monorepo |
+| `pnpm test` | Run automated test suites |
+| `pnpm db:migrate` | Apply pending database migrations |
+| `pnpm db:seed` | Seed initial countries, providers, and screening reports |
+
+---
+
+## Documentation
+
+Detailed specifications and guidelines are located in the [`docs/`](./docs) directory:
+
+- [Product Documentation](./docs/product/README.md)
+  - [Options Finder Specification](./docs/product/options-finder-spec.md)
+  - [MVP GitHub Issues Roadmap](./docs/product/github-issues.md)
+- [Engineering Documentation](./docs/engineering/README.md)
+  - [Monorepo Architecture](./docs/engineering/architecture.md)
+  - [Shariah Screening Report Dev Plan](./docs/engineering/dev-plan.md)
+- [Content & Brand Documentation](./docs/content/README.md)
+  - [Brand Book v2.0 (Design tokens, Voice & Tone)](./docs/content/brand-book.md)
+
+---
+
+## License
+
+Private & Proprietary © Sahihfolio.

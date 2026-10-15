@@ -2,7 +2,15 @@
   "name": "@sahihfolio/database",
   "version": "0.1.0",
   "private": true,
+  "description": "Database schema, migrations, and seed scripts using Drizzle ORM for Sahihfolio",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts"
+  },
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
@@ -13,8 +21,11 @@
     "postgres": "^3.4.9"
   },
   "devDependencies": {
+    "@sahihfolio/config": "workspace:*",
+    "@types/node": "^26.6.5",
     "dotenv": "^18.0.7",
     "drizzle-kit": "^0.31.11",
-    "tsx": "^4.23.15"
+    "tsx": "^4.23.15",
+    "typescript": "^5.8.2"
   }
 }

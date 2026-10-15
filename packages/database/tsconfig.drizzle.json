@@ -1,0 +1,10 @@
+{
+  "extends": "../config/typescript/base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "."
+  },
+  "include": [
+    "drizzle.config.ts"
+  ]
+}
