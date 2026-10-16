@@ -9,6 +9,7 @@
     "test": "turbo run test",
     "db:migrate": "pnpm --filter @sahihfolio/database db:migrate",
     "db:seed": "pnpm --filter @sahihfolio/database db:seed",
+    "db:seed:providers": "pnpm --filter @sahihfolio/database db:seed:providers",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
   },
   "devDependencies": {
