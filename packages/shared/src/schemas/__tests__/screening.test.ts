@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { screeningQuerySchema, createScreeningReportSchema } from "../screening";
+import {
+  screeningQuerySchema,
+  createScreeningReportSchema,
+} from "../screening";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -43,7 +46,10 @@ const validReport = {
 
 describe("screeningQuerySchema", () => {
   it("parses a valid query with methodology", () => {
-    const result = screeningQuerySchema.safeParse({ q: "AAPL", methodology: "AAOIFI" });
+    const result = screeningQuerySchema.safeParse({
+      q: "AAPL",
+      methodology: "AAOIFI",
+    });
     expect(result.success).toBe(true);
   });
 
@@ -64,7 +70,10 @@ describe("screeningQuerySchema", () => {
   });
 
   it("rejects an invalid methodology value", () => {
-    const result = screeningQuerySchema.safeParse({ q: "AAPL", methodology: "FAKE_METHOD" });
+    const result = screeningQuerySchema.safeParse({
+      q: "AAPL",
+      methodology: "FAKE_METHOD",
+    });
     expect(result.success).toBe(false);
   });
 
@@ -92,7 +101,10 @@ describe("createScreeningReportSchema", () => {
   });
 
   it("accepts an explicit status value", () => {
-    const result = createScreeningReportSchema.safeParse({ ...validReport, status: "published" });
+    const result = createScreeningReportSchema.safeParse({
+      ...validReport,
+      status: "published",
+    });
     expect(result.success).toBe(true);
     if (result.success) expect(result.data.status).toBe("published");
   });
@@ -103,7 +115,8 @@ describe("createScreeningReportSchema", () => {
       reviewedBy: "scholar@example.com",
     });
     expect(result.success).toBe(true);
-    if (result.success) expect(result.data.reviewedBy).toBe("scholar@example.com");
+    if (result.success)
+      expect(result.data.reviewedBy).toBe("scholar@example.com");
   });
 
   it("rejects ticker longer than 10 characters", () => {
@@ -115,12 +128,18 @@ describe("createScreeningReportSchema", () => {
   });
 
   it("rejects empty companyName", () => {
-    const result = createScreeningReportSchema.safeParse({ ...validReport, companyName: "" });
+    const result = createScreeningReportSchema.safeParse({
+      ...validReport,
+      companyName: "",
+    });
     expect(result.success).toBe(false);
   });
 
   it("rejects invalid assetType", () => {
-    const result = createScreeningReportSchema.safeParse({ ...validReport, assetType: "crypto" });
+    const result = createScreeningReportSchema.safeParse({
+      ...validReport,
+      assetType: "crypto",
+    });
     expect(result.success).toBe(false);
   });
 
@@ -143,7 +162,10 @@ describe("createScreeningReportSchema", () => {
   it("rejects impermissibleRevenueRatio outside [0, 1]", () => {
     const result = createScreeningReportSchema.safeParse({
       ...validReport,
-      businessActivity: { ...validReport.businessActivity, impermissibleRevenueRatio: 1.5 },
+      businessActivity: {
+        ...validReport.businessActivity,
+        impermissibleRevenueRatio: 1.5,
+      },
     });
     expect(result.success).toBe(false);
   });

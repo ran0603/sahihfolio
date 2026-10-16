@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { SCREENING_RESULTS, METHODOLOGIES, REPORT_STATUSES } from "../constants/screening";
+import {
+  SCREENING_RESULTS,
+  METHODOLOGIES,
+  REPORT_STATUSES,
+} from "../constants/screening";
 
 export const screeningQuerySchema = z.object({
   q: z.string().min(1).max(50),
@@ -37,11 +41,18 @@ export const createScreeningReportSchema = z.object({
     z.object({
       label: z.string(),
       url: z.string().url(),
-      sourceType: z.enum(["annual_report", "regulatory_filing", "scholarly_fatwa", "data_vendor"]),
+      sourceType: z.enum([
+        "annual_report",
+        "regulatory_filing",
+        "scholarly_fatwa",
+        "data_vendor",
+      ]),
       retrievedAt: z.string(),
     }),
   ),
   reviewedBy: z.string().optional(),
 });
 
-export type CreateScreeningReportInput = z.infer<typeof createScreeningReportSchema>;
+export type CreateScreeningReportInput = z.infer<
+  typeof createScreeningReportSchema
+>;

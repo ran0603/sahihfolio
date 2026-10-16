@@ -5,8 +5,12 @@ export const users = pgTable("users", {
   email: varchar("email", { length: 255 }).unique().notNull(),
   name: varchar("name", { length: 150 }),
   role: varchar("role", { length: 50 }).default("admin").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export type UserRow = typeof users.$inferSelect;

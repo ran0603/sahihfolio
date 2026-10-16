@@ -7,7 +7,14 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: "24px", minHeight: "600px" }}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "220px 1fr",
+        gap: "24px",
+        minHeight: "600px",
+      }}
+    >
       <aside
         style={{
           borderRight: "1px solid #E4E7EC",
@@ -17,8 +24,21 @@ export default function AdminLayout({
           gap: "8px",
         }}
       >
-        <div style={{ paddingBottom: "12px", borderBottom: "1px solid #E4E7EC", marginBottom: "8px" }}>
-          <span style={{ fontSize: "0.75rem", fontWeight: "700", color: "#667085", textTransform: "uppercase" }}>
+        <div
+          style={{
+            paddingBottom: "12px",
+            borderBottom: "1px solid #E4E7EC",
+            marginBottom: "8px",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: "700",
+              color: "#667085",
+              textTransform: "uppercase",
+            }}
+          >
             Admin Console
           </span>
         </div>
@@ -57,8 +77,19 @@ export default function AdminLayout({
         >
           Screening Queue
         </Link>
-        <div style={{ marginTop: "auto", padding: "12px", backgroundColor: "#FEF3F2", borderRadius: "8px" }}>
-          <span style={{ fontSize: "0.75rem", color: "#B42318", fontWeight: "600" }}>Protected Internal Area</span>
+        <div
+          style={{
+            marginTop: "auto",
+            padding: "12px",
+            backgroundColor: "#FEF3F2",
+            borderRadius: "8px",
+          }}
+        >
+          <span
+            style={{ fontSize: "0.75rem", color: "#B42318", fontWeight: "600" }}
+          >
+            Protected Internal Area
+          </span>
         </div>
       </aside>
 

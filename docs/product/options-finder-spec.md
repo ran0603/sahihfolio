@@ -12,13 +12,13 @@ The tool returns a transparent, sourced shortlist of eligible options—such as 
 
 ### Core positioning
 
-| Dimension | Initial scope |
-|---|---|
-| Primary user | Muslim retail investor researching how to start globally |
-| Primary geography | Start with 3–5 countries, then expand |
-| Primary output | Personalized, sourced comparison of available routes |
+| Dimension                 | Initial scope                                                                     |
+| ------------------------- | --------------------------------------------------------------------------------- |
+| Primary user              | Muslim retail investor researching how to start globally                          |
+| Primary geography         | Start with 3–5 countries, then expand                                             |
+| Primary output            | Personalized, sourced comparison of available routes                              |
 | Primary monetization path | Email capture, referral disclosures, and later a paid research/portfolio workflow |
-| Explicit non-goal | Automated “this is halal for you” rulings or individualized investment advice |
+| Explicit non-goal         | Automated “this is halal for you” rulings or individualized investment advice     |
 
 This is intentionally narrower than competing with established screeners such as Zoya or Musaffa, which already provide stock/ETF screening, methodologies, alerts, and purification data. [zoya](https://zoya.finance/)
 
@@ -38,14 +38,14 @@ Primary CTA: **Find my options**.
 
 A short multi-step form, ideally 4–6 questions:
 
-| Question | Input type | Purpose |
-|---|---|---|
-| Country of residence | Select | Determines regulatory and provider eligibility |
-| Investor type | Beginner / self-directed / long-term saver | Adjusts explanation depth |
-| Product interest | Stocks / ETFs / managed portfolio / unsure | Controls result categories |
-| Starting amount | Optional range | Enables relevant fee comparison |
-| Recurring contribution | Optional range | Enables cost comparison |
-| Preferences | Optional: Shariah methodology, Islamic account, local-currency support | Filters and ranks results |
+| Question               | Input type                                                             | Purpose                                        |
+| ---------------------- | ---------------------------------------------------------------------- | ---------------------------------------------- |
+| Country of residence   | Select                                                                 | Determines regulatory and provider eligibility |
+| Investor type          | Beginner / self-directed / long-term saver                             | Adjusts explanation depth                      |
+| Product interest       | Stocks / ETFs / managed portfolio / unsure                             | Controls result categories                     |
+| Starting amount        | Optional range                                                         | Enables relevant fee comparison                |
+| Recurring contribution | Optional range                                                         | Enables cost comparison                        |
+| Preferences            | Optional: Shariah methodology, Islamic account, local-currency support | Filters and ranks results                      |
 
 Do not require an email before showing the first useful result.
 
@@ -136,15 +136,15 @@ Rules:
 
 Example scoring factors:
 
-| Factor | Weight |
-|---|---|
-| Country availability | Hard requirement |
-| Product-type match | Hard requirement |
-| Halal-screening support | High |
-| Fee transparency | Medium |
-| Market and ETF coverage | Medium |
-| Local-currency support | Medium |
-| Beginner suitability | Low to medium |
+| Factor                  | Weight           |
+| ----------------------- | ---------------- |
+| Country availability    | Hard requirement |
+| Product-type match      | Hard requirement |
+| Halal-screening support | High             |
+| Fee transparency        | Medium           |
+| Market and ETF coverage | Medium           |
+| Local-currency support  | Medium           |
+| Beginner suitability    | Low to medium    |
 
 The UI should show **why** each result is included, for example:
 
@@ -241,17 +241,17 @@ Minimum capabilities:
 
 Given your experience with Next.js, TypeScript, Tailwind, and backend systems:
 
-| Layer | Recommendation |
-|---|---|
-| Frontend | Next.js App Router, TypeScript, Tailwind CSS |
-| Forms | React Hook Form + Zod |
-| Database | PostgreSQL |
-| ORM | Prisma or Drizzle |
-| Auth | None for anonymous users; email-based save links |
-| Email | Resend or Postmark |
-| Hosting | Vercel for app/UI; managed Postgres such as Neon or Supabase |
-| Analytics | PostHog or Plausible |
-| Admin | Protected `/admin` routes in the same Next.js app |
+| Layer     | Recommendation                                               |
+| --------- | ------------------------------------------------------------ |
+| Frontend  | Next.js App Router, TypeScript, Tailwind CSS                 |
+| Forms     | React Hook Form + Zod                                        |
+| Database  | PostgreSQL                                                   |
+| ORM       | Prisma or Drizzle                                            |
+| Auth      | None for anonymous users; email-based save links             |
+| Email     | Resend or Postmark                                           |
+| Hosting   | Vercel for app/UI; managed Postgres such as Neon or Supabase |
+| Analytics | PostHog or Plausible                                         |
+| Admin     | Protected `/admin` routes in the same Next.js app            |
 
 A monolith is correct here. Do not build microservices for the first version.
 
@@ -341,7 +341,7 @@ Rules should live in a single module and be covered by tests:
 export function matchProviders(
   input: MatchInput,
   providers: Provider[],
-  country: CountryProfile
+  country: CountryProfile,
 ): MatchResult[];
 ```
 
@@ -391,9 +391,7 @@ Response:
         "trading": "0.1%",
         "fx": "0.5%"
       },
-      "sources": [
-        "https://example.com/pricing"
-      ],
+      "sources": ["https://example.com/pricing"],
       "lastReviewedAt": "2026-10-01T00:00:00Z"
     }
   ],
@@ -432,14 +430,14 @@ GET    /admin/results/:id
 
 ### Pages
 
-| Route | Purpose |
-|---|---|
-| `/` | Landing page and tool entry |
-| `/find` | Guided intake flow |
-| `/results/[publicId]` | Shareable saved result |
-| `/methodology` | How Sahihfolio sources, reviews, and presents data |
-| `/disclosures` | Affiliate, editorial, and legal disclosures |
-| `/admin` | Internal content and review dashboard |
+| Route                 | Purpose                                            |
+| --------------------- | -------------------------------------------------- |
+| `/`                   | Landing page and tool entry                        |
+| `/find`               | Guided intake flow                                 |
+| `/results/[publicId]` | Shareable saved result                             |
+| `/methodology`        | How Sahihfolio sources, reviews, and presents data |
+| `/disclosures`        | Affiliate, editorial, and legal disclosures        |
+| `/admin`              | Internal content and review dashboard              |
 
 ### Results-page layout
 
@@ -513,16 +511,16 @@ If you use referral links, disclose them near the relevant result and on a dedic
 
 Track these events from day one:
 
-| Event | Purpose |
-|---|---|
-| `finder_started` | Measures interest |
-| `finder_country_selected` | Reveals demand by geography |
-| `finder_completed` | Measures completion rate |
-| `result_viewed` | Confirms value delivery |
-| `result_source_clicked` | Shows which evidence users trust |
-| `result_saved` | Measures capture intent |
-| `email_captured` | Measures lead conversion |
-| `result_shared` | Measures organic distribution |
+| Event                       | Purpose                                |
+| --------------------------- | -------------------------------------- |
+| `finder_started`            | Measures interest                      |
+| `finder_country_selected`   | Reveals demand by geography            |
+| `finder_completed`          | Measures completion rate               |
+| `result_viewed`             | Confirms value delivery                |
+| `result_source_clicked`     | Shows which evidence users trust       |
+| `result_saved`              | Measures capture intent                |
+| `email_captured`            | Measures lead conversion               |
+| `result_shared`             | Measures organic distribution          |
 | `provider_outbound_clicked` | Measures referral or commercial intent |
 
 The most important early metric is not traffic. It is:

@@ -15,7 +15,8 @@ export const Input: React.FC<InputProps> = ({
   style,
   ...props
 }) => {
-  const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
+  const inputId =
+    id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -51,7 +52,9 @@ export const Input: React.FC<InputProps> = ({
       {error ? (
         <span style={{ fontSize: "0.75rem", color: "#D92D20" }}>{error}</span>
       ) : helperText ? (
-        <span style={{ fontSize: "0.75rem", color: "#667085" }}>{helperText}</span>
+        <span style={{ fontSize: "0.75rem", color: "#667085" }}>
+          {helperText}
+        </span>
       ) : null}
     </div>
   );

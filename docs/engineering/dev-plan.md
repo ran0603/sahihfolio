@@ -2,7 +2,7 @@
 
 This plan adds a **Shariah Screening Report** to Sahihfolio as a focused, evidence-led research feature. It should not claim to issue a fatwa or personalized Shariah advice; it should explain **what a screening methodology checks, what data supports the result, when it was reviewed, and what the user should verify**.
 
-It builds directly on the existing Sahihfolio stack: Next.js App Router, TypeScript, Tailwind, PostgreSQL, Drizzle/Prisma, protected admin routes, and a source-and-review workflow. 
+It builds directly on the existing Sahihfolio stack: Next.js App Router, TypeScript, Tailwind, PostgreSQL, Drizzle/Prisma, protected admin routes, and a source-and-review workflow.
 
 ## Product definition
 
@@ -28,7 +28,7 @@ Each report should include:
 
 ### Positioning rule
 
-Use **“Shariah-screening information”**, not “halal verdict,” unless the result comes from an explicitly cited provider or scholarly body. This matches Sahihfolio’s brand rule to separate research from religious rulings. 
+Use **“Shariah-screening information”**, not “halal verdict,” unless the result comes from an explicitly cited provider or scholarly body. This matches Sahihfolio’s brand rule to separate research from religious rulings.
 
 ## Scope
 
@@ -54,7 +54,7 @@ Use **“Shariah-screening information”**, not “halal verdict,” unless the
 - Automated ingestion from paid data vendors.
 - User accounts and saved portfolios.
 
-These are sensible later extensions; the existing MVP explicitly defers stock-by-stock screening, purification, and automated ingestion. 
+These are sensible later extensions; the existing MVP explicitly defers stock-by-stock screening, purification, and automated ingestion.
 
 ## User flow
 
@@ -114,31 +114,31 @@ Do not gate the report behind email capture. Show value first, then offer saving
 
 ### Report header
 
-| Field | Example |
-|---|---|
-| Security | Apple Inc. |
-| Ticker | AAPL |
-| Exchange | NASDAQ |
-| Asset type | Common stock |
-| Country | United States |
-| Report status | Published |
-| Methodology | AAOIFI-aligned |
-| Data period | FY2025 annual report |
-| Last reviewed | 1 October 2026 |
-| Report version | v3 |
+| Field          | Example              |
+| -------------- | -------------------- |
+| Security       | Apple Inc.           |
+| Ticker         | AAPL                 |
+| Exchange       | NASDAQ               |
+| Asset type     | Common stock         |
+| Country        | United States        |
+| Report status  | Published            |
+| Methodology    | AAOIFI-aligned       |
+| Data period    | FY2025 annual report |
+| Last reviewed  | 1 October 2026       |
+| Report version | v3                   |
 
 ### Result states
 
 Use only these states:
 
-| State | Meaning |
-|---|---|
-| `screened_compliant` | The selected methodology’s published criteria are met, based on reviewed data |
-| `screened_non_compliant` | One or more criteria are not met, based on reviewed data |
-| `methodology_dependent` | Result differs by methodology |
-| `insufficient_data` | Required inputs are missing or unreliable |
-| `under_review` | A new assessment is being prepared |
-| `archived` | No longer maintained |
+| State                    | Meaning                                                                       |
+| ------------------------ | ----------------------------------------------------------------------------- |
+| `screened_compliant`     | The selected methodology’s published criteria are met, based on reviewed data |
+| `screened_non_compliant` | One or more criteria are not met, based on reviewed data                      |
+| `methodology_dependent`  | Result differs by methodology                                                 |
+| `insufficient_data`      | Required inputs are missing or unreliable                                     |
+| `under_review`           | A new assessment is being prepared                                            |
+| `archived`               | No longer maintained                                                          |
 
 Avoid binary “halal / haram” labels in the UI.
 
@@ -170,11 +170,11 @@ Reviewed: 1 October 2026.
 
 For an AAOIFI-aligned report, display at minimum:
 
-| Ratio | Input | Threshold | Result |
-|---|---|---:|---|
-| Non-permissible income | 1.8% | ≤ 5% | Pass |
-| Interest-bearing debt / market cap or total assets | 12.4% | ≤ 30% | Pass |
-| Interest-bearing securities / market cap or total assets | 3.1% | ≤ 30% | Pass |
+| Ratio                                                    | Input | Threshold | Result |
+| -------------------------------------------------------- | ----- | --------: | ------ |
+| Non-permissible income                                   | 1.8%  |      ≤ 5% | Pass   |
+| Interest-bearing debt / market cap or total assets       | 12.4% |     ≤ 30% | Pass   |
+| Interest-bearing securities / market cap or total assets | 3.1%  |     ≤ 30% | Pass   |
 
 The exact denominator must be explicit. Different methodologies use different denominators and treatments, so the report must show the formula, not only the final percentage.
 
@@ -256,7 +256,7 @@ type ScreeningReport = {
   publicId: string;
   version: number;
 
-  result: 
+  result:
     | "screened_compliant"
     | "screened_non_compliant"
     | "methodology_dependent"
@@ -525,9 +525,7 @@ export type RatioResult = {
 Rules should be methodology-specific and testable:
 
 ```ts
-export function calculateAaoifiAlignedRatios(
-  input: RatioInput
-): RatioResult[];
+export function calculateAaoifiAlignedRatios(input: RatioInput): RatioResult[];
 ```
 
 ### Validation rules
@@ -546,15 +544,15 @@ Reject or flag a report if:
 
 ### Routes
 
-| Route | Purpose |
-|---|---|
-| `/screening-report` | Search and explanation landing page |
-| `/screening-report/[publicId]` | Public report |
-| `/admin/securities` | Security catalog |
-| `/admin/methodologies` | Methodology library |
-| `/admin/screening-reports` | Report workflow |
-| `/admin/screening-reports/new` | Create report |
-| `/admin/screening-reports/[id]` | Edit and preview report |
+| Route                           | Purpose                             |
+| ------------------------------- | ----------------------------------- |
+| `/screening-report`             | Search and explanation landing page |
+| `/screening-report/[publicId]`  | Public report                       |
+| `/admin/securities`             | Security catalog                    |
+| `/admin/methodologies`          | Methodology library                 |
+| `/admin/screening-reports`      | Report workflow                     |
+| `/admin/screening-reports/new`  | Create report                       |
+| `/admin/screening-reports/[id]` | Edit and preview report             |
 
 ### Public report layout
 
@@ -587,16 +585,16 @@ Reject or flag a report if:
 
 ### Result badge styling
 
-| State | Color | Label |
-|---|---|---|
-| `screened_compliant` | Moss / Sahih Green | “Meets selected criteria” |
-| `screened_non_compliant` | Amber | “Does not meet selected criteria” |
-| `methodology_dependent` | Sand | “Varies by methodology” |
-| `insufficient_data` | Slate | “Insufficient verified data” |
-| `under_review` | Mist | “Under review” |
-| `archived` | Mist | “Archived” |
+| State                    | Color              | Label                             |
+| ------------------------ | ------------------ | --------------------------------- |
+| `screened_compliant`     | Moss / Sahih Green | “Meets selected criteria”         |
+| `screened_non_compliant` | Amber              | “Does not meet selected criteria” |
+| `methodology_dependent`  | Sand               | “Varies by methodology”           |
+| `insufficient_data`      | Slate              | “Insufficient verified data”      |
+| `under_review`           | Mist               | “Under review”                    |
+| `archived`               | Mist               | “Archived”                        |
 
-Do not use red as the default non-compliant color. Reserve Clay for system errors, in line with the brand palette. 
+Do not use red as the default non-compliant color. Reserve Clay for system errors, in line with the brand palette.
 
 ## Admin workflow
 
@@ -663,14 +661,14 @@ The public report should show:
 
 ### Unit tests
 
-| Area | Tests |
-|---|---|
+| Area              | Tests                                                   |
+| ----------------- | ------------------------------------------------------- |
 | Ratio calculation | Correct percentage, rounding, division-by-zero handling |
-| Threshold rules | Pass, fail, boundary values |
-| Result derivation | Compliant, non-compliant, insufficient data |
-| Validation | Missing source, missing reviewer, invalid dates |
-| Versioning | New version creation and prior-version preservation |
-| Public report API | Published-only visibility and correct payload |
+| Threshold rules   | Pass, fail, boundary values                             |
+| Result derivation | Compliant, non-compliant, insufficient data             |
+| Validation        | Missing source, missing reviewer, invalid dates         |
+| Versioning        | New version creation and prior-version preservation     |
+| Public report API | Published-only visibility and correct payload           |
 
 ### Integration tests
 
@@ -700,18 +698,18 @@ Before publishing:
 
 Track:
 
-| Event | Purpose |
-|---|---|
-| `screening_search_started` | Measures demand |
-| `screening_search_completed` | Measures search usability |
-| `security_selected` | Identifies requested securities |
-| `report_viewed` | Measures value delivery |
-| `report_source_clicked` | Measures trust and evidence engagement |
-| `report_saved` | Measures capture intent |
-| `report_shared` | Measures organic distribution |
-| `report_update_requested` | Identifies stale or high-demand reports |
-| `admin_report_published` | Measures content throughput |
-| `admin_report_reviewed` | Measures review workflow usage |
+| Event                        | Purpose                                 |
+| ---------------------------- | --------------------------------------- |
+| `screening_search_started`   | Measures demand                         |
+| `screening_search_completed` | Measures search usability               |
+| `security_selected`          | Identifies requested securities         |
+| `report_viewed`              | Measures value delivery                 |
+| `report_source_clicked`      | Measures trust and evidence engagement  |
+| `report_saved`               | Measures capture intent                 |
+| `report_shared`              | Measures organic distribution           |
+| `report_update_requested`    | Identifies stale or high-demand reports |
+| `admin_report_published`     | Measures content throughput             |
+| `admin_report_reviewed`      | Measures review workflow usage          |
 
 Primary early metric:
 
@@ -774,4 +772,4 @@ The feature is done when a user can:
 6. Save, share, or request an update.
 7. Understand that the report is informational research, not a religious ruling or personalized advice.
 
-The launch standard should be **depth over breadth**: 10–20 excellent, fully sourced reports are more valuable than thousands of thin, auto-generated pages. This also protects Sahihfolio’s core brand promise of clarity, evidence, and humility. 
+The launch standard should be **depth over breadth**: 10–20 excellent, fully sourced reports are more valuable than thousands of thin, auto-generated pages. This also protects Sahihfolio’s core brand promise of clarity, evidence, and humility.

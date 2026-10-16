@@ -1,5 +1,12 @@
 import { marketSchema, assetTypeSchema, feeSchema, accountRequirementSchema, sourceSchema } from "@sahihfolio/shared/provider-data";
-import { pgTable, varchar, text, timestamp, jsonb, boolean, index, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, jsonb, integer, index, uuid, pgEnum } from "drizzle-orm/pg-core";
+import { users } from "./users";
+
+export const reviewStatusEnum = pgEnum("review_status", [
+  "draft",
+  "needs_review",
+  "reviewed",
+]);
 
 export const providers = pgTable(
   "providers",
@@ -59,6 +66,10 @@ export const providers = pgTable(
     status: text("status").notNull().default("draft"),
     lastReviewedAt: timestamp("last_reviewed_at", { withTimezone: true })
       .notNull(),
+    reviewStatus: reviewStatusEnum("review_status").notNull().default("draft"),
+    reviewedBy: uuid("reviewed_by").references(() => users.id),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    reviewWindowDays: integer("review_window_days").notNull().default(180),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

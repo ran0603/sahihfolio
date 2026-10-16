@@ -4,11 +4,19 @@ export default function AdminProvidersPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       <div>
-        <h1 style={{ fontSize: "1.75rem", fontWeight: "700", color: "#0B1F3A", marginBottom: "4px" }}>
+        <h1
+          style={{
+            fontSize: "1.75rem",
+            fontWeight: "700",
+            color: "#0B1F3A",
+            marginBottom: "4px",
+          }}
+        >
           Provider Catalog Management
         </h1>
         <p style={{ color: "#667085", fontSize: "0.875rem" }}>
-          Maintain verified data on international brokers, local platforms, robo-advisors, and Shariah oversight.
+          Maintain verified data on international brokers, local platforms,
+          robo-advisors, and Shariah oversight.
         </p>
       </div>
 
@@ -17,7 +25,9 @@ export default function AdminProvidersPage() {
           <CardTitle>Catalog Entries (2 Active)</CardTitle>
         </CardHeader>
         <CardContent>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+          >
             <div
               style={{
                 display: "flex",
@@ -31,10 +41,19 @@ export default function AdminProvidersPage() {
               <div>
                 <strong>Interactive Brokers</strong>
                 <div style={{ fontSize: "0.8125rem", color: "#667085" }}>
-                  Broker • US, GB, CA, SG, AU • Self-directed, no built-in screening
+                  Broker • US, GB, CA, SG, AU • Self-directed, no built-in
+                  screening
                 </div>
               </div>
-              <span style={{ fontSize: "0.8125rem", color: "#039855", fontWeight: "600" }}>Published</span>
+              <span
+                style={{
+                  fontSize: "0.8125rem",
+                  color: "#039855",
+                  fontWeight: "600",
+                }}
+              >
+                Published
+              </span>
             </div>
 
             <div
@@ -50,10 +69,19 @@ export default function AdminProvidersPage() {
               <div>
                 <strong>Wahed Invest</strong>
                 <div style={{ fontSize: "0.8125rem", color: "#667085" }}>
-                  Robo-advisor • US, GB, MY, AE • AAOIFI Shariah Review Bureau oversight
+                  Robo-advisor • US, GB, MY, AE • AAOIFI Shariah Review Bureau
+                  oversight
                 </div>
               </div>
-              <span style={{ fontSize: "0.8125rem", color: "#039855", fontWeight: "600" }}>Published</span>
+              <span
+                style={{
+                  fontSize: "0.8125rem",
+                  color: "#039855",
+                  fontWeight: "600",
+                }}
+              >
+                Published
+              </span>
             </div>
           </div>
         </CardContent>

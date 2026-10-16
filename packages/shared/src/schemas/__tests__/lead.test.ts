@@ -38,12 +38,18 @@ describe("emailCaptureSchema", () => {
   });
 
   it("rejects countryCode shorter than 2 characters", () => {
-    const result = emailCaptureSchema.safeParse({ email: "user@example.com", countryCode: "U" });
+    const result = emailCaptureSchema.safeParse({
+      email: "user@example.com",
+      countryCode: "U",
+    });
     expect(result.success).toBe(false);
   });
 
   it("rejects countryCode longer than 2 characters", () => {
-    const result = emailCaptureSchema.safeParse({ email: "user@example.com", countryCode: "USA" });
+    const result = emailCaptureSchema.safeParse({
+      email: "user@example.com",
+      countryCode: "USA",
+    });
     expect(result.success).toBe(false);
   });
 

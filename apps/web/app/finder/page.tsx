@@ -2,20 +2,43 @@
 
 import { useState } from "react";
 import { SUPPORTED_COUNTRIES } from "@sahihfolio/shared";
-import { Button, Card, CardHeader, CardTitle, CardContent, DisclaimerBanner } from "@sahihfolio/ui";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  DisclaimerBanner,
+} from "@sahihfolio/ui";
 
 export default function FinderPage() {
   const [selectedCountry, setSelectedCountry] = useState("US");
   const [selectedAsset, setSelectedAsset] = useState("all");
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div
+      style={{
+        maxWidth: "800px",
+        margin: "0 auto",
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "2rem", fontWeight: "700", color: "#0B1F3A", marginBottom: "8px" }}>
+        <h1
+          style={{
+            fontSize: "2rem",
+            fontWeight: "700",
+            color: "#0B1F3A",
+            marginBottom: "8px",
+          }}
+        >
           Global Halal Investing Options Finder
         </h1>
         <p style={{ color: "#667085" }}>
-          Select your country and preferences to see vetted platforms, brokers, and halal routes.
+          Select your country and preferences to see vetted platforms, brokers,
+          and halal routes.
         </p>
       </div>
 
@@ -24,9 +47,23 @@ export default function FinderPage() {
           <CardTitle>1. Select Your Country & Criteria</CardTitle>
         </CardHeader>
         <CardContent>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "20px" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "16px",
+              marginBottom: "20px",
+            }}
+          >
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 600, marginBottom: "6px" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  marginBottom: "6px",
+                }}
+              >
                 Country of Residence
               </label>
               <select
@@ -50,7 +87,14 @@ export default function FinderPage() {
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 600, marginBottom: "6px" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  marginBottom: "6px",
+                }}
+              >
                 Product Interest
               </label>
               <select
@@ -65,7 +109,9 @@ export default function FinderPage() {
                   backgroundColor: "#FFFFFF",
                 }}
               >
-                <option value="all">All Products (Stocks, ETFs, Sukuk, Robo)</option>
+                <option value="all">
+                  All Products (Stocks, ETFs, Sukuk, Robo)
+                </option>
                 <option value="stocks">Direct Stocks</option>
                 <option value="etfs">Shariah ETFs</option>
                 <option value="robo_advisor">Automated Robo-Advisor</option>

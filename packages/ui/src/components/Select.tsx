@@ -20,7 +20,8 @@ export const Select: React.FC<SelectProps> = ({
   style,
   ...props
 }) => {
-  const selectId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
+  const selectId =
+    id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -59,7 +60,9 @@ export const Select: React.FC<SelectProps> = ({
           </option>
         ))}
       </select>
-      {error && <span style={{ fontSize: "0.75rem", color: "#D92D20" }}>{error}</span>}
+      {error && (
+        <span style={{ fontSize: "0.75rem", color: "#D92D20" }}>{error}</span>
+      )}
     </div>
   );
 };

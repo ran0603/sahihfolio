@@ -25,8 +25,9 @@ export default function HomePage() {
             lineHeight: "1.6",
           }}
         >
-          Transparent, evidence-based research for Muslim investors. Compare country-specific investing routes,
-          understand Shariah screening methodologies, and verify before you commit.
+          Transparent, evidence-based research for Muslim investors. Compare
+          country-specific investing routes, understand Shariah screening
+          methodologies, and verify before you commit.
         </p>
 
         <div style={{ display: "flex", justifyContent: "center", gap: "16px" }}>
@@ -88,16 +89,35 @@ export default function HomePage() {
           >
             FREE TOOL #1
           </span>
-          <h2 style={{ fontSize: "1.25rem", fontWeight: "700", color: "#0B1F3A", marginBottom: "8px" }}>
+          <h2
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: "700",
+              color: "#0B1F3A",
+              marginBottom: "8px",
+            }}
+          >
             Global Halal Options Finder
           </h2>
-          <p style={{ color: "#667085", fontSize: "0.875rem", lineHeight: "1.6", marginBottom: "20px" }}>
-            Given your country and preferences, find what halal-investing routes are actually available to you:
-            international brokers, local platforms, robo-advisors, and UCITS/US ETFs.
+          <p
+            style={{
+              color: "#667085",
+              fontSize: "0.875rem",
+              lineHeight: "1.6",
+              marginBottom: "20px",
+            }}
+          >
+            Given your country and preferences, find what halal-investing routes
+            are actually available to you: international brokers, local
+            platforms, robo-advisors, and UCITS/US ETFs.
           </p>
           <Link
             href="/finder"
-            style={{ color: "#10B981", fontWeight: "600", fontSize: "0.875rem" }}
+            style={{
+              color: "#10B981",
+              fontWeight: "600",
+              fontSize: "0.875rem",
+            }}
           >
             Explore available routes →
           </Link>
@@ -126,16 +146,35 @@ export default function HomePage() {
           >
             FREE TOOL #2
           </span>
-          <h2 style={{ fontSize: "1.25rem", fontWeight: "700", color: "#0B1F3A", marginBottom: "8px" }}>
+          <h2
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: "700",
+              color: "#0B1F3A",
+              marginBottom: "8px",
+            }}
+          >
             Shariah Screening Reports
           </h2>
-          <p style={{ color: "#667085", fontSize: "0.875rem", lineHeight: "1.6", marginBottom: "20px" }}>
-            Detailed, evidence-led breakdown of stock & ETF compliance. See business-activity ratios, financial
-            metrics, verified SEC/annual report sources, and review dates.
+          <p
+            style={{
+              color: "#667085",
+              fontSize: "0.875rem",
+              lineHeight: "1.6",
+              marginBottom: "20px",
+            }}
+          >
+            Detailed, evidence-led breakdown of stock & ETF compliance. See
+            business-activity ratios, financial metrics, verified SEC/annual
+            report sources, and review dates.
           </p>
           <Link
             href="/screening-report"
-            style={{ color: "#10B981", fontWeight: "600", fontSize: "0.875rem" }}
+            style={{
+              color: "#10B981",
+              fontWeight: "600",
+              fontSize: "0.875rem",
+            }}
           >
             View sample report (AAPL) →
           </Link>

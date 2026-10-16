@@ -42,11 +42,17 @@ export const screeningReports = pgTable("screening_reports", {
     .default([])
     .notNull(),
   reviewedBy: varchar("reviewed_by", { length: 100 }),
-  reviewedAt: timestamp("reviewed_at", { withTimezone: true }).defaultNow().notNull(),
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   disclaimer: text("disclaimer").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export type ScreeningReportRow = typeof screeningReports.$inferSelect;

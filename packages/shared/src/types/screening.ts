@@ -1,9 +1,14 @@
-import type { ScreeningResult, Methodology, ReportStatus } from "../constants/screening";
+import type {
+  ScreeningResult,
+  Methodology,
+  ReportStatus,
+} from "../constants/screening";
 
 export interface SourceReference {
   label: string;
   url: string;
-  sourceType: "annual_report" | "regulatory_filing" | "scholarly_fatwa" | "data_vendor";
+  sourceType:
+    "annual_report" | "regulatory_filing" | "scholarly_fatwa" | "data_vendor";
   retrievedAt: string;
 }
 
