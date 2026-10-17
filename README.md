@@ -104,16 +104,16 @@ The web application will be running at [http://localhost:3000](http://localhost:
 
 ## Available Scripts
 
-| Command           | Purpose                                                  |
-| ----------------- | -------------------------------------------------------- |
-| `pnpm dev`        | Run all apps and packages in dev mode                    |
-| `pnpm build`      | Build all apps and packages for production               |
-| `pnpm lint`       | Lint workspace source code with ESLint                   |
-| `pnpm typecheck`  | Run TypeScript type checks across the monorepo           |
-| `pnpm test`       | Run automated test suites                                |
-| `pnpm db:migrate` | Apply pending database migrations                        |
-| `pnpm db:seed`    | Seed initial countries, and screening reports |
-| `pnpm db:seed:providers`    | Seed initial providers |
+| Command                  | Purpose                                        |
+| ------------------------ | ---------------------------------------------- |
+| `pnpm dev`               | Run all apps and packages in dev mode          |
+| `pnpm build`             | Build all apps and packages for production     |
+| `pnpm lint`              | Lint workspace source code with ESLint         |
+| `pnpm typecheck`         | Run TypeScript type checks across the monorepo |
+| `pnpm test`              | Run automated test suites                      |
+| `pnpm db:migrate`        | Apply pending database migrations              |
+| `pnpm db:seed`           | Seed initial countries, and screening reports  |
+| `pnpm db:seed:providers` | Seed initial providers                         |
 
 ---
 

@@ -1,9 +1,5 @@
 import { db } from "./index";
-import {
-  countries,
-  screeningReports,
-  users,
-} from "./schema";
+import { countries, screeningReports, users } from "./schema";
 
 type CountryInsert = typeof countries.$inferInsert;
 
@@ -14,12 +10,7 @@ type Source = {
   label: string;
   url: string;
   sourceType:
-  | "official"
-  | "regulator"
-  | "provider"
-  | "news"
-  | "research"
-  | "other";
+    "official" | "regulator" | "provider" | "news" | "research" | "other";
   retrievedAt: string;
   confidence: "high" | "medium" | "low";
 };
@@ -49,8 +40,7 @@ export async function seed() {
       regulatoryNotes: [
         {
           category: "licensing",
-          summary:
-            "Broker-dealers are regulated by the SEC and FINRA.",
+          summary: "Broker-dealers are regulated by the SEC and FINRA.",
           detail:
             "SIPC coverage may apply to eligible securities held through member brokers, subject to program limits and conditions.",
           appliesTo: ["retail"],
@@ -121,8 +111,7 @@ export async function seed() {
       regulatoryNotes: [
         {
           category: "licensing",
-          summary:
-            "Canadian investment dealers may be regulated by CIRO.",
+          summary: "Canadian investment dealers may be regulated by CIRO.",
           detail:
             "CIPF coverage may apply to eligible client assets held through member firms, subject to program limits.",
           appliesTo: ["retail"],

@@ -91,7 +91,8 @@ const providerSeed: NewProvider[] = [
       {
         type: "etfs" as const,
         supported: true,
-        notes: "US and international ETFs, subject to local product restrictions.",
+        notes:
+          "US and international ETFs, subject to local product restrictions.",
         source: source(
           "Interactive Brokers products",
           "https://www.interactivebrokers.com",
@@ -199,7 +200,8 @@ const providerSeed: NewProvider[] = [
         code: "MY",
         name: "Malaysia",
         access: "direct" as const,
-        notes: "Shariah-screened managed portfolios for Malaysia-based investors.",
+        notes:
+          "Shariah-screened managed portfolios for Malaysia-based investors.",
         source: source("Wahed Malaysia", "https://wahed.com/my"),
       },
       {
@@ -265,10 +267,7 @@ const providerSeed: NewProvider[] = [
       "Hands-off managed portfolios",
       "Beginner-friendly",
     ],
-    cons: [
-      "Limited control over individual holdings",
-      "Management fees apply",
-    ],
+    cons: ["Limited control over individual holdings", "Management fees apply"],
     disclosureUrl: "https://wahed.com/",
     lastReviewedAt,
     status: "draft" as const,
@@ -305,7 +304,8 @@ const providerSeed: NewProvider[] = [
       {
         type: "etfs" as const,
         supported: true,
-        notes: "Includes Bursa Malaysia Shariah ETFs and eligible US Shariah ETFs.",
+        notes:
+          "Includes Bursa Malaysia Shariah ETFs and eligible US Shariah ETFs.",
         source: source(
           "Shariah ETFs in Malaysia",
           "https://www.wahed.com/my/learn/robo/all-you-need-to-know-about-investing-in-shariah-etfs/",
@@ -443,10 +443,7 @@ const providerSeed: NewProvider[] = [
       "Beginner-friendly interface",
       "Shariah filter and ETF access",
     ],
-    cons: [
-      "Self-directed platform",
-      "Promotional pricing can change",
-    ],
+    cons: ["Self-directed platform", "Promotional pricing can change"],
     disclosureUrl: "https://www.moomoo.com/my",
     lastReviewedAt,
     status: "draft" as const,
@@ -462,7 +459,8 @@ const providerSeed: NewProvider[] = [
         code: "MY",
         name: "Malaysia",
         access: "direct" as const,
-        notes: "Shariah Global Portfolio available to Malaysia-based investors.",
+        notes:
+          "Shariah Global Portfolio available to Malaysia-based investors.",
         source: source(
           "StashAway Malaysia",
           "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
@@ -528,10 +526,7 @@ const providerSeed: NewProvider[] = [
       "Diversified Shariah-focused portfolio",
       "Malaysia availability",
     ],
-    cons: [
-      "Limited control over individual holdings",
-      "Management fees apply",
-    ],
+    cons: ["Limited control over individual holdings", "Management fees apply"],
     disclosureUrl: "https://www.stashaway.my/",
     lastReviewedAt,
     status: "draft" as const,
@@ -555,7 +550,8 @@ const providerSeed: NewProvider[] = [
       {
         type: "etfs" as const,
         supported: true,
-        notes: "Bursa-listed Shariah ETFs, including Malaysian and US exposure.",
+        notes:
+          "Bursa-listed Shariah ETFs, including Malaysian and US exposure.",
         source: source("Eq8 Capital", "https://www.eq8capital.com"),
       },
     ],
@@ -590,10 +586,7 @@ const providerSeed: NewProvider[] = [
       "Malaysian and US exposure",
       "Transparent fund-level expense ratios",
     ],
-    cons: [
-      "Requires a brokerage account",
-      "ETF prices can fluctuate",
-    ],
+    cons: ["Requires a brokerage account", "ETF prices can fluctuate"],
     disclosureUrl: "https://www.eq8capital.com/",
     lastReviewedAt,
     status: "draft" as const,
@@ -651,10 +644,7 @@ const providerSeed: NewProvider[] = [
       "Multiple Islamic fund options",
       "Locally accessible",
     ],
-    cons: [
-      "Fund selection required",
-      "Fees and performance vary by fund",
-    ],
+    cons: ["Fund selection required", "Fees and performance vary by fund"],
     disclosureUrl: "https://www.publicmutual.com.my/",
     lastReviewedAt,
     status: "published",
@@ -786,10 +776,7 @@ const providerSeed: NewProvider[] = [
       "Islamic fund options",
       "Local accessibility",
     ],
-    cons: [
-      "Fund selection required",
-      "Product terms vary",
-    ],
+    cons: ["Fund selection required", "Product terms vary"],
     disclosureUrl: "https://www.maybankassetmanagement.com/",
     lastReviewedAt,
     status: "published",
@@ -846,10 +833,7 @@ const providerSeed: NewProvider[] = [
       "Islamic fund options",
       "Local accessibility",
     ],
-    cons: [
-      "Fund selection required",
-      "Fees and performance vary",
-    ],
+    cons: ["Fund selection required", "Fees and performance vary"],
     disclosureUrl: "https://www.principal.com.my/",
     lastReviewedAt,
     status: "published",
@@ -921,10 +905,7 @@ const providerSeed: NewProvider[] = [
       "Islamic fund options",
       "Local accessibility",
     ],
-    cons: [
-      "Fund selection required",
-      "Fees and performance vary",
-    ],
+    cons: ["Fund selection required", "Fees and performance vary"],
     disclosureUrl: "https://www.kenangainvestors.com.my/",
     lastReviewedAt,
     status: "published",
@@ -981,10 +962,7 @@ const providerSeed: NewProvider[] = [
       "Islamic fund options",
       "Local accessibility",
     ],
-    cons: [
-      "Fund selection required",
-      "Fees and performance vary",
-    ],
+    cons: ["Fund selection required", "Fees and performance vary"],
     disclosureUrl: "https://www.aham.com.my/",
     lastReviewedAt,
     status: "published",
@@ -1093,7 +1071,8 @@ const providerSeed: NewProvider[] = [
       {
         type: "etfs",
         supported: true,
-        notes: "Islamic UCITS ETFs with global Shariah-screened equity exposure.",
+        notes:
+          "Islamic UCITS ETFs with global Shariah-screened equity exposure.",
         source: source("Amundi", "https://www.amundi.com"),
       },
     ],
@@ -1303,10 +1282,7 @@ const providerSeed: NewProvider[] = [
       "Canada-focused registered-account compatibility",
       "Beginner-friendly",
     ],
-    cons: [
-      "Limited control over individual holdings",
-      "Management fees apply",
-    ],
+    cons: ["Limited control over individual holdings", "Management fees apply"],
     disclosureUrl: "https://www.wealthsimple.com/en-ca/halal",
     lastReviewedAt,
     status: "published",
@@ -1387,7 +1363,8 @@ const providerSeed: NewProvider[] = [
         code: "CA",
         name: "Canada",
         access: "direct",
-        notes: "Canadian and US-listed securities, subject to account eligibility.",
+        notes:
+          "Canadian and US-listed securities, subject to account eligibility.",
         source: source("Questrade", "https://www.questrade.com"),
       },
       {
@@ -1454,7 +1431,8 @@ const providerSeed: NewProvider[] = [
         "Self-directed broker. Users can access Shariah-screened ETFs but must independently verify individual securities.",
       source: source("Questrade", "https://www.questrade.com"),
     },
-    minimumInvestment: "No stated platform minimum; instrument-level minimums apply",
+    minimumInvestment:
+      "No stated platform minimum; instrument-level minimums apply",
     pros: [
       "Self-directed Canadian brokerage",
       "Access to US and Canadian markets",

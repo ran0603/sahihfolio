@@ -1,5 +1,20 @@
-import { marketSchema, assetTypeSchema, feeSchema, accountRequirementSchema, sourceSchema } from "@sahihfolio/shared/provider-data";
-import { pgTable, text, timestamp, jsonb, integer, index, uuid, pgEnum } from "drizzle-orm/pg-core";
+import {
+  marketSchema,
+  assetTypeSchema,
+  feeSchema,
+  accountRequirementSchema,
+  sourceSchema,
+} from "@sahihfolio/shared/provider-data";
+import {
+  pgTable,
+  text,
+  timestamp,
+  jsonb,
+  integer,
+  index,
+  uuid,
+  pgEnum,
+} from "drizzle-orm/pg-core";
 import { users } from "./users";
 
 export const reviewStatusEnum = pgEnum("review_status", [
@@ -16,10 +31,7 @@ export const providers = pgTable(
     name: text("name").notNull(),
     type: text("type").notNull(),
 
-    countries: jsonb("countries")
-      .$type<string[]>()
-      .notNull()
-      .default([]),
+    countries: jsonb("countries").$type<string[]>().notNull().default([]),
 
     markets: jsonb("markets")
       .$type<(typeof marketSchema._output)[]>()
@@ -52,20 +64,15 @@ export const providers = pgTable(
       .notNull(),
 
     minimumInvestment: text("minimum_investment"),
-    pros: jsonb("pros")
-      .$type<string[]>()
-      .notNull()
-      .default([]),
-    cons: jsonb("cons")
-      .$type<string[]>()
-      .notNull()
-      .default([]),
+    pros: jsonb("pros").$type<string[]>().notNull().default([]),
+    cons: jsonb("cons").$type<string[]>().notNull().default([]),
 
     disclosureUrl: text("disclosure_url").notNull(),
 
     status: text("status").notNull().default("draft"),
-    lastReviewedAt: timestamp("last_reviewed_at", { withTimezone: true })
-      .notNull(),
+    lastReviewedAt: timestamp("last_reviewed_at", {
+      withTimezone: true,
+    }).notNull(),
     reviewStatus: reviewStatusEnum("review_status").notNull().default("draft"),
     reviewedBy: uuid("reviewed_by").references(() => users.id),
     reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
