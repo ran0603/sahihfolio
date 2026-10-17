@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@config "../../../packages/config/tailwind/tailwind.config.js";
+
 :root {
   --brand-900: #0B1F3A;
   --brand-700: #2D4B73;

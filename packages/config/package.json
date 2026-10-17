@@ -11,5 +11,8 @@
     "prettier",
     "index.js"
   ],
+  "exports": {
+    ".": "./index.js"
+  },
   "license": "MIT"
 }
