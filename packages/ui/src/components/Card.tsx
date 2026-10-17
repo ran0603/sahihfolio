@@ -16,8 +16,8 @@ export const Card: React.FC<CardProps> = ({
       style={{
         backgroundColor: "#FFFFFF",
         border: "1px solid #E4E7EC",
-        borderRadius: "12px",
-        padding: "20px",
+        borderRadius: "16px",
+        padding: "22px",
         boxShadow: elevated
           ? "0 10px 15px -3px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.04)"
           : "0 1px 3px rgba(16, 24, 40, 0.05)",

@@ -60,7 +60,7 @@ export default function RootLayout({
                   ))}
                 </nav>
               </div>
-              <div className="flex flex-end align-center gap-1.5">
+              <div className="flex flex-end align-center gap-2">
                 <ThemeToggle />
                 <Link
                   href="/finder"

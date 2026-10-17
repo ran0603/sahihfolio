@@ -16,7 +16,7 @@ export function ThemeToggle() {
     return (
       <button
         aria-label="Toggle theme"
-        className="h-10 w-10 rounded-lg border border-slate-700"
+        className="h-10 w-10 rounded-lg border"
       />
     );
   }

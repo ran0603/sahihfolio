@@ -39,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
   const variantStyles: Record<string, React.CSSProperties> = {
     primary: {
       backgroundColor: "#10B981", // Emerald accent
-      color: "#FFFFFF",
+      color: "#0B1F3A",
       borderColor: "#10B981",
     },
     secondary: {
