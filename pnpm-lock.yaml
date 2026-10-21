@@ -287,6 +287,10 @@ importers:
         version: 3.2.7(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(supports-color@7.2.0)(tsx@4.23.13)(yaml@2.9.1)
 
   packages/ui:
+    dependencies:
+      next-themes:
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
     devDependencies:
       '@sahihfolio/config':
         specifier: workspace:*

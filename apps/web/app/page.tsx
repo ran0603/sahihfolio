@@ -1,145 +1,213 @@
+import HomeHero from "components/home/home-hero";
+import HomeBand from "components/home/home-band";
+import {
+  ChartColumn,
+  Clock4,
+  FileText,
+  Globe,
+  Info,
+  Percent,
+  ShieldCheck,
+  TriangleAlert,
+} from "lucide-react";
+import { Card, CardContent, Badge } from "@sahihfolio/ui";
 import Link from "next/link";
-import { Button, Card, CardContent } from "@sahihfolio/ui";
-import { ArrowRight, Check, ChevronDown, Clock4, ExternalLink, Info } from "lucide-react";
+import HomeSearch from "components/home/home-search";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const stepItems = [
+    {
+      label: "Choose your country",
+      description:
+        "Availability and rules depend on where you live, so we start there.",
+    },
+    {
+      label: "Answer a few questions",
+      description:
+        "Tell us what you want to invest in. Amounts and preferences are optional.",
+      hint: { icon: <Clock4 className="h-4 w-4" />, text: "About two minutes" },
+    },
+    {
+      label: "Compare sourced options",
+      description:
+        "See why each option appeared, with fees, coverage, sources and review dates.",
+    },
+  ];
+
+  const howitworksItems = [
+    {
+      title: "Access",
+      description:
+        "Which providers accept investors from your country, and what restrictions apply.",
+      icon: <Globe className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Fees",
+      description:
+        "Trading, currency conversion, custody and management fees, side by side.",
+      icon: <Percent className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Markets and ETFs",
+      description:
+        "Which exchanges, asset types and ETFs each provider offers.",
+      icon: <ChartColumn className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Screening methodology",
+      description:
+        "Which Shariah-screening methodology is used, and who states it.",
+      icon: <ShieldCheck className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Disclosures",
+      description:
+        "Affiliate relationships, account requirements and source documents.",
+      icon: <FileText className="h-[22px] w-[22px]" />,
+    },
+  ];
+
+  const researchItems = [
+    {
+      title: "Evidence over opinion",
+      description:
+        "Every claim links to a source and shows the date we reviewed it.",
+      icon: <FileText className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Methodology on show",
+      description:
+        "Screening methodologies differ. We show which one was used and what it checks.",
+      icon: <ShieldCheck className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Not advice",
+      description:
+        "We do not issue religious rulings or personalised investment, tax or legal advice.",
+      icon: <Info className="h-[22px] w-[22px]" />,
+    },
+  ];
+
   return (
-    <div className="grid grid-cols-2 gap-18 px-12 py-14">
-      <section className="text-left">
-        <div className="flex items-center justify-center gap-2 text-sm font-semibold py-1 px-3 rounded-full w-fit bg-[#e3f6f4] border border-[#95d5d1]">
-          <i className="h-[8px] w-[8px] bg-[#14B8A6] rounded-full block"></i>
-          Free tool · Data last reviewed 1 Oct 2026
+    <>
+      <HomeHero />
+      <HomeBand />
+      <section className="w-full max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
+        <div className="mb-[36px]">
+          <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
+            How it works
+          </h2>
+          <p className="text-muted text-lg">
+            Three steps, about two minutes. You see useful results before we ask
+            for anything.
+          </p>
         </div>
-        <h2 className="text-5xl font-bold tracking-tight my-6">
-          Find halal-investing options available in your country.
-        </h2>
-        <p className="text-lg text-muted leading-[1.6] mb-[30px]">
-          Compare brokers, ETFs, and managed services with clear fees, coverage,
-          and sourcing.
-        </p>
-
-        <Card elevated>
-          <CardContent>
-            <div className="flex flex-col gap-4">
-              <fieldset className="flex flex-col text-left gap-2">
-                <label className="font-bold text-sm">
-                  Country of residence
-                </label>
-                <div className="relative">
-                  <select className="w-full appearance-none h-[48px] pr-[44px] pl-[14px] border border-[#E4E7EC] rounded-[10px] bg-[white]">
-                    <option>Malaysia</option>
-                    <option>Indonesia</option>
-                    <option>Singapore</option>
-                    <option>United States</option>
-                    <option>United Kingdom</option>
-                  </select>
-                  <ChevronDown className="absolute right-[14px] top-1/2 -translate-y-1/2 pointer-events-none h-5 w-5" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {stepItems.map((step, index) => (
+            <Card key={"step-" + index} elevated>
+              <CardContent>
+                <div className="flex flex-col gap-3 text-foreground">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#e3f6f4] dark:bg-brand-700 font-bold border border-pos text-foreground">
+                    {index + 1}
+                  </div>
+                  <h3 className="text-lg font-semibold">{step.label}</h3>
+                  <p className="text-muted">{step.description}</p>
+                  {step.hint && (
+                    <span className="flex items-center gap-2 text-sm text-muted">
+                      {step.hint.icon} {step.hint.text}
+                    </span>
+                  )}
                 </div>
-              </fieldset>
-              <div className="text-muted flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                Select your country to see relevant options.
-              </div>
-              <Button className="w-full gap-2">
-                <span>Find my options</span>
-                <ArrowRight />
-              </Button>
-              <p className="text-muted text-center">
-                No email needed to see your results.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </section>
-
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "24px",
-        }}
-      >
-        <Card elevated style={{ padding: "0" }}>
-          <CardContent>
-            <div className="flex flex-col divide-y divide-[#E4E7EC]">
-              <div className="flex items-center justify-between px-6 py-4">
-                <div>
-                  <p className="font-bold">Example result</p>
-                  <span className="sub">Malaysia · ETF investing</span>
+      <section className="w-full bg-surface">
+        <div className="max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
+          <div className="mb-[36px]">
+            <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
+              What we check before you decide
+            </h2>
+            <p className="text-muted text-lg">
+              The things that change the outcome, shown side by side so
+              trade-offs are visible.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {howitworksItems.map((ibox, index) => (
+              <Card key={"howitworks-" + index} elevated>
+                <CardContent>
+                  <div className="flex flex-col gap-2 text-foreground">
+                    <div className="bg-[#e8ebf0] dark:bg-[#2a303c] w-[40px] h-[40px] text-sec grid place-items-center rounded-lg">
+                      {ibox.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold">{ibox.title}</h3>
+                    <p className="text-muted text-sm">{ibox.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+            <Card elevated className="dark">
+              <CardContent className="">
+                <div className="flex flex-col gap-3 text-foreground">
+                  <h3 className="text-lg font-semibold">
+                    See how we source and review
+                  </h3>
+                  <p className="text-sm">
+                    Our methodology explains where data comes from and how often
+                    we update it.
+                  </p>
+                  <Link
+                    className="inline-flex items-center justify-center rounded-lg border border-muted p-[8px] font-semibold cursor-pointer bg-brand-900 dark:bg-surface dark:hover:bg-[#2a303c] hover:bg-brand-700 hover:shadow-sm w-[200px]"
+                    href="#"
+                  >
+                    <span className="text-[#F2F4F7]">Read the methodology</span>
+                  </Link>
                 </div>
-                <span className="badge b-neutral">Sample data</span>
-              </div>
-              <div className="px-6 py-4 flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <p className="font-bold text-lg">Example Broker A</p>
-                  <span className="badge b-info">Broker</span>
-                </div>
-                <dl className="kv">
-                  <dt>Trading</dt>
-                  <dd>0.10%</dd>
-                  <dt>FX</dt>
-                  <dd>0.50%</dd>
-                  <dt>Minimum</dt>
-                  <dd>MYR 100</dd>
-                  <dt>Screening</dt>
-                  <dd>Provider-stated · AAOIFI-aligned</dd>
-                </dl>
-                <div className="flex flex-row gap-2 items-top">
-                <Check className="h-4 w-4 text-acc" />
-                  <span>
-                    Included because it serves Malaysia-based investors, offers
-                    ETFs and provides Shariah-screening information.
-                  </span>
-                </div>
-                <p className="flex flex-row gap-2 items-center">
-                  Source: <a href="#">Provider pricing page</a>{" "}
-                  <ExternalLink className="h-4 w-4" />
-                  · reviewed 1 Oct 2026
-                </p>
-              </div>
-              <div className="px-6 py-4 flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <p className="font-bold text-lg">Example Robo B</p>
-                  <span className="badge b-info">Robo-advisor</span>
-                </div>
-                <dl className="kv">
-                  <dt>Management</dt>
-                  <dd>0.45%</dd>
-                  <dt>FX</dt>
-                  <dd>Not stated</dd>
-                  <dt>Minimum</dt>
-                  <dd>MYR 500</dd>
-                  <dt>Screening</dt>
-                  <dd>Methodology not named by provider</dd>
-                </dl>
-                <div className="flex flex-row gap-2 items-top">
-                  <Check className="h-4 w-4 text-acc" />
-                  <span>
-                    Included because it serves Malaysia-based investors and
-                    offers managed ETF portfolios. Verify the screening basis
-                    with the provider.
-                  </span>
-                </div>
-                <p className="flex flex-row gap-2 items-center">
-                  Source: <a href="#">Provider fee schedule</a>{" "}
-                  <ExternalLink className="h-4 w-4" />
-                  · reviewed 1 Oct 2026
-                </p>
-              </div>
-              <button type="button" className="flex items-center justify-between px-6 py-4">
-                + 2 more options in this example
-              </button>
-              <div className="text-muted flex items-center gap-2 px-6 py-4">
-                <Clock4 className="h-4 w-4" />
-                <span>
-                  Data last reviewed 1 Oct 2026. Illustrative only, not a real
-                  result.
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </section>
-    </div>
+      <HomeSearch />
+      <section className="w-full bg-surface">
+        <div className="max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
+          <div className="mb-[36px]">
+            <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
+              Research, not rulings
+            </h2>
+            <p className="text-muted text-lg">
+              We explain what a methodology checks and what the data says. You
+              decide what to do with it.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {researchItems.map((ibox, index) => (
+              <Card key={"research-" + index} elevated>
+                <CardContent>
+                  <div className="flex flex-col gap-2 text-foreground">
+                    <div className="bg-[#e8ebf0] dark:bg-[#2a303c] w-[40px] h-[40px] text-sec grid place-items-center rounded-lg">
+                      {ibox.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold">{ibox.title}</h3>
+                    <p className="text-muted text-sm">{ibox.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2 mt-[20px]">
+            <Badge variant="neutral">Shariah-screening information</Badge>
+            <Badge variant="neutral">Provider-stated methodology</Badge>
+            <Badge variant="neutral">Sahihfolio editorial note</Badge>
+            <Badge variant="warning">
+              <TriangleAlert className="h-[14px] w-[14px]" />
+              Not a religious ruling
+            </Badge>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
