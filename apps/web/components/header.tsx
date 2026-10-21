@@ -7,7 +7,7 @@ import Link from "node_modules/next/link";
 import { ThemeToggle } from "./theme-toggle";
 
 const navItems = [
-  { label: "Options Finder", href: "/finder" },
+  { label: "Options Finder", href: "/find" },
   { label: "Screening Reports", href: "/screening-report" },
   { label: "Methodologies", href: "/methodologies" },
   { label: "Disclosures", href: "/disclosures" },
@@ -47,7 +47,7 @@ export function Header() {
           <div className="flex flex-end align-center gap-2">
             <ThemeToggle />
             <Link
-              href="/finder"
+              href="/find"
               className="bg-[#10B981] rounded-lg px-4 py-2 font-semibold cursor-pointer"
             >
               <span className="text-[#0B1F3A]">Find My Options</span>
@@ -112,7 +112,7 @@ export function Header() {
           </nav>
           <div className="px-[20px] py-[15px]">
             <Link
-              href="/finder"
+              href="/find"
               className="bg-[#10B981] text-center h-[48px] flex items-center justify-center rounded-lg px-4 py-2 font-semibold cursor-pointer"
             >
               <span className="text-[#0B1F3A]">Find My Options</span>

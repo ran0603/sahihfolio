@@ -54,7 +54,7 @@ sahihfolio/
 
 ### Package Boundaries & Responsibilities
 
-- **`apps/web`**: Contains the user-facing web portal (`/`, `/finder`, `/screening-report`) and editorial review dashboard (`/admin`). Depends on `@sahihfolio/database`, `@sahihfolio/shared`, and `@sahihfolio/ui`.
+- **`apps/web`**: Contains the user-facing web portal (`/`, `/find`, `/screening-report`) and editorial review dashboard (`/admin`). Depends on `@sahihfolio/database`, `@sahihfolio/shared`, and `@sahihfolio/ui`.
 - **`packages/database`**: Single source of truth for PostgreSQL schemas, table definitions, and database migrations via Drizzle ORM.
 - **`packages/shared`**: Pure TypeScript domain logic, Zod validation schemas, business constants, and formatting utilities. Must **not** depend on React or database drivers.
 - **`packages/ui`**: Shared, accessible presentation components adhering to the Sahihfolio Brand Book tokens.

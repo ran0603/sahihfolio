@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { finderIntakeSchema } from "../finder";
+import { finderIntakeSchema } from "../find";
 
 describe("finderIntakeSchema", () => {
   it("parses a minimal valid intake with defaults applied", () => {

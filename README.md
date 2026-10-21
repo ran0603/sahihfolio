@@ -39,7 +39,7 @@ sahihfolio/
 
 | Package / App                              | Description                                                                                      | Technologies                          |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------- |
-| [`apps/web`](./apps/web)                   | Next.js App Router public portal (`/`, `/finder`, `/screening-report`) + `/admin` review console | Next.js 16, React 19, TypeScript      |
+| [`apps/web`](./apps/web)                   | Next.js App Router public portal (`/`, `/find`, `/screening-report`) + `/admin` review console | Next.js 16, React 19, TypeScript      |
 | [`packages/database`](./packages/database) | PostgreSQL models, migrations, and seed scripts                                                  | Drizzle ORM, Postgres.js, Drizzle Kit |
 | [`packages/shared`](./packages/shared)     | Shared domain types, Zod validation schemas, constants, and formatting utilities                 | TypeScript, Zod                       |
 | [`packages/ui`](./packages/ui)             | Reusable React UI component library based on Sahihfolio brand tokens                             | React 19, TypeScript, Brand Tokens    |
