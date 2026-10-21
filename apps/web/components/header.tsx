@@ -9,7 +9,7 @@ import { ThemeToggle } from "./theme-toggle";
 const navItems = [
   { label: "Options Finder", href: "/find" },
   { label: "Screening Reports", href: "/screening-report" },
-  { label: "Methodologies", href: "/methodologies" },
+  { label: "Methodology", href: "/methodology" },
   { label: "Disclosures", href: "/disclosures" },
 ];
 
