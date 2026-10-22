@@ -200,7 +200,7 @@ export default function NotFound() {
           }}
         >
           <Link
-            href="/finder"
+            href="/find"
             className="btn-hover-lift"
             style={{
               backgroundColor: "#10B981",
@@ -302,7 +302,7 @@ export default function NotFound() {
           >
             {/* Card 1: Options Finder */}
             <Link
-              href="/finder"
+              href="/find"
               className="interactive-card"
               style={{
                 backgroundColor: "#FFFFFF",
@@ -616,7 +616,7 @@ export default function NotFound() {
             </Link>{" "}
             or check our{" "}
             <Link
-              href="/finder"
+              href="/find"
               style={{
                 color: "#10B981",
                 fontWeight: 600,

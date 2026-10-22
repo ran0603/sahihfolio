@@ -480,8 +480,8 @@ POST   /admin/screening-reports/:id/duplicate
 GET    /admin/securities
 POST   /admin/securities
 PATCH  /admin/securities/:id
-GET    /admin/methodologies
-PATCH  /admin/methodologies/:id
+GET    /admin/methodology
+PATCH  /admin/methodology/:id
 ```
 
 All admin routes require authentication, role-based authorization, and audit logging.
@@ -549,7 +549,7 @@ Reject or flag a report if:
 | `/screening-report`             | Search and explanation landing page |
 | `/screening-report/[publicId]`  | Public report                       |
 | `/admin/securities`             | Security catalog                    |
-| `/admin/methodologies`          | Methodology library                 |
+| `/admin/methodology`          | Methodology library                 |
 | `/admin/screening-reports`      | Report workflow                     |
 | `/admin/screening-reports/new`  | Create report                       |
 | `/admin/screening-reports/[id]` | Edit and preview report             |

@@ -36,7 +36,7 @@ sahihfolio/
 - Primary Next.js 16 App Router application.
 - Contains public routes:
   - `/`: Home landing page introducing the free tools.
-  - `/finder`: Global Halal Investing Options Finder (country-specific broker and robo comparison).
+  - `/find`: Global Halal Investing Options Finder (country-specific broker and robo comparison).
   - `/screening-report`: Shariah Screening Reports for stocks and ETFs.
 - Protected internal routes:
   - `/admin`: Dashboard overview and audit logs.

@@ -1,187 +1,213 @@
+import HomeHero from "components/home/home-hero";
+import HomeBand from "components/home/home-band";
+import {
+  ChartColumn,
+  Clock4,
+  FileText,
+  Globe,
+  Info,
+  Percent,
+  ShieldCheck,
+  TriangleAlert,
+} from "lucide-react";
+import { Card, CardContent, Badge } from "@sahihfolio/ui";
 import Link from "next/link";
-import { DisclaimerBanner } from "@sahihfolio/ui";
+import HomeSearch from "components/home/home-search";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const stepItems = [
+    {
+      label: "Choose your country",
+      description:
+        "Availability and rules depend on where you live, so we start there.",
+    },
+    {
+      label: "Answer a few questions",
+      description:
+        "Tell us what you want to invest in. Amounts and preferences are optional.",
+      hint: { icon: <Clock4 className="h-4 w-4" />, text: "About two minutes" },
+    },
+    {
+      label: "Compare sourced options",
+      description:
+        "See why each option appeared, with fees, coverage, sources and review dates.",
+    },
+  ];
+
+  const howitworksItems = [
+    {
+      title: "Access",
+      description:
+        "Which providers accept investors from your country, and what restrictions apply.",
+      icon: <Globe className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Fees",
+      description:
+        "Trading, currency conversion, custody and management fees, side by side.",
+      icon: <Percent className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Markets and ETFs",
+      description:
+        "Which exchanges, asset types and ETFs each provider offers.",
+      icon: <ChartColumn className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Screening methodology",
+      description:
+        "Which Shariah-screening methodology is used, and who states it.",
+      icon: <ShieldCheck className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Disclosures",
+      description:
+        "Affiliate relationships, account requirements and source documents.",
+      icon: <FileText className="h-[22px] w-[22px]" />,
+    },
+  ];
+
+  const researchItems = [
+    {
+      title: "Evidence over opinion",
+      description:
+        "Every claim links to a source and shows the date we reviewed it.",
+      icon: <FileText className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Methodology on show",
+      description:
+        "Screening methodologies differ. We show which one was used and what it checks.",
+      icon: <ShieldCheck className="h-[22px] w-[22px]" />,
+    },
+    {
+      title: "Not advice",
+      description:
+        "We do not issue religious rulings or personalised investment, tax or legal advice.",
+      icon: <Info className="h-[22px] w-[22px]" />,
+    },
+  ];
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
-      <section style={{ textAlign: "center", padding: "40px 0 20px" }}>
-        <h1
-          style={{
-            fontSize: "2.5rem",
-            fontWeight: "800",
-            color: "#0B1F3A",
-            letterSpacing: "-1px",
-            marginBottom: "16px",
-          }}
-        >
-          Make Informed Halal-Investing Decisions with Clarity
-        </h1>
-        <p
-          style={{
-            fontSize: "1.125rem",
-            color: "#667085",
-            maxWidth: "680px",
-            margin: "0 auto 32px",
-            lineHeight: "1.6",
-          }}
-        >
-          Transparent, evidence-based research for Muslim investors. Compare
-          country-specific investing routes, understand Shariah screening
-          methodologies, and verify before you commit.
-        </p>
-
-        <div style={{ display: "flex", justifyContent: "center", gap: "16px" }}>
-          <Link
-            href="/finder"
-            style={{
-              backgroundColor: "#10B981",
-              color: "#FFFFFF",
-              padding: "12px 24px",
-              borderRadius: "8px",
-              fontWeight: "600",
-              boxShadow: "0 4px 6px -1px rgba(16, 185, 129, 0.2)",
-            }}
-          >
-            Find My Options →
-          </Link>
-          <Link
-            href="/screening-report"
-            style={{
-              backgroundColor: "#0B1F3A",
-              color: "#FFFFFF",
-              padding: "12px 24px",
-              borderRadius: "8px",
-              fontWeight: "600",
-            }}
-          >
-            Search Screening Reports
-          </Link>
+    <>
+      <HomeHero />
+      <HomeBand />
+      <section className="w-full max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
+        <div className="mb-[36px]">
+          <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
+            How it works
+          </h2>
+          <p className="text-muted text-lg">
+            Three steps, about two minutes. You see useful results before we ask
+            for anything.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {stepItems.map((step, index) => (
+            <Card key={"step-" + index} elevated>
+              <CardContent>
+                <div className="flex flex-col gap-3 text-foreground">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#e3f6f4] dark:bg-brand-700 font-bold border border-pos text-foreground">
+                    {index + 1}
+                  </div>
+                  <h3 className="text-lg font-semibold">{step.label}</h3>
+                  <p className="text-muted">{step.description}</p>
+                  {step.hint && (
+                    <span className="flex items-center gap-2 text-sm text-muted">
+                      {step.hint.icon} {step.hint.text}
+                    </span>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </section>
-
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "24px",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#FFFFFF",
-            border: "1px solid #E4E7EC",
-            borderRadius: "12px",
-            padding: "24px",
-            boxShadow: "0 1px 3px rgba(16, 24, 40, 0.05)",
-          }}
-        >
-          <span
-            style={{
-              display: "inline-block",
-              padding: "4px 10px",
-              borderRadius: "9999px",
-              backgroundColor: "#EFF8FF",
-              color: "#175CD3",
-              fontSize: "0.75rem",
-              fontWeight: "600",
-              marginBottom: "12px",
-            }}
-          >
-            FREE TOOL #1
-          </span>
-          <h2
-            style={{
-              fontSize: "1.25rem",
-              fontWeight: "700",
-              color: "#0B1F3A",
-              marginBottom: "8px",
-            }}
-          >
-            Global Halal Options Finder
-          </h2>
-          <p
-            style={{
-              color: "#667085",
-              fontSize: "0.875rem",
-              lineHeight: "1.6",
-              marginBottom: "20px",
-            }}
-          >
-            Given your country and preferences, find what halal-investing routes
-            are actually available to you: international brokers, local
-            platforms, robo-advisors, and UCITS/US ETFs.
-          </p>
-          <Link
-            href="/finder"
-            style={{
-              color: "#10B981",
-              fontWeight: "600",
-              fontSize: "0.875rem",
-            }}
-          >
-            Explore available routes →
-          </Link>
-        </div>
-
-        <div
-          style={{
-            backgroundColor: "#FFFFFF",
-            border: "1px solid #E4E7EC",
-            borderRadius: "12px",
-            padding: "24px",
-            boxShadow: "0 1px 3px rgba(16, 24, 40, 0.05)",
-          }}
-        >
-          <span
-            style={{
-              display: "inline-block",
-              padding: "4px 10px",
-              borderRadius: "9999px",
-              backgroundColor: "#ECFDF3",
-              color: "#039855",
-              fontSize: "0.75rem",
-              fontWeight: "600",
-              marginBottom: "12px",
-            }}
-          >
-            FREE TOOL #2
-          </span>
-          <h2
-            style={{
-              fontSize: "1.25rem",
-              fontWeight: "700",
-              color: "#0B1F3A",
-              marginBottom: "8px",
-            }}
-          >
-            Shariah Screening Reports
-          </h2>
-          <p
-            style={{
-              color: "#667085",
-              fontSize: "0.875rem",
-              lineHeight: "1.6",
-              marginBottom: "20px",
-            }}
-          >
-            Detailed, evidence-led breakdown of stock & ETF compliance. See
-            business-activity ratios, financial metrics, verified SEC/annual
-            report sources, and review dates.
-          </p>
-          <Link
-            href="/screening-report"
-            style={{
-              color: "#10B981",
-              fontWeight: "600",
-              fontSize: "0.875rem",
-            }}
-          >
-            View sample report (AAPL) →
-          </Link>
+      <section className="w-full bg-surface">
+        <div className="max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
+          <div className="mb-[36px]">
+            <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
+              What we check before you decide
+            </h2>
+            <p className="text-muted text-lg">
+              The things that change the outcome, shown side by side so
+              trade-offs are visible.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {howitworksItems.map((ibox, index) => (
+              <Card key={"howitworks-" + index} elevated>
+                <CardContent>
+                  <div className="flex flex-col gap-2 text-foreground">
+                    <div className="bg-[#e8ebf0] dark:bg-[#2a303c] w-[40px] h-[40px] text-sec grid place-items-center rounded-lg">
+                      {ibox.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold">{ibox.title}</h3>
+                    <p className="text-muted text-sm">{ibox.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+            <Card elevated className="dark">
+              <CardContent className="">
+                <div className="flex flex-col gap-3 text-foreground">
+                  <h3 className="text-lg font-semibold">
+                    See how we source and review
+                  </h3>
+                  <p className="text-sm">
+                    Our methodology explains where data comes from and how often
+                    we update it.
+                  </p>
+                  <Link
+                    className="inline-flex items-center justify-center rounded-lg border border-muted p-[8px] font-semibold cursor-pointer bg-brand-900 dark:bg-surface dark:hover:bg-[#2a303c] hover:bg-brand-700 hover:shadow-sm w-[200px]"
+                    href="#"
+                  >
+                    <span className="text-[#F2F4F7]">Read the methodology</span>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
-
-      <DisclaimerBanner />
-    </div>
+      <HomeSearch />
+      <section className="w-full bg-surface">
+        <div className="max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
+          <div className="mb-[36px]">
+            <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
+              Research, not rulings
+            </h2>
+            <p className="text-muted text-lg">
+              We explain what a methodology checks and what the data says. You
+              decide what to do with it.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {researchItems.map((ibox, index) => (
+              <Card key={"research-" + index} elevated>
+                <CardContent>
+                  <div className="flex flex-col gap-2 text-foreground">
+                    <div className="bg-[#e8ebf0] dark:bg-[#2a303c] w-[40px] h-[40px] text-sec grid place-items-center rounded-lg">
+                      {ibox.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold">{ibox.title}</h3>
+                    <p className="text-muted text-sm">{ibox.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2 mt-[20px]">
+            <Badge variant="neutral">Shariah-screening information</Badge>
+            <Badge variant="neutral">Provider-stated methodology</Badge>
+            <Badge variant="neutral">Sahihfolio editorial note</Badge>
+            <Badge variant="warning">
+              <TriangleAlert className="h-[14px] w-[14px]" />
+              Not a religious ruling
+            </Badge>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

@@ -289,7 +289,7 @@ Stack: ${error.stack || "N/A"}`;
           </Link>
 
           <Link
-            href="/finder"
+            href="/find"
             className="btn-hover-lift"
             style={{
               backgroundColor: "#FFFFFF",

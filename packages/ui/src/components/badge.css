@@ -1,0 +1,43 @@
+@import "./tokens.css";
+
+.badge{
+  --c: var(--info);
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   height: 24px;
+   padding: 0 10px;
+   border-radius: 999px;
+   font-size: 12px;
+   font-weight: 600;
+   white-space: nowrap;
+   border: 1px solid color-mix(in srgb,var(--c) 42%,var(--border));
+   background: color-mix(in srgb,var(--c) 10%,var(--surface));
+   color: color-mix(in srgb,var(--c) 62%,var(--text));
+  }
+.badge.lg{
+  height: 28px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+.b-pos{
+  --c: var(--pos)
+  }
+.b-warn{
+  --c: var(--warn);
+  }
+.b-info{
+  --c: var(--info);
+  }
+.b-neutral{
+  --c: var(--neutral);
+  }
+.b-sand{
+  --c: #A68A64;
+  }
+.b-mist{
+  --c: #8FA3BF;
+  }
+.b-prem{
+  --c: #D4A017;
+}

@@ -6,11 +6,11 @@ The `@sahihfolio/database` package owns the PostgreSQL schema, migrations, and s
 
 ## Prerequisites
 
-| Requirement | Minimum version |
-|---|---|
-| Node.js | `>= 24.21.0` |
-| pnpm | `12.4.2` |
-| PostgreSQL | `16` (local) or a hosted provider (e.g. Neon) |
+| Requirement | Minimum version                               |
+| ----------- | --------------------------------------------- |
+| Node.js     | `>= 24.21.0`                                  |
+| pnpm        | `12.4.2`                                      |
+| PostgreSQL  | `16` (local) or a hosted provider (e.g. Neon) |
 
 ---
 
@@ -124,63 +124,63 @@ Schemas live in `packages/database/src/schema/`. Each table is defined in its ow
 
 Administrative and editorial staff accounts.
 
-| Column | Type | Notes |
-|---|---|---|
-| `id` | `varchar(50)` | Primary key — manually assigned (e.g. `usr_admin_1`) |
-| `email` | `varchar(255)` | Unique |
-| `name` | `varchar(150)` | Display name |
-| `role` | `varchar(50)` | Defaults to `admin` |
-| `created_at` | `timestamptz` | Auto-set |
-| `updated_at` | `timestamptz` | Auto-set |
+| Column       | Type           | Notes                                                |
+| ------------ | -------------- | ---------------------------------------------------- |
+| `id`         | `varchar(50)`  | Primary key — manually assigned (e.g. `usr_admin_1`) |
+| `email`      | `varchar(255)` | Unique                                               |
+| `name`       | `varchar(150)` | Display name                                         |
+| `role`       | `varchar(50)`  | Defaults to `admin`                                  |
+| `created_at` | `timestamptz`  | Auto-set                                             |
+| `updated_at` | `timestamptz`  | Auto-set                                             |
 
 ### `countries`
 
 Country profiles including regulatory context and supported providers.
 
-| Column | Type | Notes |
-|---|---|---|
-| `code` | `varchar(2)` | ISO 3166-1 alpha-2 primary key (e.g. `MY`) |
-| `name` | `varchar(100)` | Full country name |
-| `currency` | `varchar(3)` | ISO 4217 currency code (e.g. `MYR`) |
-| `region` | `varchar(50)` | Geographical region |
-| `regulatory_notes` | `jsonb` | `string[]` — regulator notes |
-| `supported_providers` | `jsonb` | `string[]` — provider names active in-country |
-| `restrictions` | `jsonb` | `string[]` — known investor restrictions |
-| `source_urls` | `jsonb` | `string[]` — regulatory source links |
-| `last_reviewed_at` | `timestamptz` | Last editorial review date |
+| Column                | Type           | Notes                                         |
+| --------------------- | -------------- | --------------------------------------------- |
+| `code`                | `varchar(2)`   | ISO 3166-1 alpha-2 primary key (e.g. `MY`)    |
+| `name`                | `varchar(100)` | Full country name                             |
+| `currency`            | `varchar(3)`   | ISO 4217 currency code (e.g. `MYR`)           |
+| `region`              | `varchar(50)`  | Geographical region                           |
+| `regulatory_notes`    | `jsonb`        | `string[]` — regulator notes                  |
+| `supported_providers` | `jsonb`        | `string[]` — provider names active in-country |
+| `restrictions`        | `jsonb`        | `string[]` — known investor restrictions      |
+| `source_urls`         | `jsonb`        | `string[]` — regulatory source links          |
+| `last_reviewed_at`    | `timestamptz`  | Last editorial review date                    |
 
 ### `providers`
 
 Catalog of brokers, robo-advisors, and ETF providers.
 
-| Column | Type | Notes |
-|---|---|---|
-| `id` | `varchar(50)` | Primary key (e.g. `prov_ibkr`) |
-| `slug` | `varchar(150)` | Unique URL slug |
-| `type` | `varchar(50)` | `broker`, `robo_advisor`, `managed_portfolio`, `etf_provider` |
-| `countries` | `jsonb` | `string[]` — ISO country codes where available |
-| `markets` | `jsonb` | `string[]` — markets accessible through the provider |
-| `asset_types` | `jsonb` | `string[]` — e.g. `stocks`, `etfs`, `sukuk`, `gold` |
-| `halal_screening` | `jsonb` | `{ supported, methodology?, notes?, sourceUrl? }` |
-| `fees` | `jsonb` | `{ trading?, management?, fx?, custody?, withdrawal?, other? }` |
-| `pros` / `cons` | `jsonb` | `string[]` — editorial notes |
-| `status` | `varchar(20)` | `published` or `draft` or `archived` |
+| Column            | Type           | Notes                                                           |
+| ----------------- | -------------- | --------------------------------------------------------------- |
+| `id`              | `varchar(50)`  | Primary key (e.g. `prov_ibkr`)                                  |
+| `slug`            | `varchar(150)` | Unique URL slug                                                 |
+| `type`            | `varchar(50)`  | `broker`, `robo_advisor`, `managed_portfolio`, `etf_provider`   |
+| `countries`       | `jsonb`        | `string[]` — ISO country codes where available                  |
+| `markets`         | `jsonb`        | `string[]` — markets accessible through the provider            |
+| `asset_types`     | `jsonb`        | `string[]` — e.g. `stocks`, `etfs`, `sukuk`, `gold`             |
+| `halal_screening` | `jsonb`        | `{ supported, methodology?, notes?, sourceUrl? }`               |
+| `fees`            | `jsonb`        | `{ trading?, management?, fx?, custody?, withdrawal?, other? }` |
+| `pros` / `cons`   | `jsonb`        | `string[]` — editorial notes                                    |
+| `status`          | `varchar(20)`  | `published` or `draft` or `archived`                            |
 
 ### `screening_reports`
 
 Shariah compliance reports for stocks and ETFs.
 
-| Column | Type | Notes |
-|---|---|---|
-| `id` | `varchar(50)` | Primary key (e.g. `rep_aapl_aaoifi`) |
-| `ticker` | `varchar(15)` | Stock ticker symbol |
-| `methodology` | `varchar(50)` | Screening standard (e.g. `AAOIFI`) |
-| `screening_result` | `varchar(50)` | e.g. `screened_compliant`, `non_compliant` |
-| `status` | `varchar(20)` | Defaults to `draft` |
-| `business_activity` | `jsonb` | Pass/fail ratio analysis |
-| `financial_ratios` | `jsonb` | Debt-to-market-cap, liquid assets, interest income |
-| `sources` | `jsonb` | `Array<{ label, url, sourceType, retrievedAt }>` |
-| `expires_at` | `timestamptz` | Report validity window (typically 90 days) |
+| Column              | Type          | Notes                                              |
+| ------------------- | ------------- | -------------------------------------------------- |
+| `id`                | `varchar(50)` | Primary key (e.g. `rep_aapl_aaoifi`)               |
+| `ticker`            | `varchar(15)` | Stock ticker symbol                                |
+| `methodology`       | `varchar(50)` | Screening standard (e.g. `AAOIFI`)                 |
+| `screening_result`  | `varchar(50)` | e.g. `screened_compliant`, `non_compliant`         |
+| `status`            | `varchar(20)` | Defaults to `draft`                                |
+| `business_activity` | `jsonb`       | Pass/fail ratio analysis                           |
+| `financial_ratios`  | `jsonb`       | Debt-to-market-cap, liquid assets, interest income |
+| `sources`           | `jsonb`       | `Array<{ label, url, sourceType, retrievedAt }>`   |
+| `expires_at`        | `timestamptz` | Report validity window (typically 90 days)         |
 
 ---
 
@@ -188,8 +188,8 @@ Shariah compliance reports for stocks and ETFs.
 
 Migration files live in `packages/database/migrations/` and are tracked in version control.
 
-| File | Description |
-|---|---|
+| File                       | Description                              |
+| -------------------------- | ---------------------------------------- |
 | `0000_even_celestials.sql` | Initial schema — creates all four tables |
 
 ### Generating a new migration
@@ -231,12 +231,12 @@ pnpm db:push
 
 Seeded records:
 
-| Table | Records |
-|---|---|
-| `users` | 1 admin user (`admin@sahihfolio.com`) |
-| `countries` | 5 countries: US, GB, CA, MY, SG |
-| `providers` | 2 providers: Interactive Brokers, Wahed Invest |
-| `screening_reports` | 1 report: Apple Inc. (AAPL) — AAOIFI |
+| Table               | Records                                        |
+| ------------------- | ---------------------------------------------- |
+| `users`             | 1 admin user (`admin@sahihfolio.com`)          |
+| `countries`         | 5 countries: US, GB, CA, MY, SG                |
+| `providers`         | 2 providers: Interactive Brokers, Wahed Invest |
+| `screening_reports` | 1 report: Apple Inc. (AAPL) — AAOIFI           |
 
 ---
 
@@ -268,6 +268,7 @@ The client cannot reach the database. Check that:
 ### `injected env (0) from .env` in drizzle-kit output
 
 drizzle-kit found the config file but loaded zero variables from `.env`. This usually means:
+
 - The `.env` file doesn't exist at the expected path.
 - `DATABASE_URL` is missing or commented out.
 

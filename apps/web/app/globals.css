@@ -1,46 +1,76 @@
+@import "tailwindcss";
+@config "../../../packages/config/tailwind/tailwind.config.js";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-acc: var(--acc);
+  --color-on-acc: var(--on-acc);
+  --color-acc2: var(--acc2);
+  --color-info: var(--info);
+  --color-pos: var(--pos);
+  --color-sec: var(--sec);
+}
+
 :root {
   --brand-900: #0B1F3A;
   --brand-700: #2D4B73;
-  --accent-primary: #10B981;
-  --accent-secondary: #14B8A6;
-  --accent-premium: #D4A017;
-
-  --bg: #F7F9FC;
-  --surface: #FFFFFF;
-  --surface-elevated: #FFFFFF;
+  --acc: #10B981;
+  --on-acc: #0B1F3A;
+  --acc2: #14B8A6;
+  --background: #F7F9FC;
+  --surface: #fff;
+  --elev: #fff;
   --border: #E4E7EC;
-
-  --text-primary: #101828;
-  --text-muted: #667085;
-
-  --positive: #039855;
-  --negative: #D92D20;
-  --warning: #DC6803;
+  --input: #8A94A6;
+  --foreground: #101828;
+  --muted: #667085;
+  --link: #2D4B73;
+  --sec: #2D4B73;
+  --pos: #039855;
+  --neg: #D92D20;
+  --warn: #DC6803;
+  --info: #2D4B73;
   --neutral: #667085;
+  --nav: #0B1F3A;
+  --nav-border: transparent;
+  --foot: #0B1F3A;
+  --skel: #E9EDF3;
+  --shadow: 0 1px 2px rgba(16,24,40,.06),0 4px 16px rgba(16,24,40,.06);
 }
 
-[data-theme='dark'] {
-  --bg: #0D1117;
+.dark {
+  --brand-900: #0B1F3A;
+  --brand-700: #2D4B73;
+  --acc: #34D399;
+  --on-acc: #06231A;
+  --acc2: #2DD4BF;
+  --background: #0D1117;
   --surface: #161B26;
-  --surface-elevated: #1D2433;
+  --elev: #1D2433;
   --border: #2A3243;
-
-  --text-primary: #F2F4F7;
-  --text-muted: #98A2B3;
-
-  --accent-primary: #34D399;
-  --accent-secondary: #2DD4BF;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  --input: #6B7790;
+  --foreground: #F2F4F7;
+  --muted: #98A2B3;
+  --link: #8CB4F0;
+  --sec: #C9D6EC;
+  --pos: #34D399;
+  --neg: #F87171;
+  --warn: #FDB022;
+  --info: #8CB4F0;
+  --neutral: #98A2B3;
+  --nav: #161B26;
+  --nav-border: #2A3243;
+  --foot: #161B26;
+  --skel: #1D2433;
+  --shadow: 0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.28);
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
@@ -48,7 +78,7 @@ body {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none;  
 }
 
 @keyframes pulseSubtle {
@@ -78,6 +108,13 @@ a {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 16px;
+  font-size: 14px;
 }
 
 .float-animation {

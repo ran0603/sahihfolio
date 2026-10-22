@@ -39,7 +39,7 @@ sahihfolio/
 
 | Package / App                              | Description                                                                                      | Technologies                          |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------- |
-| [`apps/web`](./apps/web)                   | Next.js App Router public portal (`/`, `/finder`, `/screening-report`) + `/admin` review console | Next.js 16, React 19, TypeScript      |
+| [`apps/web`](./apps/web)                   | Next.js App Router public portal (`/`, `/find`, `/screening-report`) + `/admin` review console | Next.js 16, React 19, TypeScript      |
 | [`packages/database`](./packages/database) | PostgreSQL models, migrations, and seed scripts                                                  | Drizzle ORM, Postgres.js, Drizzle Kit |
 | [`packages/shared`](./packages/shared)     | Shared domain types, Zod validation schemas, constants, and formatting utilities                 | TypeScript, Zod                       |
 | [`packages/ui`](./packages/ui)             | Reusable React UI component library based on Sahihfolio brand tokens                             | React 19, TypeScript, Brand Tokens    |
@@ -104,16 +104,16 @@ The web application will be running at [http://localhost:3000](http://localhost:
 
 ## Available Scripts
 
-| Command           | Purpose                                                  |
-| ----------------- | -------------------------------------------------------- |
-| `pnpm dev`        | Run all apps and packages in dev mode                    |
-| `pnpm build`      | Build all apps and packages for production               |
-| `pnpm lint`       | Lint workspace source code with ESLint                   |
-| `pnpm typecheck`  | Run TypeScript type checks across the monorepo           |
-| `pnpm test`       | Run automated test suites                                |
-| `pnpm db:migrate` | Apply pending database migrations                        |
-| `pnpm db:seed`    | Seed initial countries, and screening reports |
-| `pnpm db:seed:providers`    | Seed initial providers |
+| Command                  | Purpose                                        |
+| ------------------------ | ---------------------------------------------- |
+| `pnpm dev`               | Run all apps and packages in dev mode          |
+| `pnpm build`             | Build all apps and packages for production     |
+| `pnpm lint`              | Lint workspace source code with ESLint         |
+| `pnpm typecheck`         | Run TypeScript type checks across the monorepo |
+| `pnpm test`              | Run automated test suites                      |
+| `pnpm db:migrate`        | Apply pending database migrations              |
+| `pnpm db:seed`           | Seed initial countries, and screening reports  |
+| `pnpm db:seed:providers` | Seed initial providers                         |
 
 ---
 

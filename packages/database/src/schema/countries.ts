@@ -1,5 +1,16 @@
-import { regulatoryNoteSchema, restrictionSchema } from "@sahihfolio/shared/provider-data";
-import { pgTable, varchar, text, timestamp, jsonb, index, uuid } from "drizzle-orm/pg-core";
+import {
+  regulatoryNoteSchema,
+  restrictionSchema,
+} from "@sahihfolio/shared/provider-data";
+import {
+  pgTable,
+  varchar,
+  text,
+  timestamp,
+  jsonb,
+  index,
+  uuid,
+} from "drizzle-orm/pg-core";
 
 export const countries = pgTable(
   "countries",
@@ -20,8 +31,9 @@ export const countries = pgTable(
       .default([]),
 
     status: text("status").notNull().default("draft"),
-    lastReviewedAt: timestamp("last_reviewed_at", { withTimezone: true })
-      .notNull(),
+    lastReviewedAt: timestamp("last_reviewed_at", {
+      withTimezone: true,
+    }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

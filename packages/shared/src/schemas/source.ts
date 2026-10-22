@@ -11,11 +11,7 @@ export const sourceTypeSchema = z.enum([
   "other",
 ]);
 
-export const confidenceLevelSchema = z.enum([
-  "high",
-  "medium",
-  "low",
-]);
+export const confidenceLevelSchema = z.enum(["high", "medium", "low"]);
 
 export const sourceSchema = z.object({
   id: z.string().uuid(),

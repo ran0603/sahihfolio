@@ -11,11 +11,7 @@ export const SOURCE_TYPES = [
 
 export type SourceType = (typeof SOURCE_TYPES)[number];
 
-export const CONFIDENCE_LEVELS = [
-  "high",
-  "medium",
-  "low",
-] as const;
+export const CONFIDENCE_LEVELS = ["high", "medium", "low"] as const;
 
 export type ConfidenceLevel = (typeof CONFIDENCE_LEVELS)[number];
 
