@@ -1,3 +1,3 @@
-export * from "./find";
+export * from "./finder";
 export * from "./screening";
 export * from "./lead";
