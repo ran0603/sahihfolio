@@ -76,7 +76,9 @@ export default function RootLayout({
         >
           <Header />
 
-          <main className="w-full">{children}</main>
+          <div className="scroll">
+            <main className="w-full">{children}</main>
+          </div>
 
           <footer className="bg-[#0B1F3A] dark:bg-[#161B26] text-white border border-b border-border dark:border-[#2A3243] w-full flex items-center justify-center pt-[56px] pb-[32px]">
             <div className="max-w-[1200px]">
