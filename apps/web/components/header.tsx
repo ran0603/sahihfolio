@@ -30,7 +30,9 @@ export function Header() {
                 marginRight: "2rem",
               }}
             >
-              Sahih<span style={{ color: "#10B981" }}>folio</span>
+              <h1>
+                Sahih<span style={{ color: "#10B981" }}>folio</span>
+              </h1>
             </Link>
             <nav className="flex gap-4">
               {navItems.map((item, index) => (

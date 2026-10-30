@@ -12,9 +12,7 @@ export default function MethodologyPage() {
             The screening criteria that shape results, in one place.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </section>
     </main>
   );

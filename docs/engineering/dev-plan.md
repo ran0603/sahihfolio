@@ -549,7 +549,7 @@ Reject or flag a report if:
 | `/screening-report`             | Search and explanation landing page |
 | `/screening-report/[publicId]`  | Public report                       |
 | `/admin/securities`             | Security catalog                    |
-| `/admin/methodology`          | Methodology library                 |
+| `/admin/methodology`            | Methodology library                 |
 | `/admin/screening-reports`      | Report workflow                     |
 | `/admin/screening-reports/new`  | Create report                       |
 | `/admin/screening-reports/[id]` | Edit and preview report             |
