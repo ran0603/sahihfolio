@@ -1,5 +1,3 @@
-import HomeHero from "components/home/home-hero";
-import HomeBand from "components/home/home-band";
 import {
   ChartColumn,
   Clock4,
@@ -10,9 +8,8 @@ import {
   ShieldCheck,
   TriangleAlert,
 } from "lucide-react";
-import { Card, CardContent, Badge } from "@sahihfolio/ui";
 import Link from "next/link";
-import HomeSearch from "components/home/home-search";
+import "./home.css";
 
 export default async function HomePage() {
   const stepItems = [
@@ -34,7 +31,7 @@ export default async function HomePage() {
     },
   ];
 
-  const howitworksItems = [
+  const checkItems = [
     {
       title: "Access",
       description:
@@ -90,121 +87,761 @@ export default async function HomePage() {
 
   return (
     <>
-      <HomeHero />
-      <HomeBand />
-      <section className="w-full max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
-        <div className="mb-[36px]">
-          <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
-            How it works
-          </h2>
-          <p className="text-muted text-lg">
-            Three steps, about two minutes. You see useful results before we ask
-            for anything.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {stepItems.map((step, index) => (
-            <Card key={"step-" + index} elevated>
-              <CardContent>
-                <div className="flex flex-col gap-3 text-foreground">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#e3f6f4] dark:bg-brand-700 font-bold border border-pos text-foreground">
-                    {index + 1}
-                  </div>
-                  <h3 className="text-lg font-semibold">{step.label}</h3>
-                  <p className="text-muted">{step.description}</p>
-                  {step.hint && (
-                    <span className="flex items-center gap-2 text-sm text-muted">
-                      {step.hint.icon} {step.hint.text}
-                    </span>
-                  )}
+      <section className="hero">
+        <div className="wrap hero-grid">
+          <div>
+            <span className="eyebrow">
+              <i className="dot"></i>Free tool · Data last reviewed 1 Oct 2026
+            </span>
+            <h1 className="display">
+              Find halal-investing options available in your country.
+            </h1>
+            <p className="lead">
+              Compare brokers, ETFs, and managed services with clear fees,
+              coverage, and sourcing.
+            </p>
+            <form className="finder" noValidate>
+              <label className="lbl" htmlFor="u1">
+                Country of residence
+              </label>
+              <div className="sel-wrap">
+                <select
+                  className="country is-empty"
+                  id="u1"
+                  aria-describedby="u1-m"
+                  aria-invalid="false"
+                >
+                  <option value="">Select your country</option>
+                  <option value="MY">Malaysia</option>
+                  <option value="ID">Indonesia</option>
+                  <option value="SG">Singapore</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="US">United States</option>
+                  <option value="XX">Another country</option>
+                  <option value="__loading" disabled>
+                    Loading countries…
+                  </option>
+                  <option value="__error" disabled>
+                    Couldn't load countries
+                  </option>
+                </select>
+                <svg
+                  className="ic "
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </div>
+              <div className="msgs" id="u1-m" aria-live="polite">
+                <p className="fmsg" data-s="default">
+                  <svg
+                    className="ic "
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                  </svg>
+                  Select your country to see relevant options.
+                </p>
+                <p className="fmsg err" data-s="validation" role="alert" hidden>
+                  <svg
+                    className="ic "
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+                    <path d="M12 9v4"></path>
+                    <path d="M12 17h.01"></path>
+                  </svg>
+                  Select your country to continue.
+                </p>
+                <p className="fmsg ok" data-s="selected" hidden>
+                  <svg
+                    className="ic "
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m9 12 2 2 4-4"></path>
+                  </svg>
+                  <span>
+                    <b className="n">4</b> options reviewed for{" "}
+                    <b className="cn">Malaysia</b> ·{" "}
+                    <span className="cur">MYR</span> · Last reviewed 1 Oct 2026
+                  </span>
+                </p>
+                <div
+                  className="skel-wrap"
+                  data-s="loading"
+                  aria-hidden="true"
+                  hidden
+                >
+                  <i className="skel-line" style={{ width: "74%" }}></i>
+                  <i className="skel-line" style={{ width: "48%" }}></i>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+                <div data-s="unsupported" hidden>
+                  <div className="alert a-info " role="status">
+                    <svg
+                      className="ic a-ic"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 16v-4"></path>
+                      <path d="M12 8h.01"></path>
+                    </svg>
+                    <div className="a-body">
+                      <strong>No verified options for this country yet</strong>
+                      <p>
+                        We do not currently have verified options for this
+                        combination. We review new providers regularly.
+                      </p>
+                      <button
+                        type="button"
+                        className="link-btn"
+                        data-act="notify"
+                      >
+                        Tell me when more countries are added
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div data-s="error" hidden>
+                  <div className="alert a-error " role="alert">
+                    <svg
+                      className="ic a-ic"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="m15 9-6 6"></path>
+                      <path d="m9 9 6 6"></path>
+                    </svg>
+                    <div className="a-body">
+                      <strong>We couldn't load the country list</strong>
+                      <p>Check your connection, then try again.</p>
+                      <button
+                        type="button"
+                        className="link-btn"
+                        data-act="retry"
+                      >
+                        Try again
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="btn btn-primary full"
+                data-act="cta"
+                aria-busy="false"
+              >
+                <span
+                  className="inl"
+                  data-s="default validation selected unsupported error"
+                >
+                  Find my options{" "}
+                  <svg
+                    className="ic "
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </span>
+                <span className="inl" data-s="loading" hidden>
+                  <svg
+                    className="ic spin"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                  </svg>{" "}
+                  Finding your options…
+                </span>
+              </button>
+              <p className="micro">No email needed to see your results.</p>
+            </form>
+          </div>
+          <aside aria-label="Example result">
+            <div className="sample">
+              <div className="sample-h">
+                <div>
+                  <b>Example result</b>
+                  <span className="sub">Malaysia · ETF investing</span>
+                </div>
+                <span className="badge b-neutral">Sample data</span>
+              </div>
+              <div className="opt">
+                <div className="opt-top">
+                  <b>Example Broker A</b>
+                  <span className="badge b-info">Broker</span>
+                </div>
+                <dl className="kv">
+                  <dt>Trading</dt>
+                  <dd>0.10%</dd>
+                  <dt>FX</dt>
+                  <dd>0.50%</dd>
+                  <dt>Minimum</dt>
+                  <dd>MYR 100</dd>
+                  <dt>Screening</dt>
+                  <dd>Provider-stated · AAOIFI-aligned</dd>
+                </dl>
+                <p className="why">
+                  <svg
+                    className="ic "
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span>
+                    Included because it serves Malaysia-based investors, offers
+                    ETFs and provides Shariah-screening information.
+                  </span>
+                </p>
+                <p className="src">
+                  Source: <Link href="#">Provider pricing page</Link>{" "}
+                  <svg
+                    className="ic "
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M15 3h6v6"></path>
+                    <path d="M10 14 21 3"></path>
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  </svg>{" "}
+                  · reviewed 1 Oct 2026
+                </p>
+              </div>
+              <div className="opt">
+                <div className="opt-top">
+                  <b>Example Robo B</b>
+                  <span className="badge b-info">Robo-advisor</span>
+                </div>
+                <dl className="kv">
+                  <dt>Management</dt>
+                  <dd>0.45%</dd>
+                  <dt>FX</dt>
+                  <dd>Not stated</dd>
+                  <dt>Minimum</dt>
+                  <dd>MYR 500</dd>
+                  <dt>Screening</dt>
+                  <dd>Methodology not named by provider</dd>
+                </dl>
+                <p className="why">
+                  <svg
+                    className="ic "
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span>
+                    Included because it serves Malaysia-based investors and
+                    offers managed ETF portfolios. Verify the screening basis
+                    with the provider.
+                  </span>
+                </p>
+                <p className="src">
+                  Source: <Link href="#">Provider fee schedule</Link>{" "}
+                  <svg
+                    className="ic "
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M15 3h6v6"></path>
+                    <path d="M10 14 21 3"></path>
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  </svg>{" "}
+                  · reviewed 1 Oct 2026
+                </p>
+              </div>
+              <button type="button" className="more" data-act="more">
+                + 2 more options in this example
+              </button>
+              <div className="sample-f">
+                <svg
+                  className="ic "
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 6v6l4 2"></path>
+                </svg>
+                <span>
+                  Data last reviewed 1 Oct 2026. Illustrative only, not a real
+                  result.
+                </span>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
-      <section className="w-full bg-surface">
-        <div className="max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
-          <div className="mb-[36px]">
-            <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
-              What we check before you decide
-            </h2>
-            <p className="text-muted text-lg">
+
+      <div className="band">
+        <div className="wrap stats">
+          <div className="stat">
+            <b>5</b>
+            <span>Countries at launch</span>
+          </div>
+          <div className="stat">
+            <b>18</b>
+            <span>Providers reviewed</span>
+          </div>
+          <div className="stat">
+            <b>90 days</b>
+            <span>Longest gap between reviews</span>
+          </div>
+          <div className="stat">
+            <b>1 Oct 2026</b>
+            <span>Data last reviewed</span>
+          </div>
+        </div>
+      </div>
+
+      <section className="sec">
+        <div className="wrap">
+          <div className="sec-head">
+            <h2>How it works</h2>
+            <p>
+              Three steps, about two minutes. You see useful results before we
+              ask for anything.
+            </p>
+          </div>
+          <div className="steps">
+            {stepItems.map((step, index) => (
+              <div className="card" key={"step" + index}>
+                <div className="num">{index + 1}</div>
+                <h3>{step.label}</h3>
+                <p>{step.description}</p>
+                {step.hint && (
+                  <span className="time">
+                    {step.hint.icon} {step.hint.text}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="sec alt">
+        <div className="wrap">
+          <div className="sec-head">
+            <h2>What we check before you decide</h2>
+            <p>
               The things that change the outcome, shown side by side so
               trade-offs are visible.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {howitworksItems.map((ibox, index) => (
-              <Card key={"howitworks-" + index} elevated>
-                <CardContent>
-                  <div className="flex flex-col gap-2 text-foreground">
-                    <div className="bg-[#e8ebf0] dark:bg-[#2a303c] w-[40px] h-[40px] text-sec grid place-items-center rounded-lg">
-                      {ibox.icon}
-                    </div>
-                    <h3 className="text-lg font-semibold">{ibox.title}</h3>
-                    <p className="text-muted text-sm">{ibox.description}</p>
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="checks">
+            {checkItems.map((check, index) => (
+              <div className="card" key={"check" + index}>
+                <div className="ibox">{check.icon}</div>
+                <h3>{check.title}</h3>
+                <p>{check.description}</p>
+              </div>
             ))}
-            <Card elevated className="dark">
-              <CardContent className="">
-                <div className="flex flex-col gap-3 text-foreground">
-                  <h3 className="text-lg font-semibold">
-                    See how we source and review
-                  </h3>
-                  <p className="text-sm">
-                    Our methodology explains where data comes from and how often
-                    we update it.
-                  </p>
-                  <Link
-                    className="inline-flex items-center justify-center rounded-lg border border-muted p-[8px] font-semibold cursor-pointer bg-brand-900 dark:bg-surface dark:hover:bg-[#2a303c] hover:bg-brand-700 hover:shadow-sm w-[200px]"
-                    href="#"
-                  >
-                    <span className="text-[#F2F4F7]">Read the methodology</span>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="card cta-card">
+              <div>
+                <h3>See how we source and review</h3>
+                <p>
+                  Our methodology explains where data comes from and how often
+                  we update it.
+                </p>
+              </div>
+              <Link className="btn btn-secondary btn-sm" href="/methodology">
+                Read the methodology
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-      <HomeSearch />
-      <section className="w-full bg-surface">
-        <div className="max-w-[1200px] py-[72px] px-[24px] mx-auto text-foreground">
-          <div className="mb-[36px]">
-            <h2 className="font-bold text-3xl tracking-tight mb-[6px]">
-              Research, not rulings
-            </h2>
-            <p className="text-muted text-lg">
+
+      <section className="sec">
+        <div className="wrap teaser">
+          <div>
+            <h2>Looking up a specific stock or ETF?</h2>
+            <p className="sub-p">
+              Open a sourced Shariah-screening report for one security: the
+              methodology, data period, ratios and review date.
+            </p>
+            <div className="labels">
+              <span className="badge b-info">
+                <svg
+                  className="ic "
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                Shariah-screening information
+              </span>
+              <span className="badge b-neutral">
+                Provider-stated methodology
+              </span>
+            </div>
+          </div>
+          <div className="card flat">
+            <div className="qbox" data-q="idle" data-val="">
+              <label className="lbl" htmlFor="u2">
+                Search by ticker or company name
+              </label>
+              <div className="sel-wrap">
+                <input
+                  id="u2"
+                  className="inp has-ic qinput "
+                  type="search"
+                  placeholder="Try EXMP"
+                  autoComplete="off"
+                />
+                <svg
+                  className="ic lead-ic"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg>
+              </div>
+              <div className="chip-row" data-qs="idle">
+                <span>Sample reports:</span>
+                <button type="button" className="chip" data-fill="EXMP">
+                  EXMP
+                </button>
+                <button type="button" className="chip" data-fill="DEMO">
+                  DEMO
+                </button>
+                <button type="button" className="chip" data-fill="TEST">
+                  TEST
+                </button>
+              </div>
+              <div className="q-panel" data-qs="loading results none" hidden>
+                <div
+                  className="q-load"
+                  data-qs="loading"
+                  aria-busy="true"
+                  hidden
+                >
+                  <i className="skel-line" style={{ width: "60%" }}></i>
+                  <i className="skel-line" style={{ width: "85%" }}></i>
+                  <i className="skel-line" style={{ width: "40%" }}></i>
+                </div>
+                <div className="q-list" data-qs="results" hidden></div>
+                <div className="q-none" data-qs="none" hidden>
+                  <p>
+                    <b>
+                      No published report for “<span className="q-term"></span>”
+                      yet.
+                    </b>
+                  </p>
+                  <p className="muted">
+                    We publish a small number of fully sourced reports instead
+                    of thin pages. You can ask us to prioritise this one.
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    data-act="request-report"
+                  >
+                    Request this report
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec alt">
+        <div className="wrap">
+          <div className="sec-head">
+            <h2>Research, not rulings</h2>
+            <p>
               We explain what a methodology checks and what the data says. You
               decide what to do with it.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {researchItems.map((ibox, index) => (
-              <Card key={"research-" + index} elevated>
-                <CardContent>
-                  <div className="flex flex-col gap-2 text-foreground">
-                    <div className="bg-[#e8ebf0] dark:bg-[#2a303c] w-[40px] h-[40px] text-sec grid place-items-center rounded-lg">
-                      {ibox.icon}
-                    </div>
-                    <h3 className="text-lg font-semibold">{ibox.title}</h3>
-                    <p className="text-muted text-sm">{ibox.description}</p>
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="pgrid">
+            {researchItems.map((item, index) => (
+              <div className="card" key={"research" + index}>
+                <div className="ibox">{item.icon}</div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
             ))}
           </div>
-          <div className="flex flex-wrap items-center gap-2 mt-[20px]">
-            <Badge variant="neutral">Shariah-screening information</Badge>
-            <Badge variant="neutral">Provider-stated methodology</Badge>
-            <Badge variant="neutral">Sahihfolio editorial note</Badge>
-            <Badge variant="warning">
-              <TriangleAlert className="h-[14px] w-[14px]" />
+          <div className="labels">
+            <span className="badge b-info">Shariah-screening information</span>
+            <span className="badge b-neutral">Provider-stated methodology</span>
+            <span className="badge b-sand">Sahihfolio editorial note</span>
+            <span className="badge b-warn">
+              <TriangleAlert className="ic w-[14px] h-[14px]" />
               Not a religious ruling
-            </Badge>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap">
+          <div className="card signup-card">
+            <div>
+              <h2>Get research updates when data changes</h2>
+              <p className="sub-p">
+                Practical updates, not daily hype. We email when provider
+                details or screening information changes.
+              </p>
+            </div>
+            <div>
+              <form className="signup" data-fs="idle" noValidate>
+                <div data-f="idle email-error consent-error loading">
+                  <label className="lbl" htmlFor="u3">
+                    Email address
+                  </label>
+                  <div className="row">
+                    <input
+                      id="u3"
+                      className="inp semail"
+                      type="email"
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                      aria-invalid="false"
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-submit=""
+                      aria-busy="false"
+                    >
+                      <span
+                        className="inl"
+                        data-f="idle email-error consent-error"
+                      >
+                        Join updates
+                      </span>
+                      <span className="inl" data-f="loading" hidden>
+                        <svg
+                          className="ic spin"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                        </svg>{" "}
+                        Joining…
+                      </span>
+                    </button>
+                  </div>
+                  <p
+                    className="fmsg err"
+                    data-f="email-error"
+                    role="alert"
+                    hidden
+                  >
+                    <svg
+                      className="ic "
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+                      <path d="M12 9v4"></path>
+                      <path d="M12 17h.01"></path>
+                    </svg>
+                    Enter a valid email address, for example you@example.com.
+                  </p>
+                  <label className="chk">
+                    <input type="checkbox" className="sconsent" />
+                    <span>
+                      I agree to receive research updates from Sahihfolio. I can
+                      unsubscribe at any time.
+                    </span>
+                  </label>
+                  <p
+                    className="fmsg err"
+                    data-f="consent-error"
+                    role="alert"
+                    hidden
+                  >
+                    <svg
+                      className="ic "
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+                      <path d="M12 9v4"></path>
+                      <path d="M12 17h.01"></path>
+                    </svg>
+                    Confirm that you agree to receive emails to continue.
+                  </p>
+                </div>
+                <div data-f="success" hidden>
+                  <div className="alert a-success flat" role="status">
+                    <svg
+                      className="ic a-ic"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                    <div className="a-body">
+                      <strong>You're on the list</strong>
+                      <p>
+                        We will email you when provider data or screening
+                        information changes. Check your inbox to confirm.
+                      </p>
+                      <button
+                        type="button"
+                        className="link-btn"
+                        data-act="reset-form"
+                      >
+                        Use a different email
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </section>

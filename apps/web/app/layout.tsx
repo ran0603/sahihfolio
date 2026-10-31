@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
 import { ThemeProvider } from "./theme-provider";
 import { Header } from "components/header";
+import { Footer } from "components/footer";
 import { siteConfig } from "src/lib/site";
 
 export const metadata: Metadata = {
@@ -67,7 +67,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-background text-foreground flex flex-col items-center min-h-screen">
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -75,59 +75,119 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-
-          <div className="scroll">
-            <main className="w-full">{children}</main>
-          </div>
-
-          <footer className="bg-[#0B1F3A] dark:bg-[#161B26] text-white border border-b border-border dark:border-[#2A3243] w-full flex items-center justify-center pt-[56px] pb-[32px]">
-            <div className="max-w-[1200px]">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                <div className="col-span-2">
-                  <Link
-                    href="/"
-                    style={{
-                      fontSize: "1.25rem",
-                      fontWeight: "700",
-                      letterSpacing: "-0.5px",
-                      marginRight: "2rem",
-                    }}
+          <div className="banners" hidden>
+            <div className="banner b-warn" role="status" data-sb="stale" hidden>
+              <div className="wrap banner-in">
+                <svg
+                  className="ic "
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+                  <path d="M12 9v4"></path>
+                  <path d="M12 17h.01"></path>
+                </svg>
+                <p>
+                  <strong>Some data may be out of date.</strong> A few provider
+                  records were last reviewed more than 90 days ago. Each result
+                  shows its own review date.
+                </p>
+                <button
+                  type="button"
+                  className="icon-btn sm"
+                  aria-label="Dismiss"
+                  data-act="banner-close"
+                >
+                  <svg
+                    className="ic "
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
                   >
-                    Sahih<span style={{ color: "#10B981" }}>folio</span>
-                  </Link>
-                  <p className="text-muted mt-4 max-w-[34ch]">
-                    Halal-investing research with sources, dates and limitations
-                    in plain view.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h5 className="mb-2 font-bold">Tools</h5>
-                  <a href="#">Options finder</a>
-                  <a href="#">Screening report</a>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h5 className="mb-2 font-bold">Trust</h5>
-                  <a href="#">Methodology</a>
-                  <a href="#">Disclosures</a>
-                  <a href="#">Data review log</a>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h5 className="mb-2 font-bold">Company</h5>
-                  <a href="#">Privacy</a>
-                  <a href="#">Contact</a>
-                </div>
-              </div>
-              <div className="mt-[36px] pt-[24px] border-t border-muted">
-                <span className="font-bold">Disclaimer.</span>{" "}
-                <span className="text-muted">
-                  Sahihfolio provides general educational information. It does
-                  not provide personalised investment, tax, legal, accounting,
-                  or Shariah advice. Verify details directly with each provider
-                  before making a decision. Data last reviewed 1 October 2026.
-                </span>
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                  </svg>
+                </button>
               </div>
             </div>
-          </footer>
+            <div
+              className="banner b-off"
+              role="status"
+              data-sb="offline"
+              hidden
+            >
+              <div className="wrap banner-in">
+                <svg
+                  className="ic "
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 20h.01"></path>
+                  <path d="M8.5 16.429a5 5 0 0 1 7 0"></path>
+                  <path d="M5 12.859a10 10 0 0 1 5.17-2.69"></path>
+                  <path d="M19 12.859a10 10 0 0 0-2.007-1.523"></path>
+                  <path d="M2 8.82a15 15 0 0 1 4.177-2.643"></path>
+                  <path d="M22 8.82a15 15 0 0 0-11.288-3.764"></path>
+                  <path d="m2 2 20 20"></path>
+                </svg>
+                <p>
+                  <strong>You’re offline.</strong> Your answers are saved on
+                  this device. Reconnect to see your options.
+                </p>
+                <button type="button" className="link-btn" data-act="reconnect">
+                  Retry
+                </button>
+                <button
+                  type="button"
+                  className="icon-btn sm"
+                  aria-label="Dismiss"
+                  data-act="banner-close"
+                >
+                  <svg
+                    className="ic "
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="scroll">
+            <main>{children}</main>
+          </div>
+
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

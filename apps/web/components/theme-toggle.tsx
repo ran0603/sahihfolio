@@ -34,7 +34,8 @@ export function ThemeToggle() {
         setTheme(next);
         setThemeCookie(next);
       }}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-lg border transition-colors bg-[#0B1F3A] dark:bg-[#161B26] text-white hover:bg-[#2D4B73] dark:hover:bg-[#06231A] cursor-pointer"
+      className={isDark ? "icon-btn on-dark" : "icon-btn on-light"}
+      data-act="theme"
     >
       {isDark ? <Sun /> : <Moon />}
     </button>
