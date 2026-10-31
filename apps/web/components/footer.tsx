@@ -1,12 +1,28 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export function Footer() {
   const pathname = usePathname();
 
   if (pathname === "/find" || pathname?.startsWith("/find/")) {
-    return null;
+    return (
+      <footer className="pfoot">
+        <div className="wrap">
+          <p>
+            Sahihfolio provides general educational information. It does not
+            provide personalized investment, tax, legal, accounting, or Shariah
+            advice. Verify details directly with each provider before making a
+            decision.
+          </p>
+          <nav>
+            <Link href="/methodology">Methodology</Link>
+            <Link href="/disclosures">Disclosures</Link>
+          </nav>
+        </div>
+      </footer>
+    );
   }
 
   return (
@@ -14,9 +30,9 @@ export function Footer() {
       <div className="wrap">
         <div className="foot-grid">
           <div className="foot-brand">
-            <a className="logo" href="#">
+            <Link className="logo" href="/">
               <span className="mono">Sf</span>Sahihfolio
-            </a>
+            </Link>
             <p>
               Halal-investing research with sources, dates and limitations in
               plain view.
@@ -24,19 +40,19 @@ export function Footer() {
           </div>
           <div>
             <h5>Tools</h5>
-            <a href="#">Options finder</a>
-            <a href="#">Screening report</a>
+            <Link href="/find">Options finder</Link>
+            <Link href="/screening-report">Screening report</Link>
           </div>
           <div>
             <h5>Trust</h5>
-            <a href="#">Methodology</a>
-            <a href="#">Disclosures</a>
-            <a href="#">Data review log</a>
+            <Link href="/methodology">Methodology</Link>
+            <Link href="/disclosures">Disclosures</Link>
+            <Link href="#">Data review log</Link>
           </div>
           <div>
             <h5>Company</h5>
-            <a href="#">Privacy</a>
-            <a href="#">Contact</a>
+            <Link href="#">Privacy</Link>
+            <Link href="#">Contact</Link>
           </div>
         </div>
         <div className="disc">
