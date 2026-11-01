@@ -12,7 +12,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "npx node --import tsx --env-file=.env node_modules/drizzle-kit/index.mjs migrate",
+    "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx src/seed.ts",
     "db:seed:providers": "tsx src/seed-providers.ts"

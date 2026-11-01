@@ -11,6 +11,26 @@ concurrency:
 jobs:
   preview:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: sahihfolio_preview
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/sahihfolio_preview
+      NEXT_TELEMETRY_DISABLED: 1
+
     steps:
       - uses: actions/checkout@v4
 
@@ -23,9 +43,17 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      
+      - name: Check PostgreSQL connectivity
+        env:
+          PGPASSWORD: postgres
+        run: |
+          psql \
+            "postgresql://postgres:postgres@localhost:5432/sahihfolio_preview" \
+            -c "SELECT version();"
+
+      - name: Apply database migrations
+        run: pnpm --filter @sahihfolio/database db:migrate
 
       - name: Build web application preview
         run: pnpm --filter @sahihfolio/web build
-        env:
-          NODE_ENV: production
-          NEXT_TELEMETRY_DISABLED: 1

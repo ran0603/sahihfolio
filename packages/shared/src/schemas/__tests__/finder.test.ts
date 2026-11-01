@@ -9,9 +9,10 @@ describe("finderIntakeSchema", () => {
       expect(result.data.countryCode).toBe("MY");
       expect(result.data.investorType).toBe("beginner");
       expect(result.data.productInterest).toBe("all");
-      expect(result.data.preferences.islamicAccountRequired).toBe(false);
+      expect(result.data.preferences.halalScreeningRequired).toBe(false);
+      expect(result.data.preferences.islamicAccountPreferred).toBe(false);
       expect(result.data.preferences.localCurrencyPreferred).toBe(false);
-      expect(result.data.preferences.screeningToolIntegrated).toBe(false);
+      expect(result.data.preferences.shariahMethodology).toBeUndefined();
     }
   });
 
