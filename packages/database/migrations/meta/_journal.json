@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1792068106179,
-      "tag": "0000_absent_quicksilver",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1793521100853,
-      "tag": "0001_brief_hex",
+      "when": 1793575507904,
+      "tag": "0000_cooing_the_initiative",
       "breakpoints": true
     }
   ]
