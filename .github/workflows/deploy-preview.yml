@@ -44,8 +44,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Check PostgreSQL connectivity
+        run: |
+          pnpm dlx postgres@3.4.5 \
+            "postgresql://postgres:postgres@localhost:5432/sahihfolio_preview" \
+            "SELECT 1"
+
       - name: Apply database migrations
-        run: pnpm --filter @sahihfolio/database exec db:migrate --verbose
+        run: pnpm --filter @sahihfolio/database db:migrate
 
       - name: Build web application preview
         run: pnpm --filter @sahihfolio/web build
