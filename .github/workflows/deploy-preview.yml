@@ -43,12 +43,14 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
+      
       - name: Check PostgreSQL connectivity
+        env:
+          PGPASSWORD: postgres
         run: |
-          pnpm dlx postgres@3.4.5 \
+          psql \
             "postgresql://postgres:postgres@localhost:5432/sahihfolio_preview" \
-            "SELECT 1"
+            -c "SELECT version();"
 
       - name: Apply database migrations
         run: pnpm --filter @sahihfolio/database db:migrate
