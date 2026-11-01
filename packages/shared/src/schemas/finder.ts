@@ -7,13 +7,17 @@ export const finderIntakeSchema = z.object({
     .length(2, "Select your country of residence.")
     .transform((value) => value.toUpperCase()),
 
-  investorType: z.enum(INVESTOR_TYPES, {
-    message: "Select your investor type.",
-  }),
+  investorType: z
+    .enum(INVESTOR_TYPES, {
+      message: "Select your investor type.",
+    })
+    .default("beginner"),
 
-  productInterest: z.enum([...ASSET_TYPES, "all", "unsure"], {
-    message: "Select the type of investment you are interested in.",
-  }),
+  productInterest: z
+    .enum([...ASSET_TYPES, "all", "unsure"], {
+      message: "Select the type of investment you are interested in.",
+    })
+    .default("all"),
 
   startingAmount: z
     .number()

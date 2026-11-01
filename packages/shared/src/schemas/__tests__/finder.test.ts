@@ -12,7 +12,7 @@ describe("finderIntakeSchema", () => {
       expect(result.data.preferences.halalScreeningRequired).toBe(false);
       expect(result.data.preferences.islamicAccountPreferred).toBe(false);
       expect(result.data.preferences.localCurrencyPreferred).toBe(false);
-      expect(result.data.preferences.shariahMethodology).toBe(false);
+      expect(result.data.preferences.shariahMethodology).toBeUndefined();
     }
   });
 
