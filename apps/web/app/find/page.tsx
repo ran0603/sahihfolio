@@ -1,7 +1,7 @@
 "use client";
 
 import "./find.css";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -22,6 +22,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const COUNTRIES: Record<
   string,
@@ -44,12 +45,12 @@ const INVESTOR_TYPES: Record<
     a: "New to investing. Explain terms and keep it simple.",
     i: <Sprout className="ic h-[22px] w-[22px]" />,
   },
-  self: {
+  self_directed: {
     n: "Self-directed",
     a: "Comfortable choosing and monitoring my own investments.",
     i: <Compass className="ic h-[22px] w-[22px]" />,
   },
-  saver: {
+  long_term_saver: {
     n: "Long-term saver",
     a: "Focused on regular contributions and low ongoing costs.",
     i: <Calendar className="ic h-[22px] w-[22px]" />,
@@ -149,9 +150,13 @@ const PREFERENCES: Record<
   },
 };
 
-export default function FinderPage() {
+function FinderContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const country = searchParams.get("country");
+
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [selectedCountry, setSelectedCountry] = useState<string>(country || "");
   const [selectedInvestorType, setSelectedInvestorType] = useState<string>("");
   const [selectedInterest, setSelectedInterest] = useState<string>("");
   const [selectedStartingAmount, setSelectedStartingAmount] =
@@ -168,6 +173,38 @@ export default function FinderPage() {
     setSelectedMonthlyContribution("");
     setSelectedPreferences([]);
     setCurrentStep(1);
+  };
+
+  const handleSubmit = async () => {
+    console.log("hey");
+    if (currentStep === 5) {
+      const response = await fetch("/api/find-options", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          countryCode: selectedCountry,
+          investorType: selectedInvestorType,
+          productInterest: selectedInterest,
+          startingAmount: Number(selectedStartingAmount),
+          recurringContribution: Number(selectedMonthlyContribution),
+          preferences: {
+            halalScreeningRequired: selectedPreferences.includes("screening"),
+            islamicAccountPreferred: selectedPreferences.includes("islamic"),
+            localCurrencyPreferred: selectedPreferences.includes("currency"),
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      router.push(`/results/${data.resultId}`);
+    } else {
+      setCurrentStep(currentStep + 1);
+    }
   };
 
   return (
@@ -940,10 +977,14 @@ export default function FinderPage() {
                   className="btn btn-primary"
                   data-act="next"
                   aria-busy="false"
-                  onClick={() => setCurrentStep(currentStep + 1)}
+                  onClick={
+                    currentStep === 5
+                      ? handleSubmit
+                      : () => setCurrentStep(currentStep + 1)
+                  }
                 >
                   <span className="inl" data-nl="continue">
-                    {currentStep === 5 ? "Continue" : "Show my options"}{" "}
+                    {currentStep !== 5 ? "Continue" : "Show my options"}{" "}
                     <ArrowRight className="ic h-[18px] w-[18px]" />
                   </span>
                   <span className="inl" data-nl="loading" hidden>
@@ -992,5 +1033,13 @@ export default function FinderPage() {
         </div>
       </div>
     </>
+  );
+}
+
+export default function FinderPage() {
+  return (
+    <Suspense fallback={null}>
+      <FinderContent />
+    </Suspense>
   );
 }

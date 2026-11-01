@@ -260,8 +260,8 @@ export default function HomePage() {
               >
                 {isLoading ? (
                   <span className="inl" data-s="loading">
-                    <LoaderCircle className="ic spin h-[18px] w-[18px]" /> Finding
-                    your options…
+                    <LoaderCircle className="ic spin h-[18px] w-[18px]" />{" "}
+                    Finding your options…
                   </span>
                 ) : (
                   <span
