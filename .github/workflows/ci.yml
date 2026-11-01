@@ -46,7 +46,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Apply database migrations
-        run: pnpm --filter @sahihfolio/database db:migrate
+        run: pnpm --filter @sahihfolio/database db:migrate --verbose
 
       - name: Lint
         run: pnpm lint
