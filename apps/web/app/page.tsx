@@ -1,89 +1,116 @@
+"use client";
+
 import {
+  ArrowRight,
   ChartColumn,
+  ChevronDown,
+  CircleCheck,
   Clock4,
   FileText,
   Globe,
   Info,
+  LoaderCircle,
   Percent,
   ShieldCheck,
   TriangleAlert,
 } from "lucide-react";
 import Link from "next/link";
 import "./home.css";
+import { useState } from "react";
 
-export default async function HomePage() {
-  const stepItems = [
-    {
-      label: "Choose your country",
-      description:
-        "Availability and rules depend on where you live, so we start there.",
-    },
-    {
-      label: "Answer a few questions",
-      description:
-        "Tell us what you want to invest in. Amounts and preferences are optional.",
-      hint: { icon: <Clock4 className="h-4 w-4" />, text: "About two minutes" },
-    },
-    {
-      label: "Compare sourced options",
-      description:
-        "See why each option appeared, with fees, coverage, sources and review dates.",
-    },
-  ];
+const stepItems = [
+  {
+    label: "Choose your country",
+    description:
+      "Availability and rules depend on where you live, so we start there.",
+  },
+  {
+    label: "Answer a few questions",
+    description:
+      "Tell us what you want to invest in. Amounts and preferences are optional.",
+    hint: { icon: <Clock4 className="h-4 w-4" />, text: "About two minutes" },
+  },
+  {
+    label: "Compare sourced options",
+    description:
+      "See why each option appeared, with fees, coverage, sources and review dates.",
+  },
+];
 
-  const checkItems = [
-    {
-      title: "Access",
-      description:
-        "Which providers accept investors from your country, and what restrictions apply.",
-      icon: <Globe className="h-[22px] w-[22px]" />,
-    },
-    {
-      title: "Fees",
-      description:
-        "Trading, currency conversion, custody and management fees, side by side.",
-      icon: <Percent className="h-[22px] w-[22px]" />,
-    },
-    {
-      title: "Markets and ETFs",
-      description:
-        "Which exchanges, asset types and ETFs each provider offers.",
-      icon: <ChartColumn className="h-[22px] w-[22px]" />,
-    },
-    {
-      title: "Screening methodology",
-      description:
-        "Which Shariah-screening methodology is used, and who states it.",
-      icon: <ShieldCheck className="h-[22px] w-[22px]" />,
-    },
-    {
-      title: "Disclosures",
-      description:
-        "Affiliate relationships, account requirements and source documents.",
-      icon: <FileText className="h-[22px] w-[22px]" />,
-    },
-  ];
+const checkItems = [
+  {
+    title: "Access",
+    description:
+      "Which providers accept investors from your country, and what restrictions apply.",
+    icon: <Globe className="h-[22px] w-[22px]" />,
+  },
+  {
+    title: "Fees",
+    description:
+      "Trading, currency conversion, custody and management fees, side by side.",
+    icon: <Percent className="h-[22px] w-[22px]" />,
+  },
+  {
+    title: "Markets and ETFs",
+    description: "Which exchanges, asset types and ETFs each provider offers.",
+    icon: <ChartColumn className="h-[22px] w-[22px]" />,
+  },
+  {
+    title: "Screening methodology",
+    description:
+      "Which Shariah-screening methodology is used, and who states it.",
+    icon: <ShieldCheck className="h-[22px] w-[22px]" />,
+  },
+  {
+    title: "Disclosures",
+    description:
+      "Affiliate relationships, account requirements and source documents.",
+    icon: <FileText className="h-[22px] w-[22px]" />,
+  },
+];
 
-  const researchItems = [
-    {
-      title: "Evidence over opinion",
-      description:
-        "Every claim links to a source and shows the date we reviewed it.",
-      icon: <FileText className="h-[22px] w-[22px]" />,
-    },
-    {
-      title: "Methodology on show",
-      description:
-        "Screening methodologies differ. We show which one was used and what it checks.",
-      icon: <ShieldCheck className="h-[22px] w-[22px]" />,
-    },
-    {
-      title: "Not advice",
-      description:
-        "We do not issue religious rulings or personalised investment, tax or legal advice.",
-      icon: <Info className="h-[22px] w-[22px]" />,
-    },
-  ];
+const researchItems = [
+  {
+    title: "Evidence over opinion",
+    description:
+      "Every claim links to a source and shows the date we reviewed it.",
+    icon: <FileText className="h-[22px] w-[22px]" />,
+  },
+  {
+    title: "Methodology on show",
+    description:
+      "Screening methodologies differ. We show which one was used and what it checks.",
+    icon: <ShieldCheck className="h-[22px] w-[22px]" />,
+  },
+  {
+    title: "Not advice",
+    description:
+      "We do not issue religious rulings or personalised investment, tax or legal advice.",
+    icon: <Info className="h-[22px] w-[22px]" />,
+  },
+];
+
+const COUNTRIES: Record<
+  string,
+  { n: string; c: string; k: number; days: number; rev: string }
+> = {
+  MY: { n: "Malaysia", c: "MYR", k: 4, days: 14, rev: "1 Oct 2026" },
+  ID: { n: "Indonesia", c: "IDR", k: 3, days: 112, rev: "25 Jun 2026" },
+  SG: { n: "Singapore", c: "SGD", k: 3, days: 14, rev: "1 Oct 2026" },
+  GB: { n: "United Kingdom", c: "GBP", k: 5, days: 14, rev: "1 Oct 2026" },
+  US: { n: "United States", c: "USD", k: 6, days: 14, rev: "1 Oct 2026" },
+  XX: { n: "Another country", c: "N/A", k: 0, days: 14, rev: "1 Oct 2026" },
+};
+
+export default function HomePage() {
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const gotoFindPage = () => {
+    if (!selectedCountry) return;
+    setIsLoading(true);
+    window.location.href = `/find?country=${selectedCountry}`;
+  };
 
   return (
     <>
@@ -106,101 +133,59 @@ export default async function HomePage() {
               </label>
               <div className="sel-wrap">
                 <select
-                  className="country is-empty"
+                  className={`country ${selectedCountry === "" ? "is-empty" : ""}`}
                   id="u1"
                   aria-describedby="u1-m"
                   aria-invalid="false"
+                  onChange={(e) => setSelectedCountry(e.target.value)}
+                  value={selectedCountry}
                 >
                   <option value="">Select your country</option>
-                  <option value="MY">Malaysia</option>
-                  <option value="ID">Indonesia</option>
-                  <option value="SG">Singapore</option>
-                  <option value="GB">United Kingdom</option>
-                  <option value="US">United States</option>
-                  <option value="XX">Another country</option>
+                  {Object.entries(COUNTRIES).map(([code, country]) => (
+                    <option key={code} value={code}>
+                      {country.n}
+                    </option>
+                  ))}
                   <option value="__loading" disabled>
                     Loading countries…
                   </option>
                   <option value="__error" disabled>
-                    Couldn't load countries
+                    Couldn&apos;t load countries
                   </option>
                 </select>
-                <svg
-                  className="ic "
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
+                <ChevronDown className="ic h-[20px] w-[20px]" />
               </div>
               <div className="msgs" id="u1-m" aria-live="polite">
-                <p className="fmsg" data-s="default">
-                  <svg
-                    className="ic "
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 16v-4"></path>
-                    <path d="M12 8h.01"></path>
-                  </svg>
-                  Select your country to see relevant options.
-                </p>
-                <p className="fmsg err" data-s="validation" role="alert" hidden>
-                  <svg
-                    className="ic "
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
-                    <path d="M12 9v4"></path>
-                    <path d="M12 17h.01"></path>
-                  </svg>
-                  Select your country to continue.
-                </p>
-                <p className="fmsg ok" data-s="selected" hidden>
-                  <svg
-                    className="ic "
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="m9 12 2 2 4-4"></path>
-                  </svg>
-                  <span>
-                    <b className="n">4</b> options reviewed for{" "}
-                    <b className="cn">Malaysia</b> ·{" "}
-                    <span className="cur">MYR</span> · Last reviewed 1 Oct 2026
-                  </span>
-                </p>
+                {!selectedCountry && (
+                  <p className="fmsg" data-c="default">
+                    <Info className="ic h-[16px] w-[16px]" />
+                    Select your country to see relevant options.
+                  </p>
+                )}
+                {selectedCountry === "__error" && (
+                  <p className="fmsg err" data-c="validation" role="alert">
+                    <TriangleAlert className="ic h-[16px] w-[16px]" />
+                    Select your country to continue.
+                  </p>
+                )}
+                {selectedCountry && selectedCountry !== "XX" && (
+                  <p className="fmsg ok" data-s="selected">
+                    <CircleCheck className="ic h-[16px] w-[16px]" />
+                    <span>
+                      <b className="cc-k">{COUNTRIES[selectedCountry].k}</b>{" "}
+                      options reviewed for{" "}
+                      <b className="cc-name">{COUNTRIES[selectedCountry].n}</b>{" "}
+                      ·{" "}
+                      <span className="cc-cur">
+                        {COUNTRIES[selectedCountry].c}
+                      </span>{" "}
+                      · Last reviewed{" "}
+                      <span className="cc-rev">
+                        {COUNTRIES[selectedCountry].rev}
+                      </span>
+                    </span>
+                  </p>
+                )}
                 <div
                   className="skel-wrap"
                   data-s="loading"
@@ -210,40 +195,29 @@ export default async function HomePage() {
                   <i className="skel-line" style={{ width: "74%" }}></i>
                   <i className="skel-line" style={{ width: "48%" }}></i>
                 </div>
-                <div data-s="unsupported" hidden>
-                  <div className="alert a-info " role="status">
-                    <svg
-                      className="ic a-ic"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <path d="M12 16v-4"></path>
-                      <path d="M12 8h.01"></path>
-                    </svg>
-                    <div className="a-body">
-                      <strong>No verified options for this country yet</strong>
-                      <p>
-                        We do not currently have verified options for this
-                        combination. We review new providers regularly.
-                      </p>
-                      <button
-                        type="button"
-                        className="link-btn"
-                        data-act="notify"
-                      >
-                        Tell me when more countries are added
-                      </button>
+                {selectedCountry === "XX" && (
+                  <div style={{ marginTop: 14 }} data-c="unsupported">
+                    <div className="alert a-info" role="status">
+                      <Info className="ic a-ic h-[20px] w-[20px]" />
+                      <div className="a-body">
+                        <strong>
+                          No verified options for this country yet
+                        </strong>
+                        <p>
+                          We do not currently have verified options for this
+                          combination. We review new providers regularly.
+                        </p>
+                        <button
+                          type="button"
+                          className="link-btn"
+                          data-act="notify"
+                        >
+                          Tell me when more countries are added
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
                 <div data-s="error" hidden>
                   <div className="alert a-error " role="alert">
                     <svg
@@ -281,45 +255,22 @@ export default async function HomePage() {
                 className="btn btn-primary full"
                 data-act="cta"
                 aria-busy="false"
+                disabled={!selectedCountry || selectedCountry === "XX"}
+                onClick={gotoFindPage}
               >
-                <span
-                  className="inl"
-                  data-s="default validation selected unsupported error"
-                >
-                  Find my options{" "}
-                  <svg
-                    className="ic "
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
+                {isLoading ? (
+                  <span className="inl" data-s="loading">
+                    <LoaderCircle className="ic spin h-[18px] w-[18px]" /> Finding
+                    your options…
+                  </span>
+                ) : (
+                  <span
+                    className="inl"
+                    data-s="default validation selected unsupported error"
                   >
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </span>
-                <span className="inl" data-s="loading" hidden>
-                  <svg
-                    className="ic spin"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                  </svg>{" "}
-                  Finding your options…
-                </span>
+                    Find my options <ArrowRight className="h-[18px] w-[18px]" />
+                  </span>
+                )}
               </button>
               <p className="micro">No email needed to see your results.</p>
             </form>
