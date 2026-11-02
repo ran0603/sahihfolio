@@ -16,6 +16,7 @@ import {
   pgEnum,
 } from "drizzle-orm/pg-core";
 import { users } from "./users";
+import { ProviderType } from "@sahihfolio/shared";
 
 export const reviewStatusEnum = pgEnum("review_status", [
   "draft",
@@ -29,7 +30,7 @@ export const providers = pgTable(
     id: uuid("id").primaryKey().defaultRandom(),
     slug: text("slug").notNull().unique(),
     name: text("name").notNull(),
-    type: text("type").notNull(),
+    type: text("type").$type<ProviderType>().notNull(),
 
     countries: jsonb("countries").$type<string[]>().notNull().default([]),
 
@@ -67,6 +68,7 @@ export const providers = pgTable(
     pros: jsonb("pros").$type<string[]>().notNull().default([]),
     cons: jsonb("cons").$type<string[]>().notNull().default([]),
 
+    websiteUrl: text("website_url"),
     disclosureUrl: text("disclosure_url").notNull(),
 
     status: text("status").notNull().default("draft"),

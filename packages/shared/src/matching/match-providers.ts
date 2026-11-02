@@ -66,8 +66,8 @@ function hasBeginnerSuitability(provider: Provider): boolean {
 }
 
 function supportsIslamicAccount(provider: Provider): boolean {
-  return provider.accountRequirements.some((requirement) =>
-    requirement.toLowerCase().includes("islamic"),
+  return provider.accountRequirements.some((accountRequirement) =>
+    accountRequirement.requirement.toLowerCase().includes("islamic"),
   );
 }
 

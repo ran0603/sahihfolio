@@ -138,11 +138,41 @@ describe("matchProviders", () => {
       [
         makeProvider({
           id: "islamic",
-          accountRequirements: ["Islamic account available"],
+          accountRequirements: [
+            {
+              requirement: "Islamic account available",
+              category: "brokerage",
+              mandatory: true,
+              notes: "islamic account available",
+              source: {
+                id: "source_1",
+                label: "source_1",
+                url: "https://example.com/source_1",
+                sourceType: "official",
+                retrievedAt: new Date("2026-10-01T00:00:00Z"),
+                confidence: "high",
+              },
+            },
+          ],
         }),
         makeProvider({
           id: "standard",
-          accountRequirements: ["Standard brokerage account"],
+          accountRequirements: [
+            {
+              requirement: "Standard brokerage account",
+              category: "brokerage",
+              mandatory: true,
+              notes: "standard account",
+              source: {
+                id: "source_2",
+                label: "source_2",
+                url: "https://example.com/source_2",
+                sourceType: "official",
+                retrievedAt: new Date("2026-10-01T00:00:00Z"),
+                confidence: "high",
+              },
+            },
+          ],
         }),
       ],
       malaysia,

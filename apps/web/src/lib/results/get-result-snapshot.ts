@@ -28,7 +28,7 @@ export async function getResultSnapshot(
   if (!row) return null;
 
   const parsedOutput = resultSnapshotOutputSchema.safeParse(row.output);
-  console.log(parsedOutput)
+  console.log(parsedOutput);
 
   if (!parsedOutput.success) {
     // Log this in your error tracker; do not render unvalidated DB JSON.

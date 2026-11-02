@@ -1,3 +1,4 @@
+import { Source } from "../constants";
 import type { ProviderType, AssetType } from "../constants/providers";
 
 export interface ProviderFees {
@@ -16,6 +17,22 @@ export interface HalalScreeningInfo {
   sourceUrl?: string;
 }
 
+export interface AccountRequirements {
+  requirement: string;
+  category:
+    | "identity"
+    | "residency"
+    | "tax"
+    | "banking"
+    | "brokerage"
+    | "minimum_deposit"
+    | "documentation"
+    | "other";
+  mandatory: boolean;
+  notes?: string;
+  source: Source;
+}
+
 export interface Provider {
   id: string;
   name: string;
@@ -27,10 +44,10 @@ export interface Provider {
   halalScreening: HalalScreeningInfo;
   fees: ProviderFees;
   minimumInvestment?: string;
-  accountRequirements: string[];
+  accountRequirements: AccountRequirements[];
   pros: string[];
   cons: string[];
-  websiteUrl: string;
+  websiteUrl?: string;
   disclosureUrl: string;
   affiliateUrl?: string;
   lastReviewedAt: string | Date;

@@ -1,14 +1,30 @@
 import "./results.css";
-import { ArrowLeft, ArrowRight, CircleCheck, Clock, Copy, ExternalLink, Flag, Info, Lock, Mail, Pen, Printer, Share2, ShieldCheck, TriangleAlert } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CircleCheck,
+  Clock,
+  Copy,
+  ExternalLink,
+  Flag,
+  Info,
+  Lock,
+  Mail,
+  Pen,
+  Printer,
+  Share2,
+  ShieldCheck,
+  TriangleAlert,
+} from "lucide-react";
 import Link from "next/link";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 
 export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
-  console.log(snapshot)
+  console.log(snapshot);
   return (
     <div className="wrap">
-      <Link className="crumb" href="#" data-act="change-country">
-        <ArrowLeft className="ic h-[16px] w-[16px]" />{" "}Back to the finder
+      <Link className="crumb" href="/find" data-act="change-country">
+        <ArrowLeft className="ic h-[16px] w-[16px]" /> Back to the finder
       </Link>
       <div data-view="">
         <section data-m="head" className="res-head">
@@ -29,24 +45,21 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
               className="btn btn-primary btn-sm"
               data-act="goto-save"
             >
-              <Mail className="ic" width="18" height="18" />{" "}
-              Save by email
+              <Mail className="ic" width="18" height="18" /> Save by email
             </button>
             <button
               type="button"
               className="btn btn-secondary btn-sm"
               data-act="copy"
             >
-              <Copy className="ic" width="18" height="18" />{" "}
-              Copy link
+              <Copy className="ic" width="18" height="18" /> Copy link
             </button>
             <button
               type="button"
               className="btn btn-ghost btn-sm"
               data-act="print"
             >
-              <Printer className="ic" width="18" height="18" />{" "}
-              Print
+              <Printer className="ic" width="18" height="18" /> Print
             </button>
           </div>
         </section>
@@ -62,8 +75,7 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                   data-act="edit-toggle"
                   aria-expanded="false"
                 >
-                  <Pen className="ic" width="16" height="16" />{" "}
-                  Edit answers
+                  <Pen className="ic" width="16" height="16" /> Edit answers
                 </button>
               </div>
               <ul className="fa-chips" aria-label="Your answers">
@@ -118,7 +130,7 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                 <span>
                   Some links are referral links and are labelled. Sahihfolio may
                   earn a commission if you open an account through them.{" "}
-                  <Link href="#">Read our disclosures</Link>.
+                  <Link href="/disclosures">Read our disclosures</Link>.
                 </span>
               </p>
               <div className="grp-t">
@@ -134,8 +146,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                     <span className="badge b-neutral">Referral link</span>
                   </div>
                   <span className="opt-rev">
-                    <Clock className="ic" width="14" height="14" />{" "}
-                    Reviewed 1 Oct 2026
+                    <Clock className="ic" width="14" height="14" /> Reviewed 1
+                    Oct 2026
                   </span>
                 </header>
                 <p className="why">
@@ -260,8 +272,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                       data-act="report"
                       data-n="Example Broker A"
                     >
-                      <Flag className="ic" width="16" height="16" />{" "}
-                      Report a problem
+                      <Flag className="ic" width="16" height="16" /> Report a
+                      problem
                     </button>
                     <Link
                       className="btn btn-secondary btn-sm"
@@ -280,7 +292,7 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                     This is a referral link. Sahihfolio may earn a commission if
                     you open an account through it. It doesn’t change which
                     options appear or their order.{" "}
-                    <Link href="#">Read our disclosures</Link>.
+                    <Link href="/disclosures">Read our disclosures</Link>.
                   </span>
                 </p>
               </article>
@@ -291,8 +303,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                     <span className="badge b-info">Broker</span>
                   </div>
                   <span className="opt-rev">
-                    <Clock className="ic" width="14" height="14" />{" "}
-                    Reviewed 1 Oct 2026
+                    <Clock className="ic" width="14" height="14" /> Reviewed 1
+                    Oct 2026
                   </span>
                 </header>
                 <p className="why">
@@ -417,8 +429,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                       data-act="report"
                       data-n="Example Broker D"
                     >
-                      <Flag className="ic" width="16" height="16" />{" "}
-                      Report a problem
+                      <Flag className="ic" width="16" height="16" /> Report a
+                      problem
                     </button>
                     <Link
                       className="btn btn-secondary btn-sm"
@@ -446,8 +458,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                     <span className="badge b-info">Robo-advisor</span>
                   </div>
                   <span className="opt-rev">
-                    <Clock className="ic" width="14" height="14" />{" "}
-                    Reviewed 1 Oct 2026
+                    <Clock className="ic" width="14" height="14" /> Reviewed 1
+                    Oct 2026
                   </span>
                 </header>
                 <p className="why">
@@ -568,8 +580,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                       data-act="report"
                       data-n="Example Robo B"
                     >
-                      <Flag className="ic" width="16" height="16" />{" "}
-                      Report a problem
+                      <Flag className="ic" width="16" height="16" /> Report a
+                      problem
                     </button>
                     <Link
                       className="btn btn-secondary btn-sm"
@@ -598,8 +610,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                     <span className="badge b-info">ETF provider</span>
                   </div>
                   <span className="opt-rev">
-                    <Clock className="ic" width="14" height="14" />{" "}
-                    Reviewed 1 Oct 2026
+                    <Clock className="ic" width="14" height="14" /> Reviewed 1
+                    Oct 2026
                   </span>
                 </header>
                 <p className="why">
@@ -711,8 +723,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                       data-act="report"
                       data-n="Example ETF Provider C"
                     >
-                      <Flag className="ic" width="16" height="16" />{" "}
-                      Report a problem
+                      <Flag className="ic" width="16" height="16" /> Report a
+                      problem
                     </button>
                     <Link
                       className="btn btn-secondary btn-sm"
@@ -873,8 +885,8 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                 </table>
               </div>
               <p className="tbl-hint">
-                <ArrowRight className="ic" width="14" height="14" />{" "}
-                Scroll sideways to see every option.
+                <ArrowRight className="ic" width="14" height="14" /> Scroll
+                sideways to see every option.
               </p>
             </section>
             <section data-m="checklist" className="card2">
@@ -1048,8 +1060,7 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                   data-act="copy"
                   style={{ height: "48px" }}
                 >
-                  <Copy className="ic" width="16" height="16" />{" "}
-                  Copy
+                  <Copy className="ic" width="16" height="16" /> Copy
                 </button>
               </div>
 
@@ -1063,16 +1074,15 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                   className="btn btn-ghost btn-sm"
                   data-act="share-summary"
                 >
-                  <Share2 className="ic" width={16} height={16} />{" "}
-                  Share summary
+                  <Share2 className="ic" width={16} height={16} /> Share summary
                 </button>
                 <button
                   type="button"
                   className="btn btn-ghost btn-sm"
                   data-act="print"
                 >
-                  <Printer className="ic" width="16" height="16" />{" "}
-                  Print or save PDF
+                  <Printer className="ic" width="16" height="16" /> Print or
+                  save PDF
                 </button>
               </div>
               <p

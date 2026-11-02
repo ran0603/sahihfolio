@@ -551,7 +551,7 @@ function FinderContent() {
                       )}
                       {selectedCountry &&
                         selectedCountry !== "XX" &&
-                        COUNTRIES[selectedCountry].days <= 100 && (
+                        COUNTRIES[selectedCountry].days <= 180 && (
                           <p className="fmsg ok" data-c="ok">
                             <CircleCheck className="ic h-[16px] w-[16px]" />
                             <span>
@@ -574,7 +574,7 @@ function FinderContent() {
                           </p>
                         )}
                       {selectedCountry &&
-                        COUNTRIES[selectedCountry].days > 100 && (
+                        COUNTRIES[selectedCountry].days > 180 && (
                           <div style={{ marginTop: 14 }} data-c="stale">
                             <div className="alert a-warning flat" role="status">
                               <TriangleAlert className="ic a-ic h-[20px] w-[20px]" />
