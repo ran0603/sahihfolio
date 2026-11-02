@@ -1192,12 +1192,13 @@ table.cmp-t {
 }
 
 /* responsive (frame width) */
-@container fr (max-width:820px) {
+@media (max-width:820px) {
   .wrap {
     width: calc(100% - 40px)
   }
 
-  .links {
+  .links,
+  .nav-cta {
     display: none
   }
 
