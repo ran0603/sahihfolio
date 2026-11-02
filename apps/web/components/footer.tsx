@@ -25,6 +25,22 @@ export function Footer() {
     );
   }
 
+  if (pathname === "/results" || pathname?.startsWith("/results/")) {
+    return (
+      <footer className="pfoot">
+        <div className="wrap">
+          <p>
+            Informational only. Not investment, tax, legal or Shariah advice.
+          </p>
+          <nav>
+            <Link href="/methodology">Methodology</Link>
+            <Link href="/disclosures">Disclosures</Link>
+          </nav>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="foot">
       <div className="wrap">
