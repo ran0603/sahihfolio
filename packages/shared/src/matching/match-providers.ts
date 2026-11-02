@@ -1,7 +1,4 @@
-import type {
-  CountryProfile,
-  Provider,
-} from "../types";
+import type { CountryProfile, Provider } from "../types";
 
 import type {
   MatchExclusion,
@@ -33,8 +30,7 @@ function isPublishedAndAvailable(
   countryCode: string,
 ): boolean {
   return (
-    provider.status === "published" &&
-    provider.countries.includes(countryCode)
+    provider.status === "published" && provider.countries.includes(countryCode)
   );
 }
 
@@ -61,18 +57,12 @@ function hasFeeTransparency(provider: Provider): boolean {
   const fees = provider.fees ?? {};
 
   return Boolean(
-    fees.trading ||
-    fees.management ||
-    fees.fx ||
-    fees.custody ||
-    fees.other,
+    fees.trading || fees.management || fees.fx || fees.custody || fees.other,
   );
 }
 
 function hasBeginnerSuitability(provider: Provider): boolean {
-  return provider.pros.some((pro) =>
-    pro.toLowerCase().includes("beginner"),
-  );
+  return provider.pros.some((pro) => pro.toLowerCase().includes("beginner"));
 }
 
 function supportsIslamicAccount(provider: Provider): boolean {
@@ -86,9 +76,7 @@ function buildReasons(
   input: MatchInput,
   country: CountryProfile,
 ): string[] {
-  const reasons: string[] = [
-    `Available to ${country.name}-based investors`,
-  ];
+  const reasons: string[] = [`Available to ${country.name}-based investors`];
 
   switch (input.productInterest) {
     case "stocks":

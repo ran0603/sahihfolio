@@ -86,9 +86,7 @@ describe("matchProviders", () => {
       malaysia,
     );
 
-    expect(output.matches.map((match) => match.provider.id)).toEqual([
-      "etf",
-    ]);
+    expect(output.matches.map((match) => match.provider.id)).toEqual(["etf"]);
   });
 
   it("includes all published providers for unsure product interest", () => {
