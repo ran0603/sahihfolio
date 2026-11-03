@@ -1,7 +1,4 @@
-import type {
-  CountryProfile,
-  Provider,
-} from "../types";
+import type { CountryProfile, Provider } from "../types";
 
 import type {
   MatchExclusion,
@@ -10,15 +7,6 @@ import type {
   MatchResult,
   ProductInterest,
 } from "./types";
-
-const PRODUCT_TYPE_BY_INTEREST: Record<
-  Exclude<ProductInterest, "unsure">,
-  Provider["type"]
-> = {
-  stocks: "broker",
-  etfs: "broker",
-  managed: "managed_portfolio",
-};
 
 const SCORE_WEIGHTS = {
   halalScreening: 30,
@@ -33,8 +21,7 @@ function isPublishedAndAvailable(
   countryCode: string,
 ): boolean {
   return (
-    provider.status === "published" &&
-    provider.countries.includes(countryCode)
+    provider.status === "published" && provider.countries.includes(countryCode)
   );
 }
 
@@ -42,42 +29,24 @@ function supportsProductInterest(
   provider: Provider,
   productInterest: ProductInterest,
 ): boolean {
-  if (productInterest === "unsure") {
+  if (productInterest === "unsure" || productInterest === "all") {
     return true;
   }
 
-  if (productInterest === "stocks") {
-    return provider.assetTypes.includes("stocks");
-  }
-
-  if (productInterest === "etfs") {
-    return provider.assetTypes.includes("etfs");
-  }
-
-  return provider.type === PRODUCT_TYPE_BY_INTEREST.managed;
+  return provider.assetTypes.includes(productInterest);
 }
 
 function hasFeeTransparency(provider: Provider): boolean {
-  const fees = provider.fees ?? {};
-
-  return Boolean(
-    fees.trading ||
-    fees.management ||
-    fees.fx ||
-    fees.custody ||
-    fees.other,
-  );
+  return (provider.fees ?? []).length > 0;
 }
 
 function hasBeginnerSuitability(provider: Provider): boolean {
-  return provider.pros.some((pro) =>
-    pro.toLowerCase().includes("beginner"),
-  );
+  return provider.pros.some((pro) => pro.toLowerCase().includes("beginner"));
 }
 
 function supportsIslamicAccount(provider: Provider): boolean {
-  return provider.accountRequirements.some((requirement) =>
-    requirement.toLowerCase().includes("islamic"),
+  return provider.accountRequirements.some((accountRequirement) =>
+    accountRequirement.requirement.toLowerCase().includes("islamic"),
   );
 }
 
@@ -86,9 +55,7 @@ function buildReasons(
   input: MatchInput,
   country: CountryProfile,
 ): string[] {
-  const reasons: string[] = [
-    `Available to ${country.name}-based investors`,
-  ];
+  const reasons: string[] = [`Available to ${country.name}-based investors`];
 
   switch (input.productInterest) {
     case "stocks":
@@ -97,8 +64,23 @@ function buildReasons(
     case "etfs":
       reasons.push("Supports ETF investing");
       break;
-    case "managed":
-      reasons.push("Offers a managed portfolio route");
+    case "sukuk":
+      reasons.push("Supports sukuk bond investing");
+      break;
+    case "crypto":
+      reasons.push("Supports crypto investing");
+      break;
+    case "gold":
+      reasons.push("Supports gold investing");
+      break;
+    case "mutual_funds":
+      reasons.push("Supports mutual fund investing");
+      break;
+    case "real_estate":
+      reasons.push("Supports real estate investing");
+      break;
+    case "all":
+      reasons.push("Supports all investing routes");
       break;
     case "unsure":
       reasons.push("Supports at least one relevant investing route");

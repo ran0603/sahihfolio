@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { finderIntakeSchema } from "@sahihfolio/shared";
+import {
+  finderIntakeSchema,
+  MatchInput,
+  matchProviders,
+} from "@sahihfolio/shared";
 import { createResultSnapshot } from "@/lib/finder/result-snapshot";
-import { getTemporaryMatches } from "@/lib/finder/temporary-matches";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getProvidersByCountry } from "@/lib/providers/get-provider-by-country";
+import { getCountry } from "@/lib/countries/get-country";
 
 export async function POST(request: NextRequest) {
   const rate = await checkRateLimit({
@@ -42,7 +47,9 @@ export async function POST(request: NextRequest) {
   }
 
   const intake = parsed.data;
-  const matches = await getTemporaryMatches(intake);
+  const providers = await getProvidersByCountry(intake.countryCode);
+  const country = await getCountry(intake.countryCode);
+  const matches = matchProviders(intake as MatchInput, providers, country);
   const snapshot = await createResultSnapshot({
     input: intake,
     output: matches,

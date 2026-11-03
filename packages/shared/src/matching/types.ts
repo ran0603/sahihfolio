@@ -1,6 +1,7 @@
+import { AssetType } from "../constants";
 import type { Provider } from "../types";
 
-export type ProductInterest = "stocks" | "etfs" | "managed" | "unsure";
+export type ProductInterest = AssetType | "unsure" | "all";
 
 export type MatchInput = {
   countryCode: string;

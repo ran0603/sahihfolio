@@ -5,7 +5,9 @@ import { Suspense, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
-  Briefcase,
+  Banknote,
+  Bitcoin,
+  Building,
   Calendar,
   Check,
   ChevronDown,
@@ -13,28 +15,19 @@ import {
   CircleQuestionMark,
   CircleX,
   Compass,
+  GraphStar,
   Info,
   Layers,
   LoaderCircle,
   Lock,
+  Scale,
   Sprout,
   TrendingUp,
   TriangleAlert,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-
-const COUNTRIES: Record<
-  string,
-  { n: string; c: string; k: number; days: number; rev: string }
-> = {
-  MY: { n: "Malaysia", c: "MYR", k: 4, days: 14, rev: "1 Oct 2026" },
-  ID: { n: "Indonesia", c: "IDR", k: 3, days: 112, rev: "25 Jun 2026" },
-  SG: { n: "Singapore", c: "SGD", k: 3, days: 14, rev: "1 Oct 2026" },
-  GB: { n: "United Kingdom", c: "GBP", k: 5, days: 14, rev: "1 Oct 2026" },
-  US: { n: "United States", c: "USD", k: 6, days: 14, rev: "1 Oct 2026" },
-  XX: { n: "Another country", c: "N/A", k: 0, days: 14, rev: "1 Oct 2026" },
-};
+import { AMOUNTS, COUNTRIES, PREFERENCES } from "@/lib/finder/constants";
 
 const INVESTOR_TYPES: Record<
   string,
@@ -69,10 +62,30 @@ const INTERESTS: Record<string, { n: string; a: string; i: React.ReactNode }> =
       a: "Hold a basket of securities in a single fund.",
       i: <Layers className="ic h-[22px] w-[22px]" />,
     },
-    managed: {
-      n: "Managed portfolio",
-      a: "A provider builds and rebalances a portfolio for you.",
-      i: <Briefcase className="ic h-[22px] w-[22px]" />,
+    real_estate: {
+      n: "Real Estate",
+      a: "Invest in physical real estate or real estate-related products",
+      i: <Building className="ic h-[22px] w-[22px]" />,
+    },
+    sukuk: {
+      n: "Sukuk",
+      a: "Invest in Islamic bonds or Islamic finance products",
+      i: <GraphStar className="ic h-[22px] w-[22px]" />,
+    },
+    gold: {
+      n: "Gold",
+      a: "Invest in physical gold or gold-related products",
+      i: <Scale className="ic h-[22px] w-[22px]" />,
+    },
+    crypto: {
+      n: "Cryptocurrency",
+      a: "Invest in digital currencies or crypto-related products",
+      i: <Bitcoin className="ic h-[22px] w-[22px]" />,
+    },
+    mutual_funds: {
+      n: "Mutual funds",
+      a: "Invest in a basket of securities managed by fund managers.",
+      i: <Banknote className="ic h-[22px] w-[22px]" />,
     },
     unsure: {
       n: "Not sure yet",
@@ -80,75 +93,6 @@ const INTERESTS: Record<string, { n: string; a: string; i: React.ReactNode }> =
       i: <CircleQuestionMark className="ic h-[22px] w-[22px]" />,
     },
   };
-
-const AMOUNTS: Record<string, { s: string[]; r: string[] }> = {
-  MYR: {
-    s: [
-      "Under MYR 1,000",
-      "MYR 1,000–5,000",
-      "MYR 5,000–25,000",
-      "Over MYR 25,000",
-    ],
-    r: [
-      "Under MYR 200",
-      "MYR 200–1,000",
-      "Over MYR 1,000",
-      "Prefer not to say",
-    ],
-  },
-  IDR: {
-    s: [
-      "Under IDR 5 million",
-      "IDR 5–25 million",
-      "IDR 25–100 million",
-      "Over IDR 100 million",
-    ],
-    r: [
-      "Under IDR 1 million",
-      "IDR 1–5 million",
-      "Over IDR 5 million",
-      "Prefer not to say",
-    ],
-  },
-  SGD: {
-    s: [
-      "Under SGD 500",
-      "SGD 500–2,500",
-      "SGD 2,500–10,000",
-      "Over SGD 10,000",
-    ],
-    r: ["Under SGD 100", "SGD 100–500", "Over SGD 500", "Prefer not to say"],
-  },
-  GBP: {
-    s: ["Under GBP 250", "GBP 250–1,000", "GBP 1,000–5,000", "Over GBP 5,000"],
-    r: ["Under GBP 50", "GBP 50–250", "Over GBP 250", "Prefer not to say"],
-  },
-  USD: {
-    s: ["Under USD 300", "USD 300–1,500", "USD 1,500–6,000", "Over USD 6,000"],
-    r: ["Under USD 75", "USD 75–300", "Over USD 300", "Prefer not to say"],
-  },
-};
-
-const PREFERENCES: Record<
-  string,
-  { n: string; a: string; t: "filter" | "rank" }
-> = {
-  screening: {
-    n: "Require Shariah-screening information",
-    a: "Hide options that don't publish how they screen.",
-    t: "filter",
-  },
-  currency: {
-    n: "Supports MYR",
-    a: "Prefer options that let you fund and invest in your local currency.",
-    t: "rank",
-  },
-  islamic: {
-    n: "Offers an Islamic account",
-    a: "Prefer providers that offer an Islamic (swap-free) account type.",
-    t: "rank",
-  },
-};
 
 function FinderContent() {
   const router = useRouter();
@@ -176,7 +120,6 @@ function FinderContent() {
   };
 
   const handleSubmit = async () => {
-    console.log("hey");
     if (currentStep === 5) {
       const response = await fetch("/api/find-options", {
         method: "POST",
@@ -188,9 +131,15 @@ function FinderContent() {
           startingAmount: Number(selectedStartingAmount),
           recurringContribution: Number(selectedMonthlyContribution),
           preferences: {
-            halalScreeningRequired: selectedPreferences.includes("screening"),
-            islamicAccountPreferred: selectedPreferences.includes("islamic"),
-            localCurrencyPreferred: selectedPreferences.includes("currency"),
+            halalScreeningRequired: selectedPreferences.includes(
+              "halalScreeningRequired",
+            ),
+            islamicAccountPreferred: selectedPreferences.includes(
+              "islamicAccountPreferred",
+            ),
+            localCurrencyPreferred: selectedPreferences.includes(
+              "localCurrencyPreferred",
+            ),
           },
         }),
       });
@@ -551,7 +500,7 @@ function FinderContent() {
                       )}
                       {selectedCountry &&
                         selectedCountry !== "XX" &&
-                        COUNTRIES[selectedCountry].days <= 100 && (
+                        COUNTRIES[selectedCountry].days <= 180 && (
                           <p className="fmsg ok" data-c="ok">
                             <CircleCheck className="ic h-[16px] w-[16px]" />
                             <span>
@@ -574,7 +523,7 @@ function FinderContent() {
                           </p>
                         )}
                       {selectedCountry &&
-                        COUNTRIES[selectedCountry].days > 100 && (
+                        COUNTRIES[selectedCountry].days > 180 && (
                           <div style={{ marginTop: 14 }} data-c="stale">
                             <div className="alert a-warning flat" role="status">
                               <TriangleAlert className="ic a-ic h-[20px] w-[20px]" />
@@ -701,7 +650,7 @@ function FinderContent() {
                       aria-invalid="false"
                     >
                       {Object.entries(INVESTOR_TYPES).map(([key, value]) => (
-                        <label key={key} className="rcard">
+                        <label key={`investor-${key}`} className="rcard">
                           <input
                             className="rin"
                             type="radio"
@@ -753,7 +702,7 @@ function FinderContent() {
                       aria-invalid="false"
                     >
                       {Object.entries(INTERESTS).map(([key, value]) => (
-                        <label className="rcard" key={key}>
+                        <label className="rcard" key={`interest-${key}`}>
                           <input
                             className="rin"
                             type="radio"
@@ -833,7 +782,7 @@ function FinderContent() {
                       >
                         {AMOUNTS[COUNTRIES[selectedCountry]?.c]?.s.map(
                           (amount, index) => (
-                            <label className="rchip" key={index}>
+                            <label className="rchip" key={`start-opt-${index}`}>
                               <input
                                 type="radio"
                                 name="u57-start"
@@ -876,7 +825,7 @@ function FinderContent() {
                       >
                         {AMOUNTS[COUNTRIES[selectedCountry]?.c]?.r.map(
                           (amount, index) => (
-                            <label className="rchip" key={index}>
+                            <label className="rchip" key={`recur-opt-${index}`}>
                               <input
                                 type="radio"
                                 name="u57-recur"
@@ -912,7 +861,7 @@ function FinderContent() {
                     </p>
                     <div className="rgrp">
                       {Object.entries(PREFERENCES).map(([key, value]) => (
-                        <label className="rcard noic" key={key}>
+                        <label className="rcard noic" key={`pref-${key}`}>
                           <input
                             className="rin"
                             type="checkbox"

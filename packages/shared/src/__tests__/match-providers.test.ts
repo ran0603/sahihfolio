@@ -22,19 +22,46 @@ function makeProvider(overrides: Partial<Provider> = {}): Provider {
     slug: "example-broker",
     type: "broker",
     countries: ["MY"],
-    markets: ["US"],
+    markets: [
+      {
+        code: "US",
+        name: "United States",
+        notes:
+          "NYSE-listed Shariah-compliant ETFs, including SPUS, SPSK, SPRE, SPTE, and SPWO.",
+        access: "direct",
+      },
+    ],
     assetTypes: ["stocks", "etfs"],
     halalScreening: {
       supported: true,
       methodology: "AAOIFI-aligned",
       sourceUrl: "https://example.com/screening",
     },
-    fees: { trading: "0.1%" },
+    fees: [
+      {
+        kind: "management",
+        label: "ETF expense ratio",
+        value: "0.45% to 0.55% per year, depending on the ETF",
+        source: {
+          id: "source_1",
+          sourceType: "official",
+          retrievedAt: new Date(),
+          confidence: "high",
+          label: "source_1",
+          url: "https://example.com/source_1",
+        },
+        currency: "USD",
+        frequency: "per_year",
+        conditions:
+          "Verify the current expense ratio for each fund. Brokerage commissions, FX conversion, bid-ask spreads, and other trading costs also apply.",
+      },
+    ],
     accountRequirements: [],
     pros: [],
     cons: [],
     websiteUrl: "https://example.com",
     disclosureUrl: "https://example.com/disclosure",
+    isAffiliated: false,
     lastReviewedAt: new Date("2026-10-01T00:00:00Z"),
     status: "published",
     ...overrides,
@@ -86,9 +113,7 @@ describe("matchProviders", () => {
       malaysia,
     );
 
-    expect(output.matches.map((match) => match.provider.id)).toEqual([
-      "etf",
-    ]);
+    expect(output.matches.map((match) => match.provider.id)).toEqual(["etf"]);
   });
 
   it("includes all published providers for unsure product interest", () => {
@@ -140,11 +165,41 @@ describe("matchProviders", () => {
       [
         makeProvider({
           id: "islamic",
-          accountRequirements: ["Islamic account available"],
+          accountRequirements: [
+            {
+              requirement: "Islamic account available",
+              category: "brokerage",
+              mandatory: true,
+              notes: "islamic account available",
+              source: {
+                id: "source_1",
+                label: "source_1",
+                url: "https://example.com/source_1",
+                sourceType: "official",
+                retrievedAt: new Date("2026-10-01T00:00:00Z"),
+                confidence: "high",
+              },
+            },
+          ],
         }),
         makeProvider({
           id: "standard",
-          accountRequirements: ["Standard brokerage account"],
+          accountRequirements: [
+            {
+              requirement: "Standard brokerage account",
+              category: "brokerage",
+              mandatory: true,
+              notes: "standard account",
+              source: {
+                id: "source_2",
+                label: "source_2",
+                url: "https://example.com/source_2",
+                sourceType: "official",
+                retrievedAt: new Date("2026-10-01T00:00:00Z"),
+                confidence: "high",
+              },
+            },
+          ],
         }),
       ],
       malaysia,
@@ -162,7 +217,7 @@ describe("matchProviders", () => {
         makeProvider({
           id: "lower",
           halalScreening: { supported: false },
-          fees: {},
+          fees: [],
         }),
         makeProvider({ id: "higher" }),
       ],

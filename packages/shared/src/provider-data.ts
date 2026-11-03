@@ -89,7 +89,7 @@ export const assetTypeSchema = z.object({
     "etfs",
     "mutual_funds",
     "sukuk",
-    "managed_portfolios",
+    "managed_portfolio",
     "crypto",
     "reits",
     "other",
