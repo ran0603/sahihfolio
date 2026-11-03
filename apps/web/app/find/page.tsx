@@ -51,48 +51,48 @@ const INVESTOR_TYPES: Record<
 };
 
 const INTERESTS: Record<string, { n: string; a: string; i: React.ReactNode }> =
-{
-  stocks: {
-    n: "Stocks",
-    a: "Buy individual company shares through a broker.",
-    i: <TrendingUp className="ic h-[22px] w-[22px]" />,
-  },
-  etfs: {
-    n: "ETFs",
-    a: "Hold a basket of securities in a single fund.",
-    i: <Layers className="ic h-[22px] w-[22px]" />,
-  },
-  real_estate: {
-    n: "Real Estate",
-    a: "Invest in physical real estate or real estate-related products",
-    i: <Building className="ic h-[22px] w-[22px]" />,
-  },
-  sukuk: {
-    n: "Sukuk",
-    a: "Invest in Islamic bonds or Islamic finance products",
-    i: <GraphStar className="ic h-[22px] w-[22px]" />,
-  },
-  gold: {
-    n: "Gold",
-    a: "Invest in physical gold or gold-related products",
-    i: <Scale className="ic h-[22px] w-[22px]" />,
-  },
-  crypto: {
-    n: "Cryptocurrency",
-    a: "Invest in digital currencies or crypto-related products",
-    i: <Bitcoin className="ic h-[22px] w-[22px]" />,
-  },
-  mutual_funds: {
-    n: "Mutual funds",
-    a: "Invest in a basket of securities managed by fund managers.",
-    i: <Banknote className="ic h-[22px] w-[22px]" />,
-  },
-  unsure: {
-    n: "Not sure yet",
-    a: "We'll show every route available in your country.",
-    i: <CircleQuestionMark className="ic h-[22px] w-[22px]" />,
-  },
-};
+  {
+    stocks: {
+      n: "Stocks",
+      a: "Buy individual company shares through a broker.",
+      i: <TrendingUp className="ic h-[22px] w-[22px]" />,
+    },
+    etfs: {
+      n: "ETFs",
+      a: "Hold a basket of securities in a single fund.",
+      i: <Layers className="ic h-[22px] w-[22px]" />,
+    },
+    real_estate: {
+      n: "Real Estate",
+      a: "Invest in physical real estate or real estate-related products",
+      i: <Building className="ic h-[22px] w-[22px]" />,
+    },
+    sukuk: {
+      n: "Sukuk",
+      a: "Invest in Islamic bonds or Islamic finance products",
+      i: <GraphStar className="ic h-[22px] w-[22px]" />,
+    },
+    gold: {
+      n: "Gold",
+      a: "Invest in physical gold or gold-related products",
+      i: <Scale className="ic h-[22px] w-[22px]" />,
+    },
+    crypto: {
+      n: "Cryptocurrency",
+      a: "Invest in digital currencies or crypto-related products",
+      i: <Bitcoin className="ic h-[22px] w-[22px]" />,
+    },
+    mutual_funds: {
+      n: "Mutual funds",
+      a: "Invest in a basket of securities managed by fund managers.",
+      i: <Banknote className="ic h-[22px] w-[22px]" />,
+    },
+    unsure: {
+      n: "Not sure yet",
+      a: "We'll show every route available in your country.",
+      i: <CircleQuestionMark className="ic h-[22px] w-[22px]" />,
+    },
+  };
 
 function FinderContent() {
   const router = useRouter();
@@ -274,13 +274,13 @@ function FinderContent() {
                     <small>
                       {selectedStartingAmount && selectedMonthlyContribution
                         ? AMOUNTS[COUNTRIES[selectedCountry]?.c]?.s[
-                        Number(selectedStartingAmount)
-                        ] +
-                        " to start • " +
-                        AMOUNTS[COUNTRIES[selectedCountry]?.c]?.r[
-                        Number(selectedMonthlyContribution)
-                        ] +
-                        " monthly"
+                            Number(selectedStartingAmount)
+                          ] +
+                          " to start • " +
+                          AMOUNTS[COUNTRIES[selectedCountry]?.c]?.r[
+                            Number(selectedMonthlyContribution)
+                          ] +
+                          " monthly"
                         : "Not set"}
                     </small>
                   </span>
@@ -311,8 +311,8 @@ function FinderContent() {
                     <small>
                       {selectedPreferences.length > 0
                         ? selectedPreferences
-                          .map((preference) => PREFERENCES[preference].n)
-                          .join(" • ")
+                            .map((preference) => PREFERENCES[preference].n)
+                            .join(" • ")
                         : "Not set"}
                     </small>
                   </span>

@@ -77,7 +77,7 @@ describe("finderIntakeSchema", () => {
   it("rejects an invalid productInterest", () => {
     const result = finderIntakeSchema.safeParse({
       countryCode: "SG",
-      productInterest: "crypto",
+      productInterest: "managed_funds",
     });
     expect(result.success).toBe(false);
   });
