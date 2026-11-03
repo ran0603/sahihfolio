@@ -16,7 +16,6 @@ import {
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 import { getCountry } from "@/lib/countries/get-country";
 import { CountryProfile, MatchResult } from "@sahihfolio/shared";
-import { PREFERENCES } from "@/lib/finder/constants";
 import { ProviderArticle } from "./provider-article";
 import { getDateString } from "@/lib/date-utils";
 import { getProductInterestLabel } from "@/lib/results/label-utils";
@@ -130,7 +129,10 @@ export default async function ResultsPage({
                   </div>
                   <p className="grp-d">You pick and place your own trades.</p>
                   {providerTypeIsBroker.map((match) => (
-                    <ProviderArticle key={`broker-${match.provider.slug}`} match={match} />
+                    <ProviderArticle
+                      key={`broker-${match.provider.slug}`}
+                      match={match}
+                    />
                   ))}
                 </>
               )}
@@ -149,7 +151,10 @@ export default async function ResultsPage({
                     answers.
                   </p>
                   {providerTypeIsRoboAdvisor.map((match) => (
-                    <ProviderArticle key={`robo-${match.provider.slug}`} match={match} />
+                    <ProviderArticle
+                      key={`robo-${match.provider.slug}`}
+                      match={match}
+                    />
                   ))}
                 </>
               )}
@@ -168,7 +173,10 @@ export default async function ResultsPage({
                     fund provider’s own.
                   </p>
                   {providerTypeIsEtfProvider.map((match) => (
-                    <ProviderArticle key={`etf-${match.provider.slug}`} match={match} />
+                    <ProviderArticle
+                      key={`etf-${match.provider.slug}`}
+                      match={match}
+                    />
                   ))}
                 </>
               )}
@@ -186,7 +194,10 @@ export default async function ResultsPage({
                     Platforms that select and manage investments on your behalf.
                   </p>
                   {providerTypeIsManagedPortfolio.map((match) => (
-                    <ProviderArticle key={`managed-${match.provider.slug}`} match={match} />
+                    <ProviderArticle
+                      key={`managed-${match.provider.slug}`}
+                      match={match}
+                    />
                   ))}
                 </>
               )}
