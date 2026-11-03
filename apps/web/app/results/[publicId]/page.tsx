@@ -130,7 +130,7 @@ export default async function ResultsPage({
                   </div>
                   <p className="grp-d">You pick and place your own trades.</p>
                   {providerTypeIsBroker.map((match) => (
-                    <ProviderArticle key={match.provider.slug} match={match} />
+                    <ProviderArticle key={`broker-${match.provider.slug}`} match={match} />
                   ))}
                 </>
               )}
@@ -149,7 +149,7 @@ export default async function ResultsPage({
                     answers.
                   </p>
                   {providerTypeIsRoboAdvisor.map((match) => (
-                    <ProviderArticle key={match.provider.slug} match={match} />
+                    <ProviderArticle key={`robo-${match.provider.slug}`} match={match} />
                   ))}
                 </>
               )}
@@ -168,7 +168,7 @@ export default async function ResultsPage({
                     fund provider’s own.
                   </p>
                   {providerTypeIsEtfProvider.map((match) => (
-                    <ProviderArticle key={match.provider.slug} match={match} />
+                    <ProviderArticle key={`etf-${match.provider.slug}`} match={match} />
                   ))}
                 </>
               )}
@@ -186,7 +186,7 @@ export default async function ResultsPage({
                     Platforms that select and manage investments on your behalf.
                   </p>
                   {providerTypeIsManagedPortfolio.map((match) => (
-                    <ProviderArticle key={match.provider.slug} match={match} />
+                    <ProviderArticle key={`managed-${match.provider.slug}`} match={match} />
                   ))}
                 </>
               )}
