@@ -18,26 +18,378 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
+import { getCountry } from "@/lib/countries/get-country";
+import { CountryProfile, MatchOutput, MatchResult } from "@sahihfolio/shared";
 
-export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
-  console.log(snapshot);
+const getDateString = (dateInput: string | Date) => {
+  const date = new Date(dateInput);
+  const dateFormat: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+  return date.toLocaleDateString(undefined, dateFormat);
+};
+
+const getProductInterestLabel = (productInterest: string) => {
+  switch (productInterest) {
+    case "etfs":
+      return "ETFs";
+    case "stocks":
+      return "Stocks";
+    case "sukuk":
+      return "Sukuk";
+    case "crypto":
+      return "Crypto";
+    case "real_estate":
+      return "Real Estate";
+    case "gold":
+      return "Gold";
+    case "mutual_funds":
+      return "Mutual Funds";
+    default:
+      return "All Products";
+  }
+};
+
+const getInvestorLabel = (investorType: string) => {
+  switch (investorType) {
+    case "beginner":
+      return "Beginner";
+    case "self_directed":
+      return "Self-directed";
+    case "long_term_saver":
+      return "Long-term Saver";
+    default:
+      return "Any";
+  }
+};
+
+const AMOUNTS: Record<string, { s: string[]; r: string[] }> = {
+  MYR: {
+    s: [
+      "Under MYR 1,000",
+      "MYR 1,000–5,000",
+      "MYR 5,000–25,000",
+      "Over MYR 25,000",
+    ],
+    r: [
+      "Under MYR 200",
+      "MYR 200–1,000",
+      "Over MYR 1,000",
+      "Prefer not to say",
+    ],
+  },
+  IDR: {
+    s: [
+      "Under IDR 5 million",
+      "IDR 5–25 million",
+      "IDR 25–100 million",
+      "Over IDR 100 million",
+    ],
+    r: [
+      "Under IDR 1 million",
+      "IDR 1–5 million",
+      "Over IDR 5 million",
+      "Prefer not to say",
+    ],
+  },
+  SGD: {
+    s: [
+      "Under SGD 500",
+      "SGD 500–2,500",
+      "SGD 2,500–10,000",
+      "Over SGD 10,000",
+    ],
+    r: ["Under SGD 100", "SGD 100–500", "Over SGD 500", "Prefer not to say"],
+  },
+  GBP: {
+    s: ["Under GBP 250", "GBP 250–1,000", "GBP 1,000–5,000", "Over GBP 5,000"],
+    r: ["Under GBP 50", "GBP 50–250", "Over GBP 250", "Prefer not to say"],
+  },
+  USD: {
+    s: ["Under USD 300", "USD 300–1,500", "USD 1,500–6,000", "Over USD 6,000"],
+    r: ["Under USD 75", "USD 75–300", "Over USD 300", "Prefer not to say"],
+  },
+};
+
+const PREFERENCES: Record<
+  string,
+  { n: string; a: string; t: "filter" | "rank" }
+> = {
+  halalScreeningRequired: {
+    n: "Require Shariah-screening information",
+    a: "Hide options that don't publish how they screen.",
+    t: "filter",
+  },
+  localCurrencyPreferred: {
+    n: "Supports local currency",
+    a: "Prefer options that let you fund and invest in your local currency.",
+    t: "rank",
+  },
+  islamicAccountPreferred: {
+    n: "Offers an Islamic account",
+    a: "Prefer providers that offer an Islamic (swap-free) account type.",
+    t: "rank",
+  },
+};
+
+type FilteredResultsInput = {
+  preferences: {
+    halalScreeningRequired: boolean;
+    localCurrencyPreferred: boolean;
+    islamicAccountPreferred: boolean;
+  };
+};
+const getPreferenceLabels = (
+  preferences: FilteredResultsInput["preferences"],
+) => {
+  let labels: string[] = [];
+  if (preferences.localCurrencyPreferred) {
+    labels.push(PREFERENCES.localCurrencyPreferred.n);
+  }
+  if (preferences.islamicAccountPreferred) {
+    labels.push(PREFERENCES.islamicAccountPreferred.n);
+  }
+  return labels;
+};
+
+function renderProviderArticle(match: MatchResult) {
+  return (
+    <article
+      key={`broker_${match.provider.slug}`}
+      className="optc"
+      data-pid={match.provider.id}
+      aria-labelledby={`r9-n-${match.provider.slug}`}
+    >
+      <header className="opt-h">
+        <div className="opt-t">
+          <h4 id={`r9-n-${match.provider.slug}`}>{match.provider.name}</h4>
+          <span className="badge b-info">Broker</span>
+          {match.provider.isAffiliate && (
+            <span className="badge b-neutral">Referral link</span>
+          )}
+        </div>
+        <span className="opt-rev">
+          <Clock className="ic" width="14" height="14" /> Reviewed{" "}
+          {getDateString(match.provider.lastReviewedAt)}
+        </span>
+      </header>
+      <p className="why">
+        <CircleCheck className="ic" width="16" height="16" />
+        <span>Included because it is {match.reasons.join(", ")}</span>
+      </p>
+
+      <dl className="facts">
+        <div>
+          <dt>Trading fee</dt>
+          <dd>
+            {match.provider.fees.find((f: any) => f.kind === "trading")
+              ?.value || "N/A"}
+          </dd>
+        </div>
+        <div>
+          <dt>FX fee</dt>
+          <dd>
+            {match.provider.fees.find((f: any) => f.kind === "fx")?.value ||
+              "N/A"}
+          </dd>
+        </div>
+        <div>
+          <dt>Management fee</dt>
+          <dd>
+            {match.provider.fees.find((f: any) => f.kind === "management")
+              ?.value || "N/A"}
+          </dd>
+        </div>
+        <div>
+          <dt>Custody fee</dt>
+          <dd>
+            {match.provider.fees.find((f: any) => f.kind === "custody")
+              ?.value || "N/A"}
+          </dd>
+        </div>
+        <div>
+          <dt>Minimum investment</dt>
+          <dd>{match.provider.minimumInvestment || "None"}</dd>
+        </div>
+        <div>
+          <dt>Asset types</dt>
+          <dd>
+            {match.provider.assetTypes
+              .map((a) => getProductInterestLabel(a))
+              .join(", ") || "N/A"}
+          </dd>
+        </div>
+        <div style={{ gridColumn: "1/-1" }}>
+          <dt>Markets</dt>
+          <dd>
+            {match.provider.markets.map((m) => m.name).join(", ") || "N/A"}
+          </dd>
+        </div>
+      </dl>
+      {match.provider.halalScreening.supported && (
+        <div className="screen">
+          <div className="screen-h">
+            <ShieldCheck className="ic" width="16" height="16" />
+            <b>Shariah-screening information</b>
+            <span className="badge b-info">Provider-stated methodology</span>
+          </div>
+          <p>
+            Methodology: {match.provider.halalScreening.methodology || "N/A"}
+          </p>
+          <p className="fine">
+            Informational, not a personal religious ruling. Source:{" "}
+            <Link
+              href={match.provider.halalScreening.source?.url || "#"}
+              data-act="source"
+              data-n="Provider screening page"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Provider screening page{" "}
+              <ExternalLink className="ic" width="12" height="12" />
+            </Link>
+            , reviewed {getDateString(match.provider.lastReviewedAt)}.
+          </p>
+        </div>
+      )}
+      {match.provider.minimumInvestment && (
+        <p className="fit ok">
+          <CircleCheck className="ic" width="16" height="16" />
+          <span>{match.provider.minimumInvestment}</span>
+        </p>
+      )}
+      <details className="pc" data-pc="a">
+        <summary>Pros and cons</summary>
+        <div className="pc-g">
+          <div>
+            <b>Pros</b>
+            <ul>
+              {match.provider.pros.map((pro, i) => (
+                <li key={`${match.provider.slug}_pro_${i}`}>{pro}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <b>Cons</b>
+            <ul>
+              {match.provider.cons.map((con, i) => (
+                <li key={`${match.provider.slug}_con_${i}`}>{con}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </details>
+      <div className="reqs">
+        <b>Account requirements</b>
+        <ul>
+          {match.provider.accountRequirements.map((areq, i) => (
+            <li key={`${match.provider.slug}_areq_${i}`}>{areq.requirement}</li>
+          ))}
+        </ul>
+      </div>
+      <footer className="opt-f">
+        <div className="srcs">
+          <span>Sources:</span>
+          <Link
+            href={match.provider.disclosureUrl}
+            data-act="source"
+            data-n="Provider pricing page"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Provider pricing page{" "}
+            <ExternalLink className="ic" width="12" height="12" />
+          </Link>
+          <Link
+            href={match.provider.halalScreening.source?.url || "#"}
+            data-act="source"
+            data-n="Provider screening page"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Provider screening page{" "}
+            <ExternalLink className="ic" width="12" height="12" />
+          </Link>
+        </div>
+        <div className="opt-a">
+          <button
+            type="button"
+            className="btn btn-ghost btn-sm"
+            data-act="report"
+            data-n={match.provider.slug}
+          >
+            <Flag className="ic" width="16" height="16" /> Report a problem
+          </button>
+          <Link
+            className="btn btn-secondary btn-sm"
+            href={match.provider.websiteUrl || match.provider.disclosureUrl}
+            data-act="visit"
+            data-pid="a"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit provider{" "}
+            <ExternalLink className="ic" width="16" height="16" />
+          </Link>
+        </div>
+      </footer>
+      {match.provider.isAffiliate && (
+        <p className="aff">
+          <Info className="ic" width="14" height="14" />
+          <span>
+            This is a referral link. Sahihfolio may earn a commission if you
+            open an account through it. It doesn’t change which options appear
+            or their order.{" "}
+            <Link href="/disclosures">Read our disclosures</Link>.
+          </span>
+        </p>
+      )}
+    </article>
+  );
+}
+
+export async function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
+  const country: CountryProfile = await getCountry(snapshot.input.countryCode);
+  const matches: MatchResult[] = Array.isArray(snapshot.output)
+    ? (snapshot.output as unknown as MatchResult[])
+    : ((snapshot.output.matches ?? []) as unknown as MatchResult[]);
+
+  const providerTypeIsBroker = matches.filter(
+    (match) => match.provider.type === "broker",
+  );
+  const providerTypeIsManagedPortfolio = matches.filter(
+    (match) => match.provider.type === "managed_portfolio",
+  );
+  const providerTypeIsRoboAdvisor = matches.filter(
+    (match) => match.provider.type === "robo_advisor",
+  );
+  const providerTypeIsEtfProvider = matches.filter(
+    (match) => match.provider.type === "etf_provider",
+  );
+
   return (
     <div className="wrap">
       <Link className="crumb" href="/find" data-act="change-country">
-        <ArrowLeft className="ic h-[16px] w-[16px]" /> Back to the finder
+        <ArrowLeft className="ic" width={16} height={16} /> Back to the finder
       </Link>
       <div data-view="">
         <section data-m="head" className="res-head">
           <h1 tabIndex={-1}>
-            We found 4 options for ETF investing in Malaysia.
+            We found {country.supportedProviders.length} option
+            {country.supportedProviders.length !== 1 ? "s" : ""} for{" "}
+            {getProductInterestLabel(snapshot.input.productInterest)} in{" "}
+            {country.name}.
           </h1>
           <p className="res-sub">
-            Results for Malaysia (MYR). Data last reviewed 1 Oct 2026.
+            Results for {country.name} ({country.currency}). Data last reviewed{" "}
+            {getDateString(country.lastReviewedAt)}
           </p>
           <div className="res-meta">
-            <span>Result k7x2m9</span>
-            <span>Created 17 Oct 2026</span>
-            <span>Data version 2026-10-01</span>
+            <span>Result {snapshot.publicId}</span>
+            <span>Created {getDateString(snapshot.createdAt)}</span>
+            <span>Data version {snapshot.dataVersion}</span>
           </div>
           <div className="res-actions">
             <button
@@ -81,38 +433,63 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
               <ul className="fa-chips" aria-label="Your answers">
                 <li className="fchip">
                   <span className="k">Country</span>
-                  <b>Malaysia · MYR</b>
+                  <b>
+                    {country.name} · {country.currency}
+                  </b>
                 </li>
                 <li className="fchip">
                   <span className="k">Interest</span>
-                  <b>ETFs</b>
+                  <b>
+                    {getProductInterestLabel(snapshot.input.productInterest)}
+                  </b>
                 </li>
                 <li className="fchip">
                   <span className="k">Investor</span>
-                  <b>Beginner</b>
+                  <b>{getInvestorLabel(snapshot.input.investorType)}</b>
                 </li>
                 <li className="fchip">
                   <span className="k">Starting</span>
-                  <b>MYR 1,000–5,000</b>
+                  <b>
+                    {
+                      AMOUNTS[country.currency].s[
+                        snapshot.input.startingAmount!
+                      ]
+                    }
+                  </b>
                 </li>
                 <li className="fchip">
                   <span className="k">Monthly</span>
-                  <b>MYR 200–1,000</b>
+                  <b>
+                    {
+                      AMOUNTS[country.currency].r[
+                        snapshot.input.recurringContribution!
+                      ]
+                    }
+                  </b>
                 </li>
-                <li className="fchip f">
-                  <span className="k">Filter</span>
-                  <b>Screening information required</b>
-                </li>
+                {snapshot.input.preferences.halalScreeningRequired && (
+                  <li className="fchip f">
+                    <span className="k">Filter</span>
+                    <b>{PREFERENCES.halalScreeningRequired.n}</b>
+                  </li>
+                )}
                 <li className="fchip">
                   <span className="k">Prefers</span>
-                  <b>MYR support</b>
+                  <b>
+                    {getPreferenceLabels(snapshot.input.preferences).join(
+                      ", ",
+                    ) || "None"}
+                  </b>
                 </li>
               </ul>
               <p className="fa-note">
                 <span>
                   Filters remove options. Preferences only change the order.
                 </span>
-                <Link href="#" data-act="change-country">
+                <Link
+                  href={`/find?country=${country.countryCode}`}
+                  data-act="change-country"
+                >
                   Change country
                 </Link>
               </p>
@@ -133,611 +510,78 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                   <Link href="/disclosures">Read our disclosures</Link>.
                 </span>
               </p>
-              <div className="grp-t">
-                <h3>Brokers</h3>
-                <span>2 options</span>
-              </div>
-              <p className="grp-d">You pick and place your own trades.</p>
-              <article className="optc" data-pid="a" aria-labelledby="r9-n-a">
-                <header className="opt-h">
-                  <div className="opt-t">
-                    <h4 id="r9-n-a">Example Broker A</h4>
-                    <span className="badge b-info">Broker</span>
-                    <span className="badge b-neutral">Referral link</span>
-                  </div>
-                  <span className="opt-rev">
-                    <Clock className="ic" width="14" height="14" /> Reviewed 1
-                    Oct 2026
-                  </span>
-                </header>
-                <p className="why">
-                  <CircleCheck className="ic" width="16" height="16" />
-                  <span>
-                    Included because it is available to Malaysia-based
-                    investors, supports ETF investing, provides
-                    Shariah-screening information and supports MYR.
-                  </span>
-                </p>
 
-                <dl className="facts">
-                  <div>
-                    <dt>Trading fee</dt>
-                    <dd>0.10%</dd>
-                  </div>
-                  <div>
-                    <dt>FX fee</dt>
-                    <dd>0.50%</dd>
-                  </div>
-                  <div>
-                    <dt>Management fee</dt>
-                    <dd>None</dd>
-                  </div>
-                  <div>
-                    <dt>Custody fee</dt>
-                    <dd>None</dd>
-                  </div>
-                  <div>
-                    <dt>Minimum investment</dt>
-                    <dd>MYR 100</dd>
-                  </div>
-                  <div>
-                    <dt>Asset types</dt>
-                    <dd>Stocks and ETFs</dd>
-                  </div>
-                  <div style={{ gridColumn: "1/-1" }}>
-                    <dt>Markets</dt>
-                    <dd>Bursa Malaysia, NYSE, NASDAQ</dd>
-                  </div>
-                </dl>
-                <div className="screen">
-                  <div className="screen-h">
-                    <ShieldCheck className="ic" width="16" height="16" />
-                    <b>Shariah-screening information</b>
-                    <span className="badge b-info">
-                      Provider-stated methodology
+              {providerTypeIsBroker.length > 0 && (
+                <>
+                  <div className="grp-t">
+                    <h3>Broker</h3>
+                    <span>
+                      {providerTypeIsBroker.length} option
+                      {providerTypeIsBroker.length > 1 ? "s" : ""}
                     </span>
                   </div>
-                  <p>
-                    Methodology: AAOIFI-aligned screening, as described by the
-                    provider. The provider publishes its screening list monthly.
-                  </p>
-                  <p className="fine">
-                    Informational, not a personal religious ruling. Source:{" "}
-                    <Link
-                      href="#"
-                      data-act="source"
-                      data-n="Provider screening page"
-                    >
-                      Provider screening page{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                    , reviewed 1 Oct 2026.
-                  </p>
-                </div>
-                <p className="fit ok">
-                  <CircleCheck className="ic" width="16" height="16" />
-                  <span>Minimum MYR 100 fits your starting range.</span>
-                </p>
-                <details className="pc" data-pc="a">
-                  <summary>Pros and cons</summary>
-                  <div className="pc-g">
-                    <div>
-                      <b>Pros</b>
-                      <ul>
-                        <li>Low trading fee</li>
-                        <li>Funding in MYR</li>
-                        <li>Islamic account type available</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <b>Cons</b>
-                      <ul>
-                        <li>FX fee applies to US-listed ETFs</li>
-                        <li>No fractional shares</li>
-                      </ul>
-                    </div>
-                  </div>
-                </details>
-                <div className="reqs">
-                  <b>Account requirements</b>
-                  <ul>
-                    <li>Passport or national ID</li>
-                    <li>Bank account in your country for funding</li>
-                  </ul>
-                </div>
-                <footer className="opt-f">
-                  <div className="srcs">
-                    <span>Sources:</span>
-                    <Link
-                      href="#"
-                      data-act="source"
-                      data-n="Provider pricing page"
-                    >
-                      Provider pricing page{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                    <Link
-                      href="#"
-                      data-act="source"
-                      data-n="Provider screening page"
-                    >
-                      Provider screening page{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                  </div>
-                  <div className="opt-a">
-                    <button
-                      type="button"
-                      className="btn btn-ghost btn-sm"
-                      data-act="report"
-                      data-n="Example Broker A"
-                    >
-                      <Flag className="ic" width="16" height="16" /> Report a
-                      problem
-                    </button>
-                    <Link
-                      className="btn btn-secondary btn-sm"
-                      href="#"
-                      data-act="visit"
-                      data-pid="a"
-                    >
-                      Visit provider{" "}
-                      <ExternalLink className="ic" width="16" height="16" />
-                    </Link>
-                  </div>
-                </footer>
-                <p className="aff">
-                  <Info className="ic" width="14" height="14" />
-                  <span>
-                    This is a referral link. Sahihfolio may earn a commission if
-                    you open an account through it. It doesn’t change which
-                    options appear or their order.{" "}
-                    <Link href="/disclosures">Read our disclosures</Link>.
-                  </span>
-                </p>
-              </article>
-              <article className="optc" data-pid="d" aria-labelledby="r9-n-d">
-                <header className="opt-h">
-                  <div className="opt-t">
-                    <h4 id="r9-n-d">Example Broker D</h4>
-                    <span className="badge b-info">Broker</span>
-                  </div>
-                  <span className="opt-rev">
-                    <Clock className="ic" width="14" height="14" /> Reviewed 1
-                    Oct 2026
-                  </span>
-                </header>
-                <p className="why">
-                  <CircleCheck className="ic" width="16" height="16" />
-                  <span>
-                    Included because it is available to Malaysia-based
-                    investors, supports ETF investing, provides
-                    Shariah-screening information and supports MYR.
-                  </span>
-                </p>
+                  <p className="grp-d">You pick and place your own trades.</p>
+                  {providerTypeIsBroker.map((match) =>
+                    renderProviderArticle(match),
+                  )}
+                </>
+              )}
 
-                <dl className="facts">
-                  <div>
-                    <dt>Trading fee</dt>
-                    <dd>MYR 8 per trade</dd>
-                  </div>
-                  <div>
-                    <dt>FX fee</dt>
-                    <dd>Not applicable (MYR only)</dd>
-                  </div>
-                  <div>
-                    <dt>Management fee</dt>
-                    <dd>None</dd>
-                  </div>
-                  <div>
-                    <dt>Custody fee</dt>
-                    <dd>MYR 3 per quarter</dd>
-                  </div>
-                  <div>
-                    <dt>Minimum investment</dt>
-                    <dd>MYR 1,000</dd>
-                  </div>
-                  <div>
-                    <dt>Asset types</dt>
-                    <dd>Stocks and ETFs</dd>
-                  </div>
-                  <div style={{ gridColumn: "1/-1" }}>
-                    <dt>Markets</dt>
-                    <dd>Bursa Malaysia</dd>
-                  </div>
-                </dl>
-                <div className="screen">
-                  <div className="screen-h">
-                    <ShieldCheck className="ic" width="16" height="16" />
-                    <b>Shariah-screening information</b>
-                    <span className="badge b-info">
-                      Provider-stated methodology
+              {providerTypeIsRoboAdvisor.length > 0 && (
+                <>
+                  <div className="grp-t">
+                    <h3>Robo-advisor</h3>
+                    <span>
+                      {providerTypeIsRoboAdvisor.length} option
+                      {providerTypeIsRoboAdvisor.length > 1 ? "s" : ""}
                     </span>
                   </div>
-                  <p>
-                    Methodology: Provider-specific screening, as described by
-                    the provider. Shariah-screened list based on the local
-                    market regulator’s guidance, as described by the provider.
+                  <p className="grp-d">
+                    A platform builds and rebalances a portfolio from your
+                    answers.
                   </p>
-                  <p className="fine">
-                    Informational, not a personal religious ruling. Source:{" "}
-                    <Link
-                      href="#"
-                      data-act="source"
-                      data-n="Provider screening page"
-                    >
-                      Provider screening page{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                    , reviewed 1 Oct 2026.
-                  </p>
-                </div>
-                <p className="fit ok">
-                  <CircleCheck className="ic" width="16" height="16" />
-                  <span>Minimum MYR 1,000 fits your starting range.</span>
-                </p>
-                <details className="pc" data-pc="d">
-                  <summary>Pros and cons</summary>
-                  <div className="pc-g">
-                    <div>
-                      <b>Pros</b>
-                      <ul>
-                        <li>Islamic account type available</li>
-                        <li>Local support in Malay and English</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <b>Cons</b>
-                      <ul>
-                        <li>Local market only</li>
-                        <li>Quarterly custody fee</li>
-                      </ul>
-                    </div>
-                  </div>
-                </details>
-                <div className="reqs">
-                  <b>Account requirements</b>
-                  <ul>
-                    <li>National ID</li>
-                    <li>Local bank account</li>
-                  </ul>
-                </div>
-                <footer className="opt-f">
-                  <div className="srcs">
-                    <span>Sources:</span>
-                    <Link
-                      href="#"
-                      data-act="source"
-                      data-n="Provider pricing page"
-                    >
-                      Provider pricing page{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                    <Link
-                      href="#"
-                      data-act="source"
-                      data-n="Provider screening page"
-                    >
-                      Provider screening page{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                  </div>
-                  <div className="opt-a">
-                    <button
-                      type="button"
-                      className="btn btn-ghost btn-sm"
-                      data-act="report"
-                      data-n="Example Broker D"
-                    >
-                      <Flag className="ic" width="16" height="16" /> Report a
-                      problem
-                    </button>
-                    <Link
-                      className="btn btn-secondary btn-sm"
-                      href="#"
-                      data-act="visit"
-                      data-pid="d"
-                    >
-                      Visit provider{" "}
-                      <ExternalLink className="ic" width="16" height="16" />
-                    </Link>
-                  </div>
-                </footer>
-              </article>
-              <div className="grp-t">
-                <h3>Robo-advisors</h3>
-                <span>1 option</span>
-              </div>
-              <p className="grp-d">
-                A platform builds and rebalances a portfolio from your answers.
-              </p>
-              <article className="optc" data-pid="b" aria-labelledby="r9-n-b">
-                <header className="opt-h">
-                  <div className="opt-t">
-                    <h4 id="r9-n-b">Example Robo B</h4>
-                    <span className="badge b-info">Robo-advisor</span>
-                  </div>
-                  <span className="opt-rev">
-                    <Clock className="ic" width="14" height="14" /> Reviewed 1
-                    Oct 2026
-                  </span>
-                </header>
-                <p className="why">
-                  <CircleCheck className="ic" width="16" height="16" />
-                  <span>
-                    Included because it is available to Malaysia-based
-                    investors, supports ETF investing, provides
-                    Shariah-screening information and supports MYR.
-                  </span>
-                </p>
+                  {providerTypeIsRoboAdvisor.map((match) =>
+                    renderProviderArticle(match),
+                  )}
+                </>
+              )}
 
-                <dl className="facts">
-                  <div>
-                    <dt>Trading fee</dt>
-                    <dd>None</dd>
-                  </div>
-                  <div>
-                    <dt>FX fee</dt>
-                    <dd>
-                      <span className="ns">Not stated</span>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Management fee</dt>
-                    <dd>0.45%</dd>
-                  </div>
-                  <div>
-                    <dt>Custody fee</dt>
-                    <dd>
-                      <span className="ns">Not stated</span>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Minimum investment</dt>
-                    <dd>MYR 500</dd>
-                  </div>
-                  <div>
-                    <dt>Asset types</dt>
-                    <dd>ETFs and managed portfolios</dd>
-                  </div>
-                  <div style={{ gridColumn: "1/-1" }}>
-                    <dt>Markets</dt>
-                    <dd>Global ETFs selected by the provider</dd>
-                  </div>
-                </dl>
-                <div className="screen">
-                  <div className="screen-h">
-                    <ShieldCheck className="ic" width="16" height="16" />
-                    <b>Shariah-screening information</b>
-                    <span className="badge b-neutral">
-                      Methodology not named
+              {providerTypeIsEtfProvider.length > 0 && (
+                <>
+                  <div className="grp-t">
+                    <h3>ETF providers</h3>
+                    <span>
+                      {providerTypeIsEtfProvider.length} option
+                      {providerTypeIsEtfProvider.length > 1 ? "s" : ""}
                     </span>
                   </div>
-                  <p>
-                    The provider says its portfolios are screened but does not
-                    name a methodology. Ask which methodology it uses before you
-                    decide.
+                  <p className="grp-d">
+                    Funds you buy through a broker. The details shown are the
+                    fund provider’s own.
                   </p>
-                  <p className="fine">
-                    Source:{" "}
-                    <Link href="#" data-act="source" data-n="Provider FAQ">
-                      Provider FAQ{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                    , reviewed 1 Oct 2026.
-                  </p>
-                </div>
-                <p className="fit ok">
-                  <CircleCheck className="ic" width="16" height="16" />
-                  <span>Minimum MYR 500 fits your starting range.</span>
-                </p>
-                <details className="pc" data-pc="b">
-                  <summary>Pros and cons</summary>
-                  <div className="pc-g">
-                    <div>
-                      <b>Pros</b>
-                      <ul>
-                        <li>Automatic rebalancing</li>
-                        <li>Low minimum</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <b>Cons</b>
-                      <ul>
-                        <li>FX and custody fees not stated</li>
-                        <li>Methodology not named</li>
-                      </ul>
-                    </div>
-                  </div>
-                </details>
-                <div className="reqs">
-                  <b>Account requirements</b>
-                  <ul>
-                    <li>National ID or passport</li>
-                    <li>Selfie verification</li>
-                  </ul>
-                </div>
-                <footer className="opt-f">
-                  <div className="srcs">
-                    <span>Sources:</span>
-                    <Link
-                      href="#"
-                      data-act="source"
-                      data-n="Provider fee schedule"
-                    >
-                      Provider fee schedule{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                    <Link href="#" data-act="source" data-n="Provider FAQ">
-                      Provider FAQ{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                  </div>
-                  <div className="opt-a">
-                    <button
-                      type="button"
-                      className="btn btn-ghost btn-sm"
-                      data-act="report"
-                      data-n="Example Robo B"
-                    >
-                      <Flag className="ic" width="16" height="16" /> Report a
-                      problem
-                    </button>
-                    <Link
-                      className="btn btn-secondary btn-sm"
-                      href="#"
-                      data-act="visit"
-                      data-pid="b"
-                    >
-                      Visit provider{" "}
-                      <ExternalLink className="ic" width="16" height="16" />
-                    </Link>
-                  </div>
-                </footer>
-              </article>
-              <div className="grp-t">
-                <h3>ETF providers</h3>
-                <span>1 option</span>
-              </div>
-              <p className="grp-d">
-                Funds you buy through a broker. The details shown are the fund
-                provider’s own.
-              </p>
-              <article className="optc" data-pid="c" aria-labelledby="r9-n-c">
-                <header className="opt-h">
-                  <div className="opt-t">
-                    <h4 id="r9-n-c">Example ETF Provider C</h4>
-                    <span className="badge b-info">ETF provider</span>
-                  </div>
-                  <span className="opt-rev">
-                    <Clock className="ic" width="14" height="14" /> Reviewed 1
-                    Oct 2026
-                  </span>
-                </header>
-                <p className="why">
-                  <CircleCheck className="ic" width="16" height="16" />
-                  <span>
-                    Included because it is available to Malaysia-based
-                    investors, supports ETF investing and provides
-                    Shariah-screening information.
-                    <span className="unmet">
-                      Not matched: doesn’t support MYR.
-                    </span>
-                  </span>
-                </p>
+                  {providerTypeIsEtfProvider.map((match) =>
+                    renderProviderArticle(match),
+                  )}
+                </>
+              )}
 
-                <dl className="facts">
-                  <div>
-                    <dt>Trading fee</dt>
-                    <dd>Set by your broker</dd>
-                  </div>
-                  <div>
-                    <dt>FX fee</dt>
-                    <dd>Depends on your broker</dd>
-                  </div>
-                  <div>
-                    <dt>Expense ratio</dt>
-                    <dd>0.40% expense ratio</dd>
-                  </div>
-                  <div>
-                    <dt>Custody fee</dt>
-                    <dd>Set by your broker</dd>
-                  </div>
-                  <div>
-                    <dt>Minimum investment</dt>
-                    <dd>Price of one unit</dd>
-                  </div>
-                  <div>
-                    <dt>Asset types</dt>
-                    <dd>ETFs</dd>
-                  </div>
-                  <div style={{ gridColumn: "1/-1" }}>
-                    <dt>Markets</dt>
-                    <dd>Bursa Malaysia, NYSE Arca</dd>
-                  </div>
-                </dl>
-                <div className="screen">
-                  <div className="screen-h">
-                    <ShieldCheck className="ic" width="16" height="16" />
-                    <b>Shariah-screening information</b>
-                    <span className="badge b-info">
-                      Provider-stated methodology
+              {providerTypeIsManagedPortfolio.length > 0 && (
+                <>
+                  <div className="grp-t">
+                    <h3>Managed portfolios</h3>
+                    <span>
+                      {providerTypeIsManagedPortfolio.length} option
+                      {providerTypeIsManagedPortfolio.length > 1 ? "s" : ""}
                     </span>
                   </div>
-                  <p>
-                    Methodology: Provider-specific screening, as described by
-                    the provider. The fund follows an index that applies its own
-                    screening rules.
+                  <p className="grp-d">
+                    Platforms that select and manage investments on your behalf.
                   </p>
-                  <p className="fine">
-                    Informational, not a personal religious ruling. Source:{" "}
-                    <Link href="#" data-act="source" data-n="Fund factsheet">
-                      Fund factsheet{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                    , reviewed 1 Oct 2026.
-                  </p>
-                </div>
-
-                <details className="pc" data-pc="c">
-                  <summary>Pros and cons</summary>
-                  <div className="pc-g">
-                    <div>
-                      <b>Pros</b>
-                      <ul>
-                        <li>Single fund, simple to hold</li>
-                        <li>Published factsheet</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <b>Cons</b>
-                      <ul>
-                        <li>Priced in USD</li>
-                        <li>You need a broker</li>
-                      </ul>
-                    </div>
-                  </div>
-                </details>
-                <div className="reqs">
-                  <b>Account requirements</b>
-                  <ul>
-                    <li>A brokerage account that can buy the fund</li>
-                  </ul>
-                </div>
-                <footer className="opt-f">
-                  <div className="srcs">
-                    <span>Sources:</span>
-                    <Link href="#" data-act="source" data-n="Fund factsheet">
-                      Fund factsheet{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                    <Link href="#" data-act="source" data-n="Index methodology">
-                      Index methodology{" "}
-                      <ExternalLink className="ic" width="12" height="12" />
-                    </Link>
-                  </div>
-                  <div className="opt-a">
-                    <button
-                      type="button"
-                      className="btn btn-ghost btn-sm"
-                      data-act="report"
-                      data-n="Example ETF Provider C"
-                    >
-                      <Flag className="ic" width="16" height="16" /> Report a
-                      problem
-                    </button>
-                    <Link
-                      className="btn btn-secondary btn-sm"
-                      href="#"
-                      data-act="visit"
-                      data-pid="c"
-                    >
-                      Visit provider{" "}
-                      <ExternalLink className="ic" width="16" height="16" />
-                    </Link>
-                  </div>
-                </footer>
-              </article>
+                  {providerTypeIsManagedPortfolio.map((match) =>
+                    renderProviderArticle(match),
+                  )}
+                </>
+              )}
             </section>
             <section data-m="table" className="tbl">
               <div className="sec-h">
@@ -1052,7 +896,7 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
                   id="r9-lk"
                   className="inp share-lk"
                   readOnly
-                  value="sahihfolio.com/results/k7x2m9"
+                  value="sahihfolio.com/results/{snapshot.publicId}"
                 />
                 <button
                   type="button"
@@ -1100,7 +944,7 @@ export function ResultsView({ snapshot }: { snapshot: ResultSnapshot }) {
               <h3>About this result</h3>
               <dl className="meta-l">
                 <dt>Result ID</dt>
-                <dd>k7x2m9</dd>
+                <dd>{snapshot.publicId}</dd>
                 <dt>Created</dt>
                 <dd>17 Oct 2026</dd>
                 <dt>Data version</dt>

@@ -54,11 +54,7 @@ function supportsProductInterest(
 }
 
 function hasFeeTransparency(provider: Provider): boolean {
-  const fees = provider.fees ?? {};
-
-  return Boolean(
-    fees.trading || fees.management || fees.fx || fees.custody || fees.other,
-  );
+  return (provider.fees ?? []).length > 0;
 }
 
 function hasBeginnerSuitability(provider: Provider): boolean {

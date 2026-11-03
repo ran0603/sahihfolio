@@ -13,15 +13,11 @@ export const temporaryMatchSchema = z
   })
   .passthrough();
 
-export const resultSnapshotOutputSchema = z.union([
-  // Array of matches (as created in find-options route: output: matches)
-  z.array(z.record(z.string(), z.unknown())),
-  // Object structure (e.g. { matches: [...], ... })
-  z
-    .object({
-      matches: z.array(z.record(z.string(), z.unknown())).optional(),
-    })
-    .passthrough(),
-]);
+export const resultSnapshotOutputSchema = z
+  .object({
+    matches: z.array(z.record(z.string(), z.unknown())).default([]),
+    exclusions: z.array(z.record(z.string(), z.unknown())).default([]),
+  })
+  .passthrough();
 
 export type ResultSnapshotOutput = z.infer<typeof resultSnapshotOutputSchema>;

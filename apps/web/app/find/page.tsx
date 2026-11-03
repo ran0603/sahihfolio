@@ -5,6 +5,8 @@ import { Suspense, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
+  Banknote,
+  Bitcoin,
   Briefcase,
   Calendar,
   Check,
@@ -13,10 +15,12 @@ import {
   CircleQuestionMark,
   CircleX,
   Compass,
+  GraphStar,
   Info,
   Layers,
   LoaderCircle,
   Lock,
+  Scale,
   Sprout,
   TrendingUp,
   TriangleAlert,
@@ -73,6 +77,26 @@ const INTERESTS: Record<string, { n: string; a: string; i: React.ReactNode }> =
       n: "Managed portfolio",
       a: "A provider builds and rebalances a portfolio for you.",
       i: <Briefcase className="ic h-[22px] w-[22px]" />,
+    },
+    sukuk: {
+      n: "Sukuk",
+      a: "Invest in Islamic bonds or Islamic finance products",
+      i: <GraphStar className="ic h-[22px] w-[22px]" />,
+    },
+    gold: {
+      n: "Gold",
+      a: "Invest in physical gold or gold-related products",
+      i: <Scale className="ic h-[22px] w-[22px]" />,
+    },
+    crypto: {
+      n: "Cryptocurrency",
+      a: "Invest in digital currencies or crypto-related products",
+      i: <Bitcoin className="ic h-[22px] w-[22px]" />,
+    },
+    mutual_funds: {
+      n: "Mutual funds",
+      a: "Invest in a basket of securities managed by fund managers.",
+      i: <Banknote className="ic h-[22px] w-[22px]" />,
     },
     unsure: {
       n: "Not sure yet",
@@ -133,17 +157,17 @@ const PREFERENCES: Record<
   string,
   { n: string; a: string; t: "filter" | "rank" }
 > = {
-  screening: {
+  halalScreeningRequired: {
     n: "Require Shariah-screening information",
     a: "Hide options that don't publish how they screen.",
     t: "filter",
   },
-  currency: {
-    n: "Supports MYR",
+  localCurrencyPreferred: {
+    n: "Supports local currency",
     a: "Prefer options that let you fund and invest in your local currency.",
     t: "rank",
   },
-  islamic: {
+  islamicAccountPreferred: {
     n: "Offers an Islamic account",
     a: "Prefer providers that offer an Islamic (swap-free) account type.",
     t: "rank",
@@ -176,7 +200,6 @@ function FinderContent() {
   };
 
   const handleSubmit = async () => {
-    console.log("hey");
     if (currentStep === 5) {
       const response = await fetch("/api/find-options", {
         method: "POST",
@@ -188,9 +211,15 @@ function FinderContent() {
           startingAmount: Number(selectedStartingAmount),
           recurringContribution: Number(selectedMonthlyContribution),
           preferences: {
-            halalScreeningRequired: selectedPreferences.includes("screening"),
-            islamicAccountPreferred: selectedPreferences.includes("islamic"),
-            localCurrencyPreferred: selectedPreferences.includes("currency"),
+            halalScreeningRequired: selectedPreferences.includes(
+              "halalScreeningRequired",
+            ),
+            islamicAccountPreferred: selectedPreferences.includes(
+              "islamicAccountPreferred",
+            ),
+            localCurrencyPreferred: selectedPreferences.includes(
+              "localCurrencyPreferred",
+            ),
           },
         }),
       });

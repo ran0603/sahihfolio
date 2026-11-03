@@ -2,18 +2,37 @@ import { Source } from "../constants";
 import type { ProviderType, AssetType } from "../constants/providers";
 
 export interface ProviderFees {
-  trading?: string;
-  management?: string;
-  fx?: string;
-  custody?: string;
-  withdrawal?: string;
-  other?: string;
+  kind:
+    | "trading"
+    | "management"
+    | "platform"
+    | "fx"
+    | "custody"
+    | "withdrawal"
+    | "deposit"
+    | "inactivity"
+    | "other";
+  label: string;
+  value: string;
+  currency?: string;
+  frequency: "per_trade" | "per_year" | "per_month" | "one_time" | "variable";
+  conditions?: string;
+  source: Source;
+}
+
+export interface Market {
+  code: string;
+  name: string;
+  access: "direct" | "indirect" | "unavailable";
+  notes?: string;
+  source?: Source;
 }
 
 export interface HalalScreeningInfo {
   supported: boolean;
   methodology?: string;
   notes?: string;
+  source?: Source;
   sourceUrl?: string;
 }
 
@@ -39,17 +58,17 @@ export interface Provider {
   slug: string;
   type: ProviderType;
   countries: string[];
-  markets: string[];
+  markets: Market[];
   assetTypes: AssetType[];
   halalScreening: HalalScreeningInfo;
-  fees: ProviderFees;
+  fees: ProviderFees[];
   minimumInvestment?: string;
   accountRequirements: AccountRequirements[];
   pros: string[];
   cons: string[];
   websiteUrl?: string;
   disclosureUrl: string;
-  affiliateUrl?: string;
+  isAffiliate?: boolean;
   lastReviewedAt: string | Date;
   status: "published" | "draft" | "archived";
 }
