@@ -14,6 +14,7 @@ import {
   index,
   uuid,
   pgEnum,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { users } from "./users";
 import { ProviderType } from "@sahihfolio/shared";
@@ -70,6 +71,7 @@ export const providers = pgTable(
 
     websiteUrl: text("website_url"),
     disclosureUrl: text("disclosure_url").notNull(),
+    isAffiliated: boolean("is_affiliated").notNull().default(false),
 
     status: text("status").notNull().default("draft"),
     lastReviewedAt: timestamp("last_reviewed_at", {

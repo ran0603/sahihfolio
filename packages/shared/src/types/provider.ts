@@ -68,7 +68,7 @@ export interface Provider {
   cons: string[];
   websiteUrl?: string;
   disclosureUrl: string;
-  isAffiliate?: boolean;
+  isAffiliated: boolean;
   lastReviewedAt: string | Date;
   status: "published" | "draft" | "archived";
 }

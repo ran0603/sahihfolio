@@ -14,6 +14,7 @@ export const ASSET_TYPES = [
   "real_estate",
   "gold",
   "mutual_funds",
+  "crypto",
 ] as const;
 
 export type AssetType = (typeof ASSET_TYPES)[number];

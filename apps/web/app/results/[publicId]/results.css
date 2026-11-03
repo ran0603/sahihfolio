@@ -333,6 +333,13 @@
   color: var(--muted)
 }
 
+.fine a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
 .sec-h {
   display: flex;
   align-items: center;
