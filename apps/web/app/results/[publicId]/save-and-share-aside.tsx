@@ -5,7 +5,11 @@ import { getDateString } from "@/lib/date-utils";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 import { useState } from "react";
 
-export default function SaveAndShareAside({ snapshot }: { snapshot: ResultSnapshot }) {
+export default function SaveAndShareAside({
+  snapshot,
+}: {
+  snapshot: ResultSnapshot;
+}) {
   const [emailInput, setEmailInput] = useState("");
   const [emailError, setEmailError] = useState("");
   const [consentChecked, setConsentChecked] = useState(false);
@@ -40,8 +44,8 @@ export default function SaveAndShareAside({ snapshot }: { snapshot: ResultSnapsh
           <label className="chk ">
             <input className="rin save-cb" type="checkbox" />
             <span>
-              I agree to receive this email from Sahihfolio. I can
-              unsubscribe at any time.
+              I agree to receive this email from Sahihfolio. I can unsubscribe
+              at any time.
             </span>
           </label>
           <p className="fmsg err" data-se="" role="alert" hidden>
@@ -57,8 +61,8 @@ export default function SaveAndShareAside({ snapshot }: { snapshot: ResultSnapsh
           </button>
         </form>
         <p className="fine" style={{ margin: "12px 0 0" }}>
-          No account needed. We store your email, country, interest and
-          this result.
+          No account needed. We store your email, country, interest and this
+          result.
         </p>
       </section>
       <section data-m="share" className="card2 share">
@@ -100,8 +104,7 @@ export default function SaveAndShareAside({ snapshot }: { snapshot: ResultSnapsh
             className="btn btn-ghost btn-sm"
             data-act="print"
           >
-            <Printer className="ic" width="16" height="16" /> Print or
-            save PDF
+            <Printer className="ic" width="16" height="16" /> Print or save PDF
           </button>
         </div>
         <p
@@ -110,8 +113,7 @@ export default function SaveAndShareAside({ snapshot }: { snapshot: ResultSnapsh
         >
           <Lock className="ic" width="14" height="14" />
           <span>
-            The link shows country, interest and filters. Amounts stay
-            private.
+            The link shows country, interest and filters. Amounts stay private.
           </span>
         </p>
       </section>
@@ -132,5 +134,5 @@ export default function SaveAndShareAside({ snapshot }: { snapshot: ResultSnapsh
         </p>
       </section>
     </aside>
-  )
+  );
 }
