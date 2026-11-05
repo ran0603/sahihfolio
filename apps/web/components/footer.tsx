@@ -25,7 +25,12 @@ export function Footer() {
     );
   }
 
-  if (pathname === "/results" || pathname?.startsWith("/results/")) {
+  if (
+    pathname === "/results" ||
+    pathname?.startsWith("/results/") ||
+    pathname === "/methodology" ||
+    pathname?.startsWith("/methodology/")
+  ) {
     return (
       <footer className="pfoot">
         <div className="wrap">
