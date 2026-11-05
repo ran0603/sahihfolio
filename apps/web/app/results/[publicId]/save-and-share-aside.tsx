@@ -7,8 +7,12 @@ import { Suspense, useState } from "react";
 
 export default function SaveAndShareAside({
   snapshot,
+  emailRef,
+  onHandleCopy,
 }: {
   snapshot: ResultSnapshot;
+  emailRef?: React.RefObject<HTMLInputElement | null>;
+  onHandleCopy: () => void;
 }) {
   const [emailInput, setEmailInput] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -72,10 +76,13 @@ export default function SaveAndShareAside({
               type="email"
               placeholder="you@example.com"
               autoComplete="email"
+              ref={emailRef}
               value={emailInput}
               onChange={(e) => {
                 setEmailInput(e.target.value);
-                setEmailError(validEmail(e.target.value));
+                setEmailError(
+                  validEmail(e.target.value) && emailInput.length == 0,
+                );
               }}
             />
             <p
@@ -136,6 +143,7 @@ export default function SaveAndShareAside({
             className="btn btn-secondary btn-sm"
             data-act="copy"
             style={{ height: "48px" }}
+            onClick={onHandleCopy}
           >
             <Copy className="ic" width="16" height="16" /> Copy
           </button>
