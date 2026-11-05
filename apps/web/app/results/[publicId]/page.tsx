@@ -2,17 +2,7 @@ import { getResultSnapshot } from "@/lib/results/get-result-snapshot";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import "./results.css";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Copy,
-  Info,
-  Lock,
-  Mail,
-  Printer,
-  Share2,
-  TriangleAlert,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Copy, Info, Mail, Printer } from "lucide-react";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 import { getCountry } from "@/lib/countries/get-country";
 import { CountryProfile, MatchResult } from "@sahihfolio/shared";

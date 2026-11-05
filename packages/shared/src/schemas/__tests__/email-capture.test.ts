@@ -1,29 +1,37 @@
 import { describe, it, expect } from "vitest";
-import { emailCaptureSchema } from "../lead";
+import { emailCaptureSchema } from "../email-capture";
 
 describe("emailCaptureSchema", () => {
   it("parses a valid payload with all fields", () => {
     const result = emailCaptureSchema.safeParse({
       email: "user@example.com",
+      resultSnapshotId: "123e4567-e89b-12d3-a456-426614174000",
+      consent: true,
+      productInterest: "all",
       countryCode: "MY",
-      source: "landing_page",
-      metadata: { campaign: "ramadan2024" },
+      source: "finder",
+      unsubscribeToken: "123e4567-e89b-12d3-a456-426614174789",
     });
     expect(result.success).toBe(true);
   });
 
   it("defaults source to 'finder' when not provided", () => {
-    const result = emailCaptureSchema.safeParse({ email: "user@example.com" });
+    const result = emailCaptureSchema.safeParse({
+      email: "user@example.com",
+      consent: true,
+    });
     expect(result.success).toBe(true);
     if (result.success) expect(result.data.source).toBe("finder");
   });
 
   it("accepts an email without optional fields", () => {
-    const result = emailCaptureSchema.safeParse({ email: "minimal@test.org" });
+    const result = emailCaptureSchema.safeParse({
+      email: "minimal@test.org",
+      consent: true,
+    });
     expect(result.success).toBe(true);
     if (result.success) {
-      expect(result.data.countryCode).toBeUndefined();
-      expect(result.data.metadata).toBeUndefined();
+      expect(result.data.resultSnapshotId).toBeUndefined();
     }
   });
 
@@ -51,13 +59,5 @@ describe("emailCaptureSchema", () => {
       countryCode: "USA",
     });
     expect(result.success).toBe(false);
-  });
-
-  it("accepts arbitrary metadata record", () => {
-    const result = emailCaptureSchema.safeParse({
-      email: "user@example.com",
-      metadata: { nested: { value: 42 }, flag: true, label: "test" },
-    });
-    expect(result.success).toBe(true);
   });
 });
