@@ -29,6 +29,9 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/sahihfolio_preview
+      RESEND_API_KEY: test-api-key
+      EMAIL_FROM: "Sahihfolio <results@sahihfolio.com>"
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
       NEXT_TELEMETRY_DISABLED: 1
 
     steps:

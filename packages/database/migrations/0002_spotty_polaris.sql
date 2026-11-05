@@ -1,0 +1,1 @@
+ALTER TABLE "providers" ADD COLUMN "is_affiliated" boolean DEFAULT false NOT NULL;

@@ -6,9 +6,11 @@ import type { FinderIntakeInput } from "@sahihfolio/shared";
 export async function createResultSnapshot({
   input,
   output,
+  oldDataVersion,
 }: {
   input: FinderIntakeInput;
   output: unknown;
+  oldDataVersion?: number;
 }) {
   const publicId = randomUUID();
 
@@ -18,7 +20,7 @@ export async function createResultSnapshot({
       publicId,
       input,
       output,
-      dataVersion: "v1",
+      dataVersion: `v${oldDataVersion ? oldDataVersion + 1 : 1}`,
     })
     .returning({
       publicId: resultSnapshots.publicId,

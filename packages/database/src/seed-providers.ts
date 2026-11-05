@@ -105,36 +105,50 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "trading" as const,
+        kind: "trading",
         label: "US stock and ETF commission",
-        value: "From USD 0.005 per share or tiered commission",
-        currency: "USD" as const,
-        frequency: "per_trade" as const,
-        conditions: "Pricing varies by exchange, product, and account tier.",
-        source: source(
-          "Interactive Brokers pricing",
-          "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
-        ),
+        value: "USD 0 or USD 0.0005–0.005 per share",
+        currency: "USD",
+        frequency: "per_trade",
+        conditions:
+          "IBKR Lite: USD 0 for eligible US exchange-listed stocks and ETFs, subject to program rules. IBKR Pro: Fixed USD 0.005 per share or Tiered USD 0.0005–0.0035 per share; minimums and exchange, clearing, and regulatory fees may apply.",
+        source: {
+          label: "Interactive Brokers pricing",
+          url: "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
       {
-        kind: "fx" as const,
-        label: "Currency conversion",
-        value: "Spot rate plus 0.03% to 0.20%",
-        frequency: "variable",
-        source: source(
-          "Interactive Brokers pricing",
-          "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
-        ),
+        kind: "fx",
+        label: "Currency conversion commission",
+        value: "0.08–0.20 bps",
+        frequency: "per_trade",
+        conditions:
+          "Commission is 0.08 to 0.20 basis points of trade value; currency spreads also apply. Basis point means 0.0001.",
+        source: {
+          label: "Interactive Brokers pricing",
+          url: "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
       {
-        kind: "custody" as const,
+        kind: "inactivity",
         label: "Inactivity fee",
         value: "None",
         frequency: "per_year",
-        source: source(
-          "Interactive Brokers pricing",
-          "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
-        ),
+        conditions:
+          "IBKR states there are no inactivity fees; IBKR Lite also has no account minimums or maintenance fees.",
+        source: {
+          label: "Interactive Brokers pricing",
+          url: "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -236,12 +250,19 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
+        kind: "management",
         label: "Portfolio management fee",
-        value: "Tiered management fee",
-        frequency: "per_year" as const,
-        conditions: "Verify the current fee schedule for the user’s country.",
-        source: source("Wahed pricing", "https://wahed.com"),
+        value: "Tiered; country-specific",
+        frequency: "per_year",
+        conditions:
+          "Wahed’s fee depends on the user’s country, account type, and portfolio. Verify the applicable local fee schedule before publishing.",
+        source: {
+          label: "Wahed pricing",
+          url: "https://wahed.com",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -338,12 +359,36 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "trading" as const,
+        kind: "trading",
         label: "Brokerage commission",
-        value: "Tiered brokerage commission",
-        frequency: "per_trade" as const,
-        conditions: "Verify current rates, minimums, and promotional pricing.",
-        source: source("Rakuten Trade pricing", "https://www.rakutentrade.my"),
+        value: "RM1–RM100",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "Tiered brokerage based on trading value; rates, minimums, and market-specific charges vary. New US traders may receive fixed RM1 brokerage on NYSE/NASDAQ trades for up to 3 months under promotion.",
+        source: {
+          label: "Rakuten Trade pricing",
+          url: "https://www.rakutentrade.my",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "other",
+        label: "Contra margin interest",
+        value: "6.5%",
+        currency: "MYR",
+        frequency: "variable",
+        conditions:
+          "Applies to Rakuten Trade’s Contra Account; settlement is required within two days. Confirm current terms and applicable interest calculation.",
+        source: {
+          label: "Rakuten Trade pricing",
+          url: "https://www.rakutentrade.my",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -452,15 +497,68 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "trading" as const,
+        kind: "trading",
         label: "Stock and ETF commission",
-        value:
-          "0 commission promotion for MY, US, SG, HK, and China A-share stocks and ETFs; standard and other fees may apply",
-        currency: "MYR" as const,
-        frequency: "per_trade" as const,
+        value: "0%",
+        currency: "MYR",
+        frequency: "per_trade",
         conditions:
-          "Promotional pricing, platform fees, regulatory charges, FX conversion, and product-specific charges may apply. Verify the current fee schedule before publishing.",
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          "Promotional 0 commission for MY, US, SG, HK, and China A-share stocks and ETFs. Platform, regulatory, FX, and product-specific fees may apply.",
+        source: {
+          label: "Moomoo Malaysia",
+          url: "https://www.moomoo.com/my",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "deposit",
+        label: "Malaysia IPO subscription fee",
+        value: "Free",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "Applies to Malaysian IPO subscriptions; availability and eligibility may vary.",
+        source: {
+          label: "Moomoo Malaysia",
+          url: "https://www.moomoo.com/my",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "custody",
+        label: "Malaysia CDS account fee",
+        value: "Free",
+        currency: "MYR",
+        frequency: "one_time",
+        conditions:
+          "Promotional zero CDS account fee for Malaysia; confirm current account-opening terms.",
+        source: {
+          label: "Moomoo Malaysia",
+          url: "https://www.moomoo.com/my",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "other",
+        label: "Margin financing rate",
+        value: "6.8%",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "Competitive margin rate advertised by Moomoo Malaysia; actual rate may vary by market, currency, and account terms.",
+        source: {
+          label: "Moomoo Malaysia",
+          url: "https://www.moomoo.com/my",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -542,15 +640,36 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
+        kind: "management",
         label: "Portfolio management fee",
-        value:
-          "Tiered management fee; verify the fee applicable to the selected Shariah Global Portfolio",
-        currency: "MYR" as const,
-        frequency: "per_year" as const,
+        value: "Portfolio-specific",
+        currency: "MYR",
+        frequency: "per_year",
         conditions:
-          "Fees may vary by portfolio, assets under management, and product. Underlying ETF expenses and other product charges may also apply.",
-        source: source("StashAway Malaysia", "https://www.stashaway.my"),
+          "Verify the fee applicable to the selected Shariah Global Portfolio. Fees may vary by portfolio, assets under management, and product. Underlying ETF expenses and other product charges may apply.",
+        source: {
+          label: "StashAway Malaysia",
+          url: "https://www.stashaway.my",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "management",
+        label: "ETF Explorer platform fee",
+        value: "0.3%",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "0.3% per year to hold a single global equity ETF through StashAway’s ETF Explorer; underlying ETF expenses may also apply.",
+        source: {
+          label: "StashAway Malaysia",
+          url: "https://www.stashaway.my",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -629,17 +748,66 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
+        kind: "management",
         label: "ETF management fee",
-        value: "Fund-specific: 0.40% to 0.65% per year",
-        currency: "MYR" as const,
-        frequency: "per_year" as const,
+        value: "0.40%",
+        currency: "MYR",
+        frequency: "per_year",
         conditions:
-          "Management fees vary by ETF. Total annual fund charges also include trustee and index-license fees; investors may incur brokerage and other trading charges.",
-        source: source(
-          "Eq8 fund fee and charges",
-          "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
-        ),
+          "0.40% per annum for Eq8 Dow Jones Islamic Market Malaysia Titans 25 ETF (EQ8MY25). Management fees vary by ETF; verify each fund’s fee table.",
+        source: {
+          label: "Eq8 fund fee and charges",
+          url: "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "trustee",
+        label: "ETF trustee fee",
+        value: "0.05%",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions: "0.05% per annum, chargeable to the Fund.",
+        source: {
+          label: "Eq8 fund fee and charges",
+          url: "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "other",
+        label: "Index licence fee",
+        value: "0.04%",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions: "0.04% per annum, chargeable to the Fund.",
+        source: {
+          label: "Eq8 fund fee and charges",
+          url: "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "trading",
+        label: "Brokerage and transaction charges",
+        value: "Broker-specific",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "Investors may pay brokerage and other incidental trading charges when buying or selling EQ8MY25 on Bursa Malaysia.",
+        source: {
+          label: "Eq8 fund fee and charges",
+          url: "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -716,17 +884,83 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
-        label: "Fund management fee",
-        value: "Fund-specific; commonly up to 1.50% per year for equity funds",
-        currency: "MYR" as const,
-        frequency: "per_year" as const,
+        kind: "management",
+        label: "Annual fund management fee",
+        value: "1.50%",
+        currency: "MYR",
+        frequency: "per_year",
         conditions:
-          "Sales charges, trustee fees, switching or transfer charges, and other fund-level costs may apply. Verify the Product Highlights Sheet and prospectus for the selected fund.",
-        source: source(
-          "PB Islamic Equity Fund fees and charges",
-          "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
-        ),
+          "1.50% per annum of NAV for PB Islamic Equity Fund. Other Public Mutual funds may differ; verify the selected fund’s Product Highlights Sheet and prospectus.",
+        source: {
+          label: "PB Islamic Equity Fund fees and charges",
+          url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "sales",
+        label: "Sales charge",
+        value: "Up to 5.0%",
+        currency: "MYR",
+        frequency: "one_time",
+        conditions:
+          "Up to 5.0% of NAV per unit; the manager may charge less at its discretion.",
+        source: {
+          label: "PB Islamic Equity Fund fees and charges",
+          url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "trustee",
+        label: "Annual trustee fee",
+        value: "0.06%",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "0.06% per annum of NAV, subject to a minimum of RM18,000 and maximum of RM600,000 per annum.",
+        source: {
+          label: "PB Islamic Equity Fund fees and charges",
+          url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "switching",
+        label: "Switching charge",
+        value: "Up to 0.75% or RM50",
+        currency: "MYR",
+        frequency: "variable",
+        conditions:
+          "Varies by recipient fund, holding period, and whether units are loaded or partial-load; subject to a minimum of RM50 where applicable.",
+        source: {
+          label: "PB Islamic Equity Fund fees and charges",
+          url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "transfer",
+        label: "Transfer charge",
+        value: "Up to RM50",
+        currency: "MYR",
+        frequency: "one_time",
+        conditions: "Up to RM50 per transfer.",
+        source: {
+          label: "PB Islamic Equity Fund fees and charges",
+          url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -824,18 +1058,68 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
-        label: "Fund management fee",
-        value:
-          "Fund-specific; BEST portfolio management fee is 0.5% per year for money-market funds and 1.5% per year for other portfolios",
-        currency: "MYR" as const,
-        frequency: "per_year" as const,
+        kind: "management",
+        label: "Annual fund management fee",
+        value: "Up to 1.80%",
+        currency: "MYR",
+        frequency: "per_year",
         conditions:
-          "Fund prospectuses may permit annual management fees up to 1.80% or 2.00% of NAV, plus trustee and other charges. Verify the selected fund’s Product Highlights Sheet and prospectus.",
-        source: source(
-          "BIMB Investment prospectus",
-          "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
-        ),
+          "Fund-specific. BEST portfolio management fee is 0.5% per year for money-market funds and 1.5% per year for other portfolios. Check the selected fund’s prospectus and Product Highlights Sheet.",
+        source: {
+          label: "BIMB Investment prospectus",
+          url: "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "trustee",
+        label: "Annual trustee fee",
+        value: "Up to 0.08%",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "Charged on NAV and may vary by fund; confirm the applicable rate in the fund’s prospectus.",
+        source: {
+          label: "BIMB Investment prospectus",
+          url: "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "administration",
+        label: "Administrative fees",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "May include fund administration and related operating charges; review the selected fund’s fee disclosure.",
+        source: {
+          label: "BIMB Investment prospectus",
+          url: "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "sales",
+        label: "Sales charge",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "one_time",
+        conditions:
+          "May apply on unit purchases; confirm whether the selected fund and distribution channel charge a sales fee.",
+        source: {
+          label: "BIMB Investment prospectus",
+          url: "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -930,18 +1214,82 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
-        label: "Fund management fee",
-        value:
-          "Fund-specific: 0.25% to 1.50% per year across selected Islamic funds",
-        currency: "MYR" as const,
-        frequency: "per_year" as const,
+        kind: "management",
+        label: "Annual fund management fee",
+        value: "0.28%",
+        currency: "MYR",
+        frequency: "per_year",
         conditions:
-          "Sales charges, trustee fees, switching fees, transfer fees, and other fund-level costs may apply. Verify the selected fund’s Product Highlights Sheet and prospectus.",
-        source: source(
-          "Maybank Income Flow-I Fund",
-          "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
-        ),
+          "0.28% per annum of the NAV of Class A for Maybank Income Flow-I Fund. Other Maybank Islamic funds may differ; verify the selected fund’s Product Highlights Sheet and prospectus.",
+        source: {
+          label: "Maybank Income Flow-I Fund",
+          url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "sales",
+        label: "Sales charge",
+        value: "Up to 0.50%",
+        currency: "MYR",
+        frequency: "one_time",
+        conditions: "Up to 0.50% of the NAV per unit.",
+        source: {
+          label: "Maybank Income Flow-I Fund",
+          url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "trustee",
+        label: "Annual trustee fee",
+        value: "0.05%",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "0.05% per annum of the NAV of the Fund, excluding foreign custodian fees and charges.",
+        source: {
+          label: "Maybank Income Flow-I Fund",
+          url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "switching",
+        label: "Switching fee",
+        value: "MYR 10",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "RM10.00 per switch; confirm eligibility and any fund-specific switching terms.",
+        source: {
+          label: "Maybank Income Flow-I Fund",
+          url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "transfer",
+        label: "Transfer fee",
+        value: "MYR 10",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions: "RM10.00 per transfer.",
+        source: {
+          label: "Maybank Income Flow-I Fund",
+          url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -1039,18 +1387,84 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
-        label: "Fund management fee",
-        value:
-          "Fund-specific: 0.40% to 3.00% per year maximum, depending on the fund and share class",
-        currency: "MYR" as const,
-        frequency: "per_year" as const,
+        kind: "management",
+        label: "Annual fund management fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_year",
         conditions:
-          "Application fees, trustee fees, switching fees, transfer fees, and other charges may apply. Verify the selected fund’s Product Highlights Sheet and prospectus.",
-        source: source(
-          "Principal Islamic Money Market Fund annual report",
-          "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
-        ),
+          "Verify the annual management fee for the selected Principal fund and share class in its Product Highlights Sheet and prospectus. The Principal Islamic Money Market Fund report confirms a management fee is charged but does not state the percentage rate.",
+        source: {
+          label: "Principal Islamic Money Market Fund annual report",
+          url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "trustee",
+        label: "Annual trustee fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "Verify the annual trustee fee for the selected fund and share class in its Product Highlights Sheet and prospectus.",
+        source: {
+          label: "Principal Islamic Money Market Fund annual report",
+          url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "sales",
+        label: "Application fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "one_time",
+        conditions:
+          "Verify whether the selected fund charges an application fee and the applicable rate by purchase channel.",
+        source: {
+          label: "Principal Islamic Money Market Fund annual report",
+          url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "switching",
+        label: "Switching fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "Verify the switching fee and eligibility rules in the selected fund’s prospectus and Product Highlights Sheet.",
+        source: {
+          label: "Principal Islamic Money Market Fund annual report",
+          url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "transfer",
+        label: "Transfer fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "Verify the transfer fee in the selected fund’s prospectus and Product Highlights Sheet.",
+        source: {
+          label: "Principal Islamic Money Market Fund annual report",
+          url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -1145,18 +1559,83 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
-        label: "Fund management fee",
-        value:
-          "Fund-specific: commonly 1.20% to 1.90% per year; selected alternative Islamic funds may charge up to 1.80% per year",
-        currency: "MYR" as const,
-        frequency: "per_year" as const,
+        kind: "management",
+        label: "Annual fund management fee",
+        value: "1.50%",
+        currency: "MYR",
+        frequency: "per_year",
         conditions:
-          "Entry fees may reach 5.50% for cash investments or 3.00% for EPF investments, depending on the fund. Trustee, switching, transfer, and other charges may also apply.",
-        source: source(
-          "Kenanga Syariah Growth Fund",
-          "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
-        ),
+          "1.50% per annum of NAV for Kenanga Syariah Growth Fund. Other Kenanga Islamic funds may differ; verify the selected fund’s Product Highlights Sheet and prospectus.",
+        source: {
+          label: "Kenanga Syariah Growth Fund",
+          url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "sales",
+        label: "Entry fee",
+        value: "Up to 5.50% or 3.00%",
+        currency: "MYR",
+        frequency: "one_time",
+        conditions:
+          "Up to 5.50% of NAV per unit for cash investments; up to 3.00% for EPF investments. Applies to all unit classes.",
+        source: {
+          label: "Kenanga Syariah Growth Fund",
+          url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "trustee",
+        label: "Annual trustee fee",
+        value: "0.05%",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "0.05% per annum of NAV; the NAV used for the trustee fee includes that day’s trustee fee.",
+        source: {
+          label: "Kenanga Syariah Growth Fund",
+          url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "withdrawal",
+        label: "Exit fee",
+        value: "None",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions: "No exit fee is charged for redemptions.",
+        source: {
+          label: "Kenanga Syariah Growth Fund",
+          url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "switching",
+        label: "Switching fee",
+        value: "None",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "No switching fee is charged; confirm eligibility and recipient-fund terms.",
+        source: {
+          label: "Kenanga Syariah Growth Fund",
+          url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -1251,18 +1730,84 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
-        label: "Fund management fee",
-        value:
-          "Fund-specific: commonly 0.50% to 1.50% per year for retail Islamic funds",
-        currency: "MYR" as const,
-        frequency: "per_year" as const,
+        kind: "management",
+        label: "Annual fund management fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_year",
         conditions:
-          "Sales charges vary by channel: up to 6.50% through IUTA platforms, up to 5.50% through AHAM/internal channels, and capped at 3% for EPF MIS purchases in eligible funds. Trustee, switching, and other charges may apply.",
-        source: source(
-          "AHAM Aiiman Quantum Fund",
-          "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
-        ),
+          "Verify the annual management fee in the AHAM AIIMAN Quantum Fund prospectus and Product Highlights Sheet. Retail Islamic funds may differ by fund and share class.",
+        source: {
+          label: "AHAM Aiiman Quantum Fund",
+          url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "sales",
+        label: "Sales charge",
+        value: "Fund- and channel-specific",
+        currency: "MYR",
+        frequency: "one_time",
+        conditions:
+          "Verify the applicable sales charge by purchase channel. The fund page identifies sales charge as a disclosed fee category; do not apply a generic 5.50%–6.50% range without confirming the current fund documents.",
+        source: {
+          label: "AHAM Aiiman Quantum Fund",
+          url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "trustee",
+        label: "Annual trustee or custodian fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_year",
+        conditions:
+          "Verify the annual trustee/custodian fee in the fund’s prospectus and Product Highlights Sheet.",
+        source: {
+          label: "AHAM Aiiman Quantum Fund",
+          url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "switching",
+        label: "Switching fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "Verify the switching fee and eligibility rules in the fund’s prospectus and Product Highlights Sheet.",
+        source: {
+          label: "AHAM Aiiman Quantum Fund",
+          url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "transfer",
+        label: "Transfer fee",
+        value: "Fund-specific",
+        currency: "MYR",
+        frequency: "per_trade",
+        conditions:
+          "Verify the transfer fee in the fund’s prospectus and Product Highlights Sheet.",
+        source: {
+          label: "AHAM Aiiman Quantum Fund",
+          url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -1356,17 +1901,35 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
+        kind: "management",
         label: "ETF expense ratio",
-        value: "0.45% to 0.55% per year, depending on the ETF",
-        currency: "USD" as const,
-        frequency: "per_year" as const,
+        value: "0.45%",
+        currency: "USD",
+        frequency: "per_year",
         conditions:
-          "Verify the current expense ratio for each fund. Brokerage commissions, FX conversion, bid-ask spreads, and other trading costs also apply.",
-        source: source(
-          "SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS)",
-          "https://www.sp-funds.com/spus/",
-        ),
+          "Expense ratio for SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS). Verify the current expense ratio for each SP Funds ETF before publishing.",
+        source: {
+          label: "SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS)",
+          url: "https://www.sp-funds.com/spus/",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "trading",
+        label: "Trading costs",
+        value: "Broker-specific",
+        frequency: "per_trade",
+        conditions:
+          "Brokerage commissions, FX conversion, bid-ask spreads, and other trading costs may apply. SPUS’s 30-day median spread was 0.02% as of the fund page date.",
+        source: {
+          label: "SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS)",
+          url: "https://www.sp-funds.com/spus/",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -1456,8 +2019,15 @@ const providerSeed: NewProvider[] = [
         label: "ETF expense ratio",
         value: "ETF-specific",
         frequency: "per_year",
-        conditions: "Verify the expense ratio for each fund.",
-        source: source("Amundi", "https://www.amundi.com"),
+        conditions:
+          "Verify the ongoing charges figure (OCF) or expense ratio for the selected Amundi ETF in its official fund page, KID, or factsheet. It may vary by share class, currency, and distribution channel.",
+        source: {
+          label: "Amundi",
+          url: "https://www.amundi.com",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -1540,18 +2110,35 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
+        kind: "management",
         label: "ETF expense ratio",
-        value:
-          "ETF-specific: 0.30% to 0.35% per year for the verified MSCI Islamic UCITS ETFs",
-        currency: "USD" as const,
-        frequency: "per_year" as const,
+        value: "0.30%",
+        currency: "USD",
+        frequency: "per_year",
         conditions:
-          "Verify the expense ratio, listing venue, currency class, and brokerage charges for each specific fund.",
-        source: source(
-          "iShares MSCI World Islamic UCITS ETF",
-          "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
-        ),
+          "Total expense ratio for iShares MSCI World Islamic UCITS ETF (ISWD), USD distributing share class. Verify the expense ratio, share class, and listing venue for each iShares MSCI Islamic UCITS ETF.",
+        source: {
+          label: "iShares MSCI World Islamic UCITS ETF",
+          url: "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "trading",
+        label: "Brokerage and trading costs",
+        value: "Broker-specific",
+        frequency: "per_trade",
+        conditions:
+          "Brokerage commissions, exchange fees, taxes, FX conversion, bid-ask spreads, and premiums/discounts to NAV may apply. ISWD trades on the London Stock Exchange; secondary-market trading is through an intermediary.",
+        source: {
+          label: "iShares MSCI World Islamic UCITS ETF",
+          url: "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
+          sourceType: "provider",
+          retrievedAt: "2026-11-04T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -1640,18 +2227,51 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
-        label: "Managed Halal portfolio fee",
-        value:
-          "0.25% to 0.50% management expense ratio per year, depending on account tier and assets",
-        currency: "CAD" as const,
-        frequency: "per_year" as const,
+        kind: "management",
+        label: "Halal portfolio management expense ratio",
+        value: "0.25%–0.50%",
+        currency: "CAD",
+        frequency: "per_year",
         conditions:
-          "The Halal portfolio includes WSHR, for which Wealthsimple receives part of the ETF MER. Verify the current all-in cost, underlying ETF fees, taxes, and any account-specific charges.",
-        source: source(
-          "Wealthsimple managed investing MER fees",
-          "https://help.wealthsimple.com/hc/en-ca/articles/360056584334-Management-expense-ratio-MER-fees-for-managed-investing-portfolios",
-        ),
+          "Approximate MER for Wealthsimple’s Halal managed portfolio. It includes a Wealthsimple Shariah-compliant ETF for which Wealthsimple receives part of the MER directly from the investment.",
+        source: {
+          label: "Wealthsimple managed investing MER fees",
+          url: "https://help.wealthsimple.com/hc/en-ca/articles/360056584334-Management-expense-ratio-MER-fees-for-managed-investing-portfolios",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "management",
+        label: "Managed investing advisory fee",
+        value: "0.2%–0.5%",
+        currency: "CAD",
+        frequency: "per_year",
+        conditions:
+          "Wealthsimple management fee by client tier: Core 0.5%, Premium 0.4%, Generation starting at 0.4% and as low as 0.2%.",
+        source: {
+          label: "Wealthsimple managed investing MER fees",
+          url: "https://help.wealthsimple.com/hc/en-ca/articles/360056584334-Management-expense-ratio-MER-fees-for-managed-investing-portfolios",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "fx",
+        label: "Currency conversion fee",
+        value: "Variable",
+        frequency: "variable",
+        conditions:
+          "Managed portfolios may incur currency-conversion fees; see Wealthsimple’s Managed Investing Fee Schedule for the applicable rate.",
+        source: {
+          label: "Wealthsimple managed investing MER fees",
+          url: "https://help.wealthsimple.com/hc/en-ca/articles/360056584334-Management-expense-ratio-MER-fees-for-managed-investing-portfolios",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -1743,17 +2363,68 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
+        kind: "management",
         label: "Discretionary portfolio management fee",
-        value: "0.60% per year of assets under management",
-        currency: "CAD" as const,
-        frequency: "per_year" as const,
+        value: "0.60%",
+        currency: "CAD",
+        frequency: "per_year",
         conditions:
-          "The OneVest discretionary management fee includes custody and trade execution. Underlying third-party investment products also carry MERs, which may range from 0.60% to 1.28% per year depending on the model portfolio. Management fees are subject to provincial sales taxes.",
-        source: source(
-          "Manzil Invest fee schedule",
-          "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
-        ),
+          "0.60% of assets under management, charged monthly on average daily invested account value. Includes custody and trade execution; provincial sales tax applies. No fee on cash held during liquidation.",
+        source: {
+          label: "Manzil Invest fee schedule",
+          url: "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "management",
+        label: "Underlying investment product MER",
+        value: "0.60%–1.28%",
+        currency: "CAD",
+        frequency: "per_year",
+        conditions:
+          "Indirect MER on third-party products varies by model portfolio and is charged within the products rather than as a separate account line item.",
+        source: {
+          label: "Manzil Invest fee schedule",
+          url: "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "performance",
+        label: "Underlying product performance fee",
+        value: "Variable",
+        currency: "CAD",
+        frequency: "variable",
+        conditions:
+          "May apply on select third-party products when returns exceed a specified benchmark; included in the product MER rather than billed separately.",
+        source: {
+          label: "Manzil Invest fee schedule",
+          url: "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "administration",
+        label: "Custodian administrative charges",
+        value: "See custodian schedule",
+        currency: "CAD",
+        frequency: "variable",
+        conditions:
+          "Applicable account fees are set by CI Investment Services; consult its administrative charges schedule for the current list.",
+        source: {
+          label: "Manzil Invest fee schedule",
+          url: "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -1862,23 +2533,35 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "trading" as const,
+        kind: "trading",
         label: "Stock and ETF commission",
-        value: "CAD 0 commission on stocks and ETFs",
-        currency: "CAD" as const,
-        frequency: "per_trade" as const,
+        value: "CAD 0",
+        currency: "CAD",
+        frequency: "per_trade",
         conditions:
-          "Regulatory fees, exchange fees, account-specific charges, and other product charges may apply. Verify the current fee schedule before publishing.",
-        source: source("Questrade", "https://www.questrade.com"),
+          "Zero commission on stocks, ETFs, fractional shares, and US equity options. Regulatory, exchange, account-specific, and other product charges may apply.",
+        source: {
+          label: "Questrade",
+          url: "https://www.questrade.com",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
       {
-        kind: "fx" as const,
+        kind: "fx",
         label: "Currency conversion",
-        value: "Variable FX conversion cost",
+        value: "Variable",
         frequency: "variable",
         conditions:
           "US-listed Shariah ETFs are USD-denominated. Confirm Questrade’s current currency-conversion spread and whether USD balances can be held to reduce conversion frequency.",
-        source: source("Questrade", "https://www.questrade.com"),
+        source: {
+          label: "Questrade",
+          url: "https://www.questrade.com",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -1951,14 +2634,20 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "platform" as const,
+        kind: "platform",
         label: "Platform access fee",
-        value: "USD 249 one-time for Standard; USD 999 one-time for Pro",
-        currency: "USD" as const,
+        value: "USD 249 or USD 999",
+        currency: "USD",
         frequency: "one_time",
         conditions:
-          "No Amal subscription or percentage-of-assets fee. Brokerage fees, fund expenses, FX conversion, and other broker or fund charges may still apply.",
-        source: source("Amal Invest", "https://amalinvest.com"),
+          "USD 249 one-time for Standard lifetime access; USD 999 one-time for Pro. No Amal subscription or percentage-of-assets fee. Brokerage fees, fund expenses, FX conversion, and other broker or fund charges may apply.",
+        source: {
+          label: "Amal Invest",
+          url: "https://amalinvest.com",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
     ],
     accountRequirements: [
@@ -2082,14 +2771,36 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "management" as const,
-        label: "Fund management and performance fees",
+        kind: "management",
+        label: "Fund management fee",
         value: "Fund-specific",
-        currency: "GBP" as const,
+        currency: "GBP",
         frequency: "variable",
         conditions:
-          "Fees, performance fees, liquidity terms, minimums, and eligibility vary by investment. Review the individual fund campaign and offering documents before investing.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+          "Varies by fund and investment. Review the individual Cur8 campaign and offering documents for the applicable management fee.",
+        source: {
+          label: "Cur8 Capital",
+          url: "https://cur8.capital",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
+      },
+      {
+        kind: "performance",
+        label: "Performance fee",
+        value: "Fund-specific",
+        currency: "GBP",
+        frequency: "variable",
+        conditions:
+          "May apply depending on the fund’s return hurdle, crystallisation terms, and offering documents. Verify the individual campaign before investing.",
+        source: {
+          label: "Cur8 Capital",
+          url: "https://cur8.capital",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -2185,23 +2896,67 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "trading" as const,
+        kind: "trading",
         label: "US stock and ETF commission",
-        value: "AED 0 commission",
-        currency: "AED" as const,
-        frequency: "per_trade" as const,
+        value: "AED 0",
+        currency: "AED",
+        frequency: "per_trade",
         conditions:
-          "No withdrawal fees and no transfer costs for AED accounts are advertised. Verify regulatory, exchange, FX, and other account charges before publishing.",
-        source: source("Sarwa", "https://www.sarwa.co"),
+          "Zero commission on US stocks and ETFs through Sarwa Trade. Regulatory, exchange, FX, and other account charges may apply.",
+        source: {
+          label: "Sarwa",
+          url: "https://www.sarwa.co",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
       },
       {
-        kind: "fx" as const,
+        kind: "withdrawal",
+        label: "Withdrawal fee",
+        value: "AED 0",
+        currency: "AED",
+        frequency: "per_trade",
+        conditions:
+          "No withdrawal fees for AED accounts, as advertised by Sarwa.",
+        source: {
+          label: "Sarwa",
+          url: "https://www.sarwa.co",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "deposit",
+        label: "Transfer cost",
+        value: "AED 0",
+        currency: "AED",
+        frequency: "per_trade",
+        conditions:
+          "No transfer costs for AED accounts, as advertised by Sarwa.",
+        source: {
+          label: "Sarwa",
+          url: "https://www.sarwa.co",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "high",
+        },
+      },
+      {
+        kind: "fx",
         label: "Currency conversion",
-        value: "Verify current FX pricing",
+        value: "Variable",
         frequency: "variable",
         conditions:
-          "US-listed securities are USD-denominated; confirm the applicable AED-to-USD conversion cost and whether USD balances can be held.",
-        source: source("Sarwa", "https://www.sarwa.co"),
+          "US-listed securities are USD-denominated. Confirm the applicable AED-to-USD conversion cost and whether USD balances can be held.",
+        source: {
+          label: "Sarwa",
+          url: "https://www.sarwa.co",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
@@ -2290,14 +3045,20 @@ const providerSeed: NewProvider[] = [
     ],
     fees: [
       {
-        kind: "trading" as const,
+        kind: "trading",
         label: "Trading commission",
-        value: "Verify current commission and account pricing",
-        currency: "AED" as const,
+        value: "Verify current pricing",
+        currency: "AED",
         frequency: "per_trade",
         conditions:
-          "Verify commissions, FX conversion, regulatory charges, and any account-specific fees before publishing.",
-        source: source("Baraka", "https://www.getbaraka.com"),
+          "Baraka offers US stocks, ETFs, local stocks, options, and physical gold. Verify current commissions, FX conversion, regulatory charges, and account-specific fees before publishing.",
+        source: {
+          label: "Baraka",
+          url: "https://www.getbaraka.com",
+          sourceType: "provider",
+          retrievedAt: "2026-10-16T00:00:00Z",
+          confidence: "medium",
+        },
       },
     ],
     accountRequirements: [
