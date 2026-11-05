@@ -4,7 +4,6 @@ import { emailCaptures } from "@sahihfolio/database/schema";
 import { ResultEmailCaptureInput } from "@sahihfolio/shared";
 
 export async function createEmailCapture(input: ResultEmailCaptureInput) {
-
   const [capture] = await db
     .insert(emailCaptures)
     .values({

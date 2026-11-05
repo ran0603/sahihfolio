@@ -98,9 +98,7 @@
         "countries_code_unique": {
           "name": "countries_code_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "code"
-          ]
+          "columns": ["code"]
         }
       },
       "policies": {},
@@ -323,12 +321,8 @@
           "name": "providers_reviewed_by_users_id_fk",
           "tableFrom": "providers",
           "tableTo": "users",
-          "columnsFrom": [
-            "reviewed_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["reviewed_by"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -338,9 +332,7 @@
         "providers_slug_unique": {
           "name": "providers_slug_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
+          "columns": ["slug"]
         }
       },
       "policies": {},
@@ -591,9 +583,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -655,12 +645,8 @@
           "name": "audit_logs_actor_id_users_id_fk",
           "tableFrom": "audit_logs",
           "tableTo": "users",
-          "columnsFrom": [
-            "actor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["actor_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -753,12 +739,8 @@
           "name": "provider_sources_provider_id_providers_id_fk",
           "tableFrom": "provider_sources",
           "tableTo": "providers",
-          "columnsFrom": [
-            "provider_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["provider_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -766,12 +748,8 @@
           "name": "provider_sources_source_id_sources_id_fk",
           "tableFrom": "provider_sources",
           "tableTo": "sources",
-          "columnsFrom": [
-            "source_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["source_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         }
@@ -832,9 +810,7 @@
         "result_snapshots_public_id_unique": {
           "name": "result_snapshots_public_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "public_id"
-          ]
+          "columns": ["public_id"]
         }
       },
       "policies": {},
@@ -919,12 +895,8 @@
           "name": "email_captures_result_snapshot_id_result_snapshots_id_fk",
           "tableFrom": "email_captures",
           "tableTo": "result_snapshots",
-          "columnsFrom": [
-            "result_snapshot_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["result_snapshot_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -934,9 +906,7 @@
         "email_captures_unsubscribe_token_unique": {
           "name": "email_captures_unsubscribe_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "unsubscribe_token"
-          ]
+          "columns": ["unsubscribe_token"]
         }
       },
       "policies": {},
@@ -948,20 +918,12 @@
     "public.review_status": {
       "name": "review_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "needs_review",
-        "reviewed"
-      ]
+      "values": ["draft", "needs_review", "reviewed"]
     },
     "public.confidence": {
       "name": "confidence",
       "schema": "public",
-      "values": [
-        "high",
-        "medium",
-        "low"
-      ]
+      "values": ["high", "medium", "low"]
     },
     "public.source_type": {
       "name": "source_type",
@@ -994,12 +956,7 @@
     "public.source": {
       "name": "source",
       "schema": "public",
-      "values": [
-        "finder",
-        "screening_report",
-        "footer",
-        "other"
-      ]
+      "values": ["finder", "screening_report", "footer", "other"]
     }
   },
   "schemas": {},
