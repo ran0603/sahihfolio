@@ -1,8 +1,6 @@
 import { Resend } from "resend";
 import { resultSavedEmail } from "./result-saved-email";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 type ResultSavedEmailInput = {
   to: string;
   resultPublicId: string;
@@ -17,6 +15,7 @@ export async function sendResultSavedEmail({
   if (process.env.NODE_ENV === "test" || !process.env.RESEND_API_KEY) {
     return { id: "email-skipped" };
   }
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
   const resultUrl = `${appUrl}/results/${resultPublicId}`;
