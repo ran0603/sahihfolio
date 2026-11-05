@@ -4,6 +4,7 @@ import { Copy, Link, Printer, Share2, TriangleAlert, Lock } from "lucide-react";
 import { getDateString } from "@/lib/date-utils";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 import { Suspense, useState } from "react";
+import { getProductInterestLabel } from "src/lib/results/label-utils";
 
 export default function SaveAndShareAside({
   snapshot,
@@ -18,6 +19,20 @@ export default function SaveAndShareAside({
   const [emailError, setEmailError] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
   const [consentError, setConsentError] = useState(false);
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: `Sahihfolio — Halal investing options for ${getProductInterestLabel(snapshot.input.productInterest)}`,
+        text: `I compared halal-investing options available in ${snapshot.input.countryCode} using Sahihfolio’s free finder.`,
+        url: `https://sahihfolio.com/results/${snapshot.publicId}`,
+      });
+    } else {
+      navigator.clipboard.writeText(
+        `https://sahihfolio.com/results/${snapshot.publicId}`,
+      );
+    }
+  };
 
   const handleEmailResult = async () => {
     if (!validateForm()) {
@@ -158,6 +173,7 @@ export default function SaveAndShareAside({
             type="button"
             className="btn btn-ghost btn-sm"
             data-act="share-summary"
+            onClick={handleShare}
           >
             <Share2 className="ic" width={16} height={16} /> Share summary
           </button>
