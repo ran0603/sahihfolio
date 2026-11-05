@@ -29,3 +29,9 @@ export type ResultEmailCaptureInput = z.infer<typeof resultEmailCaptureSchema>;
 export type GeneralEmailCaptureInput = z.infer<
   typeof generalEmailCaptureSchema
 >;
+
+export const unsubscribeSchema = z.object({
+  token: z.string().min(16, "Invalid unsubscribe token"),
+});
+
+export type UnsubscribeInput = z.infer<typeof unsubscribeSchema>;

@@ -16,7 +16,7 @@ export async function sendResultSavedEmail({
 }: ResultSavedEmailInput) {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
   const resultUrl = `${appUrl}/results/${resultPublicId}`;
-  const unsubscribeUrl = `${appUrl}/api/unsubscribe/${unsubscribeToken}`;
+  const unsubscribeUrl = `${appUrl}/unsubscribe?token=${unsubscribeToken}`;
 
   const { subject, html, text } = resultSavedEmail({
     resultUrl,
