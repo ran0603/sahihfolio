@@ -14,6 +14,10 @@ export async function sendResultSavedEmail({
   resultPublicId,
   unsubscribeToken,
 }: ResultSavedEmailInput) {
+  if (process.env.NODE_ENV === "test" || !process.env.RESEND_API_KEY) {
+    return { id: "email-skipped" };
+  }
+
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
   const resultUrl = `${appUrl}/results/${resultPublicId}`;
   const unsubscribeUrl = `${appUrl}/unsubscribe?token=${unsubscribeToken}`;
