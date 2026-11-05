@@ -30,10 +30,12 @@ export const emailCaptures = pgTable("email_captures", {
     () => resultSnapshots.id,
   ),
   countryCode: text("country_code"),
-  productInterest: productInterestEnum("product_interest").default("unset"),
-  consent: boolean("consent").default(false),
-  source: sourceEnum("source").default("finder"),
-  unsubscribeToken: text("unsubscribe_token").unique(),
+  productInterest: productInterestEnum("product_interest")
+    .notNull()
+    .default("unset"),
+  consent: boolean("consent").notNull().default(false),
+  source: sourceEnum("source").notNull().default("finder"),
+  unsubscribeToken: text("unsubscribe_token").notNull().unique(),
   unsubscribedAt: timestamp("unsubscribed_at", { mode: "date" }),
-  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
 });
