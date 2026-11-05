@@ -828,7 +828,8 @@ details.ver summary:focus-visible {
     width: calc(100% - 40px)
   }
 
-  .links {
+  .links,
+  .nav-cta {
     display: none
   }
 

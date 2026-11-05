@@ -20,8 +20,71 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+
+const SECTIONS = [
+  {
+    title: "At a glance",
+    slug: "at-a-glance",
+  },
+  {
+    title: "How we source information",
+    slug: "sourcing",
+  },
+  {
+    title: "How we review and update",
+    slug: "review",
+  },
+  {
+    title: "How the Options Finder works",
+    slug: "finder",
+  },
+  {
+    title: "How Screening Reports work",
+    slug: "screening",
+  },
+  {
+    title: "What we don't do",
+    slug: "not-do",
+  },
+  {
+    title: "Independence and corrections",
+    slug: "independence",
+  },
+  // {
+  //   title: "Version history",
+  //   slug: "changelog"
+  // },
+  {
+    title: "Glossary",
+    slug: "glossary",
+  },
+];
 
 export default function MethodologyPage() {
+  const [open, setOpen] = useState(false);
+  const [currentSection, setCurrectSection] = useState("at-a-glance");
+  const [feedback, setFeedback] = useState(false);
+  const [helpful, setHelpful] = useState<boolean | null>(null);
+  const [feedbackDetails, setFeedbackDetails] = useState("");
+
+  const gotoSection = (section: string) => {
+    setOpen(false);
+    setCurrectSection(section);
+    document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const openFeedback = () => {
+    setCurrectSection("feedback");
+    document.getElementById("feedback")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(
+      `https://sahihfolio.com/methodology/#${text}`,
+    );
+  };
+
   return (
     <div className="wrap" data-view="">
       <Link className="crumb" href="/" data-act="home">
@@ -66,6 +129,7 @@ export default function MethodologyPage() {
             type="button"
             className="btn btn-ghost btn-sm"
             data-act="problem"
+            onClick={openFeedback}
           >
             <Pen className="ic" width="18" height="18" /> Tell us what’s unclear
           </button>
@@ -74,13 +138,14 @@ export default function MethodologyPage() {
       <div className="mt-grid">
         <aside className="mt-aside" aria-label="On this page">
           <section data-m="toc" className="">
-            <div className="toc-box ">
+            <div className={`toc-box ${open ? "open" : ""}`}>
               <button
                 type="button"
                 className="toc-t"
                 data-act="toc-toggle"
-                aria-expanded="false"
+                aria-expanded={open}
                 aria-controls="m1-toc"
+                onClick={() => setOpen(!open)}
               >
                 <span>
                   <small>On this page</small>At a glance
@@ -91,97 +156,22 @@ export default function MethodologyPage() {
                 ON THIS PAGE
               </p>
               <ul className="toc" id="m1-toc">
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="at-a-glance"
-                    aria-current="true"
-                  >
-                    At a glance
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="sourcing"
-                  >
-                    How we source information
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="review"
-                  >
-                    How we review and update
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="finder"
-                  >
-                    How the Options Finder works
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="screening"
-                  >
-                    How Screening Reports work
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="not-do"
-                  >
-                    What we don’t do
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="independence"
-                  >
-                    Independence and corrections
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="changelog"
-                  >
-                    Version history
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="l"
-                    data-act="goto"
-                    data-t="glossary"
-                  >
-                    Glossary
-                  </button>
-                </li>
+                {SECTIONS.map((section, index) => (
+                  <li key={`menu-${index}`}>
+                    <button
+                      type="button"
+                      className="l"
+                      data-act="goto"
+                      data-t={section.slug}
+                      aria-current={
+                        currentSection === section.slug ? "true" : "false"
+                      }
+                      onClick={() => gotoSection(section.slug)}
+                    >
+                      {section.title}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </section>
@@ -194,7 +184,7 @@ export default function MethodologyPage() {
             id="at-a-glance"
             className="card2"
           >
-            <h2>
+            <h2 id="at-a-glance">
               At a glance
               <button
                 type="button"
@@ -202,6 +192,7 @@ export default function MethodologyPage() {
                 data-act="copy-sec"
                 data-sec="at-a-glance"
                 aria-label="Copy link to the section “At a glance”"
+                onClick={() => handleCopy("at-a-glance")}
               >
                 <LinkIcon className="ic" width={18} height={18} />
               </button>
@@ -271,7 +262,7 @@ export default function MethodologyPage() {
             id="sourcing"
             className="card2"
           >
-            <h2>
+            <h2 id="sourcing">
               How we source information
               <button
                 type="button"
@@ -279,6 +270,7 @@ export default function MethodologyPage() {
                 data-act="copy-sec"
                 data-sec="sourcing"
                 aria-label="Copy link to the section “How we source information”"
+                onClick={() => handleCopy("sourcing")}
               >
                 <LinkIcon className="ic" width={18} height={18} />
               </button>
@@ -404,7 +396,7 @@ export default function MethodologyPage() {
             id="review"
             className="card2"
           >
-            <h2>
+            <h2 id="review">
               How we review and update
               <button
                 type="button"
@@ -412,6 +404,7 @@ export default function MethodologyPage() {
                 data-act="copy-sec"
                 data-sec="review"
                 aria-label="Copy link to the section “How we review and update”"
+                onClick={() => handleCopy("review")}
               >
                 <LinkIcon className="ic" width={18} height={18} />
               </button>
@@ -474,7 +467,7 @@ export default function MethodologyPage() {
             id="finder"
             className="card2"
           >
-            <h2>
+            <h2 id="finder">
               How the Options Finder works
               <button
                 type="button"
@@ -482,6 +475,7 @@ export default function MethodologyPage() {
                 data-act="copy-sec"
                 data-sec="finder"
                 aria-label="Copy link to the section “How the Options Finder works”"
+                onClick={() => handleCopy("finder")}
               >
                 <LinkIcon className="ic" width={18} height={18} />
               </button>
@@ -573,7 +567,7 @@ export default function MethodologyPage() {
             id="screening"
             className="card2"
           >
-            <h2>
+            <h2 id="screening">
               How Screening Reports work
               <button
                 type="button"
@@ -581,6 +575,7 @@ export default function MethodologyPage() {
                 data-act="copy-sec"
                 data-sec="screening"
                 aria-label="Copy link to the section “How Screening Reports work”"
+                onClick={() => handleCopy("screening")}
               >
                 <LinkIcon className="ic" width={18} height={18} />
               </button>
@@ -764,7 +759,7 @@ export default function MethodologyPage() {
             id="not-do"
             className="card2"
           >
-            <h2>
+            <h2 id="not-do">
               What we don’t do
               <button
                 type="button"
@@ -772,6 +767,7 @@ export default function MethodologyPage() {
                 data-act="copy-sec"
                 data-sec="not-do"
                 aria-label="Copy link to the section “What we don’t do”"
+                onClick={() => handleCopy("not-do")}
               >
                 <LinkIcon className="ic" width={18} height={18} />
               </button>
@@ -819,7 +815,7 @@ export default function MethodologyPage() {
             id="independence"
             className="card2"
           >
-            <h2>
+            <h2 id="independence">
               Independence and corrections
               <button
                 type="button"
@@ -827,6 +823,7 @@ export default function MethodologyPage() {
                 data-act="copy-sec"
                 data-sec="independence"
                 aria-label="Copy link to the section “Independence and corrections”"
+                onClick={() => handleCopy("independence")}
               >
                 <LinkIcon className="ic" width={18} height={18} />
               </button>
@@ -852,103 +849,107 @@ export default function MethodologyPage() {
               of this page.
             </p>
           </section>
-          <section
-            data-m="changelog"
-            data-sec="changelog"
-            id="changelog"
-            className="card2"
-          >
-            <h2>
-              Version history
-              <button
-                type="button"
-                className="anc"
-                data-act="copy-sec"
-                data-sec="changelog"
-                aria-label="Copy link to the section “Version history”"
-              >
-                <LinkIcon className="ic" width={18} height={18} />
-              </button>
-            </h2>
-            <p>
-              Each version of this page is kept. The most recent is shown first.
-            </p>
-            <details className="ver" data-vd="v1.2">
-              <summary>
-                <b>Version 1.2</b>
-                <span className="badge b-neutral">Viewing</span>
-                <span className="d">1 Oct 2026</span>
-              </summary>
-              <div className="vb">
-                <ul>
-                  <li>
-                    Reports show both denominators when methodologies differ.
-                  </li>
-                  <li>
-                    Added a report-level confidence, taken from the weakest
-                    source.
-                  </li>
-                  <li>
-                    Clarified how “Insufficient verified data” is decided.
-                  </li>
-                </ul>
-              </div>
-            </details>
-            <details className="ver" data-vd="v1.1">
-              <summary>
-                <b>Version 1.1</b>
-                <span className="badge b-mist">Archived</span>
-                <span className="d">4 Aug 2026</span>
-              </summary>
-              <div className="vb">
-                <ul>
-                  <li>
-                    Added the 90-day stale flag and the “Needs review” badge.
-                  </li>
-                  <li>Added the version history to each report.</li>
-                </ul>
-                <p style={{ margin: "10px 0 0", fontSize: "14px" }}>
-                  <button
-                    type="button"
-                    className="link-btn"
-                    data-act="to-ver"
-                    data-v="v1.1"
-                  >
-                    View version 1.1
-                  </button>
-                </p>
-              </div>
-            </details>
-            <details className="ver" data-vd="v1.0">
-              <summary>
-                <b>Version 1.0</b>
-                <span className="badge b-mist">Archived</span>
-                <span className="d">10 Apr 2026</span>
-              </summary>
-              <div className="vb">
-                <ul>
-                  <li>First published.</li>
-                </ul>
-                <p style={{ margin: "10px 0 0", fontSize: "14px" }}>
-                  <button
-                    type="button"
-                    className="link-btn"
-                    data-act="to-ver"
-                    data-v="v1.0"
-                  >
-                    View version 1.0
-                  </button>
-                </p>
-              </div>
-            </details>
-          </section>
+          {false && (
+            <section
+              data-m="changelog"
+              data-sec="changelog"
+              id="changelog"
+              className="card2"
+            >
+              <h2 id="changelog">
+                Version history
+                <button
+                  type="button"
+                  className="anc"
+                  data-act="copy-sec"
+                  data-sec="changelog"
+                  aria-label="Copy link to the section “Version history”"
+                  onClick={() => handleCopy("changelog")}
+                >
+                  <LinkIcon className="ic" width={18} height={18} />
+                </button>
+              </h2>
+              <p>
+                Each version of this page is kept. The most recent is shown
+                first.
+              </p>
+              <details className="ver" data-vd="v1.2">
+                <summary>
+                  <b>Version 1.2</b>
+                  <span className="badge b-neutral">Viewing</span>
+                  <span className="d">1 Oct 2026</span>
+                </summary>
+                <div className="vb">
+                  <ul>
+                    <li>
+                      Reports show both denominators when methodologies differ.
+                    </li>
+                    <li>
+                      Added a report-level confidence, taken from the weakest
+                      source.
+                    </li>
+                    <li>
+                      Clarified how “Insufficient verified data” is decided.
+                    </li>
+                  </ul>
+                </div>
+              </details>
+              <details className="ver" data-vd="v1.1">
+                <summary>
+                  <b>Version 1.1</b>
+                  <span className="badge b-mist">Archived</span>
+                  <span className="d">4 Aug 2026</span>
+                </summary>
+                <div className="vb">
+                  <ul>
+                    <li>
+                      Added the 90-day stale flag and the “Needs review” badge.
+                    </li>
+                    <li>Added the version history to each report.</li>
+                  </ul>
+                  <p style={{ margin: "10px 0 0", fontSize: "14px" }}>
+                    <button
+                      type="button"
+                      className="link-btn"
+                      data-act="to-ver"
+                      data-v="v1.1"
+                    >
+                      View version 1.1
+                    </button>
+                  </p>
+                </div>
+              </details>
+              <details className="ver" data-vd="v1.0">
+                <summary>
+                  <b>Version 1.0</b>
+                  <span className="badge b-mist">Archived</span>
+                  <span className="d">10 Apr 2026</span>
+                </summary>
+                <div className="vb">
+                  <ul>
+                    <li>First published.</li>
+                  </ul>
+                  <p style={{ margin: "10px 0 0", fontSize: "14px" }}>
+                    <button
+                      type="button"
+                      className="link-btn"
+                      data-act="to-ver"
+                      data-v="v1.0"
+                    >
+                      View version 1.0
+                    </button>
+                  </p>
+                </div>
+              </details>
+            </section>
+          )}
           <section
             data-m="glossary"
             data-sec="glossary"
             id="glossary"
             className="card2"
           >
-            <h2>
+            <h2 id="glossary">
               Glossary
               <button
                 type="button"
@@ -956,29 +957,34 @@ export default function MethodologyPage() {
                 data-act="copy-sec"
                 data-sec="glossary"
                 aria-label="Copy link to the section “Glossary”"
+                onClick={() => handleCopy("glossary")}
               >
                 <LinkIcon className="ic" width={18} height={18} />
               </button>
             </h2>
             <p>Short definitions of the terms used on this site.</p>
-            <label className="lbl" htmlFor="m1-g">
-              Search the glossary
-            </label>
-            <div className="sbox">
-              <Search className="ic lead" width={20} height={20} />
-              <input
-                id="m1-g"
-                className="inp gq"
-                type="search"
-                placeholder="For example, denominator"
-                autoComplete="off"
-                value=""
-                aria-controls="m1-gl"
-              />
-            </div>
-            <p className="gl-c" role="status" aria-live="polite">
-              11 terms
-            </p>
+            {false && (
+              <>
+                <label className="lbl" htmlFor="m1-g">
+                  Search the glossary
+                </label>
+                <div className="sbox">
+                  <Search className="ic lead" width={20} height={20} />
+                  <input
+                    id="m1-g"
+                    className="inp gq"
+                    type="search"
+                    placeholder="For example, denominator"
+                    autoComplete="off"
+                    value=""
+                    aria-controls="m1-gl"
+                  />
+                </div>
+                <p className="gl-c" role="status" aria-live="polite">
+                  11 terms
+                </p>
+              </>
+            )}
             <dl className="gl" id="m1-gl">
               <div className="gl-i">
                 <dt>AAOIFI</dt>
@@ -1062,30 +1068,99 @@ export default function MethodologyPage() {
               </div>
             </dl>
           </section>
-          <section data-m="feedback" className="card2 fb">
-            <h2>Was this page helpful?</h2>
-            <div
-              className="btn-row"
-              role="group"
-              aria-label="Was this page helpful?"
-            >
-              <button
-                type="button"
-                className="btn btn-secondary btn-sm"
-                data-act="fb-yes"
-                aria-pressed="false"
-              >
-                <ThumbsUp className="ic" width={18} height={18} /> Yes
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary btn-sm"
-                data-act="fb-no"
-                aria-pressed="false"
-              >
-                <ThumbsDown className="ic" width={18} height={18} /> No
-              </button>
-            </div>
+          <section id="feedback" data-m="feedback" className="card2 fb">
+            {!feedback ? (
+              <>
+                <h2>Was this page helpful?</h2>
+                <div
+                  className="btn-row"
+                  role="group"
+                  aria-label="Was this page helpful?"
+                >
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    data-act="fb-yes"
+                    aria-pressed={helpful || false}
+                    onClick={() => setHelpful(true)}
+                  >
+                    <ThumbsUp className="ic" width={18} height={18} /> Yes
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    data-act="fb-no"
+                    aria-pressed={!helpful || false}
+                    onClick={() => {
+                      setHelpful(false);
+                      setFeedback(true);
+                    }}
+                  >
+                    <ThumbsDown className="ic" width={18} height={18} /> No
+                  </button>
+                </div>
+                {helpful && (
+                  <p
+                    className="fmsg"
+                    role="status"
+                    style={{ marginTop: "12px" }}
+                  >
+                    <CircleCheck className="ic" width={16} height={16} />
+                    Thanks. Glad it helped.
+                  </p>
+                )}
+              </>
+            ) : (
+              <>
+                <h2>What was missing or unclear?</h2>
+                <p className="muted" style={{ marginBottom: "12px" }}>
+                  Tell us what to improve. You don’t need to share your name or
+                  email.
+                </p>
+                <form className="fb-f" noValidate>
+                  <div className="fld">
+                    <label className="vh" htmlFor="m1-n">
+                      What was missing or unclear?
+                    </label>
+                    <textarea
+                      id="m1-n"
+                      className={`ta fb-note ${feedbackDetails.length >= 500 ? "invalid" : ""}`}
+                      placeholder="For example, how thresholds are chosen"
+                      onChange={(e) => setFeedbackDetails(e.target.value)}
+                    ></textarea>
+                    <div className="cnt ">
+                      <span
+                        className="fmsg err"
+                        data-nm=""
+                        role="alert"
+                        style={{ margin: 0 }}
+                        hidden={feedbackDetails.length < 500}
+                      >
+                        <TriangleAlert className="ic" width={16} height={16} />
+                        Keep it to 500 characters or fewer.
+                      </span>
+                      <span className="cn">0/500</span>
+                    </div>
+                  </div>
+                  <div className="btn-row" style={{ marginTop: "14px" }}>
+                    <button type="submit" className="btn btn-primary btn-sm">
+                      Send feedback
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-sm"
+                      data-act="fb-reset"
+                      onClick={() => {
+                        setHelpful(null);
+                        setFeedback(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
           </section>
           <section data-m="disc" className="disc">
             <Info className="ic" width={20} height={20} />
