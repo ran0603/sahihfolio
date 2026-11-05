@@ -3,7 +3,7 @@
 import { Copy, Link, Printer, Share2, TriangleAlert, Lock } from "lucide-react";
 import { getDateString } from "@/lib/date-utils";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function SaveAndShareAside({
   snapshot,
@@ -11,9 +11,46 @@ export default function SaveAndShareAside({
   snapshot: ResultSnapshot;
 }) {
   const [emailInput, setEmailInput] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [emailError, setEmailError] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
-  const [consentError, setConsentError] = useState("");
+  const [consentError, setConsentError] = useState(false);
+
+  const handleEmailResult = async () => {
+    if (!validateForm()) {
+      return;
+    }
+    const response = await fetch("/api/save-result", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        resultSnapshotId: snapshot.publicId,
+        email: emailInput,
+        productInterest: snapshot.input.productInterest,
+        countryCode: snapshot.input.countryCode,
+        consent: consentChecked,
+      }),
+    });
+  };
+
+  const validEmail = (emailInput: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return !emailRegex.test(emailInput);
+  };
+
+  const validateForm = () => {
+    setEmailError(false);
+    setConsentError(false);
+
+    if (!emailInput) {
+      setEmailError(true);
+    }
+
+    if (!consentChecked) {
+      setConsentError(true);
+    }
+
+    return !emailError && !consentError;
+  };
 
   return (
     <aside className="res-aside" aria-label="Save and share">
@@ -24,42 +61,59 @@ export default function SaveAndShareAside({
           opening an account.
         </p>
 
-        <form className="save-form" noValidate>
-          <label className="lbl" htmlFor="r9-em">
-            Email address
-          </label>
-          <input
-            id="r9-em"
-            className="inp save-em "
-            type="email"
-            placeholder="you@example.com"
-            autoComplete="email"
-            value={emailInput}
-            onChange={(e) => setEmailInput(e.target.value)}
-          />
-          <p className="fmsg err" data-se="" role="alert" hidden>
-            <TriangleAlert className="ic" width="16" height="16" />
-            Enter a valid email address, for example you@example.com.
-          </p>
-          <label className="chk ">
-            <input className="rin save-cb" type="checkbox" />
-            <span>
-              I agree to receive this email from Sahihfolio. I can unsubscribe
-              at any time.
-            </span>
-          </label>
-          <p className="fmsg err" data-se="" role="alert" hidden>
-            <TriangleAlert className="ic" width="16" height="16" />
-            Confirm that you agree to receive the email to continue.
-          </p>
-          <button
-            type="button"
-            className="btn btn-primary full"
-            style={{ marginTop: "16px" }}
-          >
-            Email me this result
-          </button>
-        </form>
+        <Suspense fallback={null}>
+          <form className="save-form" noValidate>
+            <label className="lbl" htmlFor="r9-em">
+              Email address
+            </label>
+            <input
+              id="r9-em"
+              className="inp save-em "
+              type="email"
+              placeholder="you@example.com"
+              autoComplete="email"
+              value={emailInput}
+              onChange={(e) => {
+                setEmailInput(e.target.value);
+                setEmailError(validEmail(e.target.value));
+              }}
+            />
+            <p
+              className="fmsg err"
+              data-se=""
+              role="alert"
+              hidden={!emailError}
+            >
+              <TriangleAlert className="ic" width="16" height="16" />
+              Enter a valid email address, for example you@example.com.
+            </p>
+            <label className="chk ">
+              <input
+                className="rin save-cb"
+                type="checkbox"
+                checked={consentChecked}
+                onChange={(e) => setConsentChecked(e.target.checked)}
+              />
+              <span>
+                I agree to receive this email from Sahihfolio. I can unsubscribe
+                at any time.
+              </span>
+            </label>
+            <p className="fmsg err" data-se="" role="alert" hidden>
+              <TriangleAlert className="ic" width="16" height="16" />
+              Confirm that you agree to receive the email to continue.
+            </p>
+            <button
+              type="button"
+              className="btn btn-primary full"
+              style={{ marginTop: "16px" }}
+              disabled={!emailInput || !consentChecked}
+              onClick={handleEmailResult}
+            >
+              Email me this result
+            </button>
+          </form>
+        </Suspense>
         <p className="fine" style={{ margin: "12px 0 0" }}>
           No account needed. We store your email, country, interest and this
           result.

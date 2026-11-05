@@ -26,8 +26,8 @@ export const productInterestEnum = pgEnum("product_interest", [
 export const emailCaptures = pgTable("email_captures", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").notNull(),
-  resultSnapshotId: uuid("result_snapshot_id").references(
-    () => resultSnapshots.id,
+  resultSnapshotId: text("result_snapshot_id").references(
+    () => resultSnapshots.publicId,
   ),
   countryCode: text("country_code"),
   productInterest: productInterestEnum("product_interest")

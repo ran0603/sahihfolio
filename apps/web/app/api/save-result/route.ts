@@ -45,11 +45,11 @@ export async function POST(request: NextRequest) {
   const emailCapture = await createEmailCapture({
     source: "finder",
     email: intake.email,
-    consent: true,
+    consent: intake.consent,
     productInterest: intake.productInterest,
     resultSnapshotId: intake.resultSnapshotId,
     countryCode: intake.countryCode,
   });
 
   return NextResponse.json({ emailCapture });
-};
+}
