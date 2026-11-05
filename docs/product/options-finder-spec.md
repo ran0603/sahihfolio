@@ -406,7 +406,7 @@ POST /api/save-result
 ```json
 {
   "email": "user@example.com",
-  "resultId": "abc123",
+  "resultSnapshotId": "abc123",
   "consent": true
 }
 ```

@@ -4,7 +4,7 @@ import {
   MatchInput,
   matchProviders,
 } from "@sahihfolio/shared";
-import { createResultSnapshot } from "@/lib/finder/result-snapshot";
+import { createResultSnapshot } from "src/lib/finder/create-result-snapshot";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getProvidersByCountry } from "@/lib/providers/get-provider-by-country";
 import { getCountry } from "@/lib/countries/get-country";
