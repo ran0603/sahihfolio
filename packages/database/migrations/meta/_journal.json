@@ -15,6 +15,20 @@
       "when": 1793626901628,
       "tag": "0001_omniscient_steve_rogers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793852191889,
+      "tag": "0002_spotty_polaris",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793852361310,
+      "tag": "0003_mature_bedlam",
+      "breakpoints": true
     }
   ]
 }
