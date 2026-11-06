@@ -10,7 +10,9 @@ import {
 import { CountryProfile } from "@sahihfolio/shared";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 import { useState } from "react";
-import { redirect } from "node_modules/next/navigation";
+import { redirect } from "next/navigation";
+import { track } from "@/lib/analytics";
+import { snapshot } from "node:test";
 
 const INVESTOR_TYPE = {
   beginner: "Beginner",
@@ -114,7 +116,16 @@ export default function FiltersSection({
 
     const data = await response.json();
 
-    redirect(`/results/${data.resultId}`);
+    track("result_saved", {
+      public_id: data.publicId,
+      country_code: data.country.code,
+      product_interest: selectedProductInterest,
+      result_count: data.output.matches.length,
+      data_version: data.dataVersion,
+      save_method: "email",
+    });
+
+    redirect(`/results/${data.publicId}`);
   };
 
   return (

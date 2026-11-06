@@ -6,6 +6,7 @@ import { useRef } from "react";
 import ResultOptionsHeader from "./result-options-header";
 import ResultOptionsMain from "./result-options-main";
 import SaveAndShareAside from "./save-and-share-aside";
+import { track } from "src/lib/analytics";
 
 export default function DataViewWrapper({
   snapshot,
@@ -26,6 +27,15 @@ export default function DataViewWrapper({
     navigator.clipboard.writeText(
       `https://sahihfolio.com/results/${snapshot.publicId}`,
     );
+
+    track("result_shared", {
+      public_id: snapshot.publicId,
+      country_code: snapshot.input.countryCode,
+      product_interest: snapshot.input.productInterest,
+      result_count: snapshot.output.matches.length,
+      data_version: snapshot.dataVersion,
+      share_method: "copy_link",
+    });
   };
 
   return (

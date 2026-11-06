@@ -10,8 +10,10 @@ import {
 } from "lucide-react";
 import { getDateString } from "@/lib/date-utils";
 import { getProductInterestLabel } from "@/lib/results/label-utils";
+import { track } from "@/lib/analytics";
+import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 
-export function ProviderArticle({ match }: { match: MatchResult }) {
+export function ProviderArticle({ snapshot, match }: { snapshot: ResultSnapshot, match: MatchResult }) {
   return (
     <article
       key={`broker_${match.provider.slug}`}
@@ -103,6 +105,18 @@ export function ProviderArticle({ match }: { match: MatchResult }) {
               data-n="Provider screening page"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("result_source_clicked", {
+                public_id: snapshot.publicId,
+                country_code: snapshot.input.countryCode,
+                product_interest: snapshot.input.productInterest,
+                result_count: snapshot.output.matches.length,
+                data_version: snapshot.dataVersion,
+                provider_id: match.provider.id,
+                provider_slug: match.provider.slug,
+                source_type: "Provider screening page",
+                source_url_host: new URL(match.provider.halalScreening.source?.url || "#").hostname,
+                link_location: "provider_screening_page",
+              })}
             >
               Provider screening page{" "}
               <ExternalLink className="ic" width="12" height="12" />
@@ -155,6 +169,18 @@ export function ProviderArticle({ match }: { match: MatchResult }) {
             data-n="Provider pricing page"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track("result_source_clicked", {
+              public_id: snapshot.publicId,
+              country_code: snapshot.input.countryCode,
+              product_interest: snapshot.input.productInterest,
+              result_count: snapshot.output.matches.length,
+              data_version: snapshot.dataVersion,
+              provider_id: match.provider.id,
+              provider_slug: match.provider.slug,
+              source_type: "Provider pricing page",
+              source_url_host: new URL(match.provider.disclosureUrl).hostname,
+              link_location: "provider_pricing_page",
+            })}
           >
             Provider pricing page{" "}
             <ExternalLink className="ic" width="12" height="12" />
@@ -165,6 +191,18 @@ export function ProviderArticle({ match }: { match: MatchResult }) {
             data-n="Provider screening page"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track("result_source_clicked", {
+              public_id: snapshot.publicId,
+              country_code: snapshot.input.countryCode,
+              product_interest: snapshot.input.productInterest,
+              result_count: snapshot.output.matches.length,
+              data_version: snapshot.dataVersion,
+              provider_id: match.provider.id,
+              provider_slug: match.provider.slug,
+              source_type: "Provider screening page",
+              source_url_host: new URL(match.provider.halalScreening.source?.url || "#").hostname,
+              link_location: "provider_screening_page",
+            })}
           >
             Provider screening page{" "}
             <ExternalLink className="ic" width="12" height="12" />
@@ -185,7 +223,20 @@ export function ProviderArticle({ match }: { match: MatchResult }) {
             data-act="visit"
             data-pid="a"
             target="_blank"
-            rel="noopener noreferrer"
+            rel={match.provider.isAffiliated ? "sponsored noopener noreferrer" : "noopener noreferrer"}
+            onClick={() => track("provider_outbound_clicked", {
+              public_id: snapshot.publicId,
+              country_code: snapshot.input.countryCode,
+              product_interest: snapshot.input.productInterest,
+              result_count: snapshot.output.matches.length,
+              data_version: snapshot.dataVersion,
+              provider_id: match.provider.id,
+              provider_slug: match.provider.slug,
+              provider_type: match.provider.type,
+              is_affiliated: match.provider.isAffiliated,
+              cta_location: "provider_article",
+              cta_label: "Visit provider",
+            })}
           >
             Visit provider{" "}
             <ExternalLink className="ic" width="16" height="16" />
