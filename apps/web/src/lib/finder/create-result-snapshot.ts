@@ -24,6 +24,9 @@ export async function createResultSnapshot({
     })
     .returning({
       publicId: resultSnapshots.publicId,
+      input: resultSnapshots.input,
+      output: resultSnapshots.output,
+      dataVersion: resultSnapshots.dataVersion,
     });
 
   return {
@@ -33,5 +36,8 @@ export async function createResultSnapshot({
       name: input.countryCode, // Replace with DB country name in #11/#12.
       currency: null,
     },
+    input: row.input,
+    output: row.output,
+    dataVersion: row.dataVersion,
   };
 }

@@ -66,6 +66,7 @@ export default function ResultOptionsMain({
             {providerTypeIsBroker.map((match) => (
               <ProviderArticle
                 key={`broker-${match.provider.slug}`}
+                snapshot={snapshot}
                 match={match}
               />
             ))}
@@ -87,6 +88,7 @@ export default function ResultOptionsMain({
             {providerTypeIsRoboAdvisor.map((match) => (
               <ProviderArticle
                 key={`robo-${match.provider.slug}`}
+                snapshot={snapshot}
                 match={match}
               />
             ))}
@@ -109,6 +111,7 @@ export default function ResultOptionsMain({
             {providerTypeIsEtfProvider.map((match) => (
               <ProviderArticle
                 key={`etf-${match.provider.slug}`}
+                snapshot={snapshot}
                 match={match}
               />
             ))}
@@ -130,6 +133,7 @@ export default function ResultOptionsMain({
             {providerTypeIsManagedPortfolio.map((match) => (
               <ProviderArticle
                 key={`managed-${match.provider.slug}`}
+                snapshot={snapshot}
                 match={match}
               />
             ))}

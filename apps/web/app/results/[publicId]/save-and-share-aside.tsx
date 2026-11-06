@@ -5,6 +5,7 @@ import { getDateString } from "@/lib/date-utils";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 import { Suspense, useState } from "react";
 import { getProductInterestLabel } from "src/lib/results/label-utils";
+import { track } from "src/lib/analytics";
 
 export default function SaveAndShareAside({
   snapshot,
@@ -32,6 +33,15 @@ export default function SaveAndShareAside({
         `https://sahihfolio.com/results/${snapshot.publicId}`,
       );
     }
+
+    track("result_shared", {
+      public_id: snapshot.publicId,
+      country_code: snapshot.input.countryCode,
+      product_interest: snapshot.input.productInterest,
+      result_count: snapshot.output.matches.length,
+      data_version: snapshot.dataVersion,
+      share_method: "native_share", // TODO: "whatsapp" | "x" | "facebook" | "linkedin";
+    });
   };
 
   const handleEmailResult = async () => {
@@ -48,6 +58,15 @@ export default function SaveAndShareAside({
         countryCode: snapshot.input.countryCode,
         consent: consentChecked,
       }),
+    });
+
+    track("email_captured", {
+      public_id: snapshot.publicId,
+      country_code: snapshot.input.countryCode,
+      product_interest: snapshot.input.productInterest,
+      result_count: snapshot.output.matches.length,
+      data_version: snapshot.dataVersion,
+      consent: consentChecked,
     });
   };
 

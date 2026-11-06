@@ -1,7 +1,7 @@
 "use client";
 
 import "./find.css";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -28,6 +28,7 @@ import {
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AMOUNTS, COUNTRIES, PREFERENCES } from "@/lib/finder/constants";
+import { track } from "@/lib/analytics";
 
 const INVESTOR_TYPES: Record<
   string,
@@ -51,48 +52,48 @@ const INVESTOR_TYPES: Record<
 };
 
 const INTERESTS: Record<string, { n: string; a: string; i: React.ReactNode }> =
-  {
-    stocks: {
-      n: "Stocks",
-      a: "Buy individual company shares through a broker.",
-      i: <TrendingUp className="ic h-[22px] w-[22px]" />,
-    },
-    etfs: {
-      n: "ETFs",
-      a: "Hold a basket of securities in a single fund.",
-      i: <Layers className="ic h-[22px] w-[22px]" />,
-    },
-    real_estate: {
-      n: "Real Estate",
-      a: "Invest in physical real estate or real estate-related products",
-      i: <Building className="ic h-[22px] w-[22px]" />,
-    },
-    sukuk: {
-      n: "Sukuk",
-      a: "Invest in Islamic bonds or Islamic finance products",
-      i: <GraphStar className="ic h-[22px] w-[22px]" />,
-    },
-    gold: {
-      n: "Gold",
-      a: "Invest in physical gold or gold-related products",
-      i: <Scale className="ic h-[22px] w-[22px]" />,
-    },
-    crypto: {
-      n: "Cryptocurrency",
-      a: "Invest in digital currencies or crypto-related products",
-      i: <Bitcoin className="ic h-[22px] w-[22px]" />,
-    },
-    mutual_funds: {
-      n: "Mutual funds",
-      a: "Invest in a basket of securities managed by fund managers.",
-      i: <Banknote className="ic h-[22px] w-[22px]" />,
-    },
-    unsure: {
-      n: "Not sure yet",
-      a: "We'll show every route available in your country.",
-      i: <CircleQuestionMark className="ic h-[22px] w-[22px]" />,
-    },
-  };
+{
+  stocks: {
+    n: "Stocks",
+    a: "Buy individual company shares through a broker.",
+    i: <TrendingUp className="ic h-[22px] w-[22px]" />,
+  },
+  etfs: {
+    n: "ETFs",
+    a: "Hold a basket of securities in a single fund.",
+    i: <Layers className="ic h-[22px] w-[22px]" />,
+  },
+  real_estate: {
+    n: "Real Estate",
+    a: "Invest in physical real estate or real estate-related products",
+    i: <Building className="ic h-[22px] w-[22px]" />,
+  },
+  sukuk: {
+    n: "Sukuk",
+    a: "Invest in Islamic bonds or Islamic finance products",
+    i: <GraphStar className="ic h-[22px] w-[22px]" />,
+  },
+  gold: {
+    n: "Gold",
+    a: "Invest in physical gold or gold-related products",
+    i: <Scale className="ic h-[22px] w-[22px]" />,
+  },
+  crypto: {
+    n: "Cryptocurrency",
+    a: "Invest in digital currencies or crypto-related products",
+    i: <Bitcoin className="ic h-[22px] w-[22px]" />,
+  },
+  mutual_funds: {
+    n: "Mutual funds",
+    a: "Invest in a basket of securities managed by fund managers.",
+    i: <Banknote className="ic h-[22px] w-[22px]" />,
+  },
+  unsure: {
+    n: "Not sure yet",
+    a: "We'll show every route available in your country.",
+    i: <CircleQuestionMark className="ic h-[22px] w-[22px]" />,
+  },
+};
 
 function FinderContent() {
   const router = useRouter();
@@ -102,17 +103,24 @@ function FinderContent() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [selectedCountry, setSelectedCountry] = useState<string>(country || "");
   const [selectedInvestorType, setSelectedInvestorType] = useState<string>("");
-  const [selectedInterest, setSelectedInterest] = useState<string>("");
+  const [selectedProductInterest, setSelectedProductInterest] = useState<string>("");
   const [selectedStartingAmount, setSelectedStartingAmount] =
     useState<string>("");
   const [selectedMonthlyContribution, setSelectedMonthlyContribution] =
     useState<string>("");
   const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
 
+  useEffect(() => {
+    track("finder_started");
+    if (country) {
+      track("finder_country_selected", { country_code: selectedCountry })
+    }
+  }, []);
+
   const reset = () => {
     setSelectedCountry("");
     setSelectedInvestorType("");
-    setSelectedInterest("");
+    setSelectedProductInterest("");
     setSelectedStartingAmount("");
     setSelectedMonthlyContribution("");
     setSelectedPreferences([]);
@@ -127,7 +135,7 @@ function FinderContent() {
         body: JSON.stringify({
           countryCode: selectedCountry,
           investorType: selectedInvestorType,
-          productInterest: selectedInterest,
+          productInterest: selectedProductInterest,
           startingAmount: Number(selectedStartingAmount),
           recurringContribution: Number(selectedMonthlyContribution),
           preferences: {
@@ -150,7 +158,14 @@ function FinderContent() {
 
       const data = await response.json();
 
-      router.push(`/results/${data.resultId}`);
+      track("finder_completed", {
+        country_code: selectedCountry,
+        product_interest: selectedProductInterest,
+        result_count: data.output.matches.length,
+        data_version: data.dataVersion
+      })
+
+      router.push(`/results/${data.publicId}`);
     } else {
       setCurrentStep(currentStep + 1);
     }
@@ -241,8 +256,8 @@ function FinderContent() {
                   <span className="stx">
                     <b>Interests</b>
                     <small>
-                      {selectedInterest
-                        ? INTERESTS[selectedInterest].n
+                      {selectedProductInterest
+                        ? INTERESTS[selectedProductInterest].n
                         : "Not answered yet"}
                     </small>
                   </span>
@@ -274,13 +289,13 @@ function FinderContent() {
                     <small>
                       {selectedStartingAmount && selectedMonthlyContribution
                         ? AMOUNTS[COUNTRIES[selectedCountry]?.c]?.s[
-                            Number(selectedStartingAmount)
-                          ] +
-                          " to start • " +
-                          AMOUNTS[COUNTRIES[selectedCountry]?.c]?.r[
-                            Number(selectedMonthlyContribution)
-                          ] +
-                          " monthly"
+                        Number(selectedStartingAmount)
+                        ] +
+                        " to start • " +
+                        AMOUNTS[COUNTRIES[selectedCountry]?.c]?.r[
+                        Number(selectedMonthlyContribution)
+                        ] +
+                        " monthly"
                         : "Not set"}
                     </small>
                   </span>
@@ -311,8 +326,8 @@ function FinderContent() {
                     <small>
                       {selectedPreferences.length > 0
                         ? selectedPreferences
-                            .map((preference) => PREFERENCES[preference].n)
-                            .join(" • ")
+                          .map((preference) => PREFERENCES[preference].n)
+                          .join(" • ")
                         : "Not set"}
                     </small>
                   </span>
@@ -709,9 +724,9 @@ function FinderContent() {
                             name="u57-product"
                             data-f="product"
                             value={key}
-                            checked={selectedInterest === key}
+                            checked={selectedProductInterest === key}
                             onChange={(e) =>
-                              setSelectedInterest(e.target.value)
+                              setSelectedProductInterest(e.target.value)
                             }
                           />
                           <span className="rib">{value.i}</span>

@@ -7,6 +7,7 @@ import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 import { getCountry } from "@/lib/countries/get-country";
 import { CountryProfile } from "@sahihfolio/shared";
 import DataViewWrapper from "./data-view-wrapper";
+import DataViewTracker from "./data-view-tracker";
 
 export default async function ResultsPage({
   params,
@@ -22,6 +23,7 @@ export default async function ResultsPage({
   const country: CountryProfile = await getCountry(snapshot.input.countryCode);
   return (
     <div className="wrap">
+      <DataViewTracker snapshot={snapshot} />
       <Link className="crumb" href="/find" data-act="change-country">
         <ArrowLeft className="ic" width={16} height={16} /> Back to the finder
       </Link>
