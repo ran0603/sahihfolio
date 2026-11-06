@@ -57,12 +57,7 @@ export default function SiteLayout({
             </button>
           </div>
         </div>
-        <div
-          className="banner b-off"
-          role="status"
-          data-sb="offline"
-          hidden
-        >
+        <div className="banner b-off" role="status" data-sb="offline" hidden>
           <div className="wrap banner-in">
             <svg
               className="ic "
@@ -85,8 +80,8 @@ export default function SiteLayout({
               <path d="m2 2 20 20"></path>
             </svg>
             <p>
-              <strong>You’re offline.</strong> Your answers are saved on
-              this device. Reconnect to see your options.
+              <strong>You’re offline.</strong> Your answers are saved on this
+              device. Reconnect to see your options.
             </p>
             <button type="button" className="link-btn" data-act="reconnect">
               Retry

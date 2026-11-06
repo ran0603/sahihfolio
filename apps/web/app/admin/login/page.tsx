@@ -1,3 +1,6 @@
+import Link from "next/link";
+import "./login.css";
+
 export default function LoginPage() {
   return (
     <div data-m="card">
@@ -7,8 +10,7 @@ export default function LoginPage() {
         </div>
         <h1 tabIndex={-1}>Sign in to Admin</h1>
         <p className="lg-sub">
-          Sahihfolio internal tools. We’ll email you a link that works
-          once.
+          Sahihfolio internal tools. We’ll email you a link that works once.
         </p>
 
         <form className="lf" noValidate>
@@ -39,17 +41,13 @@ export default function LoginPage() {
             Email me a sign-in link
           </button>
         </form>
-        <p className="lg-next">
-          After signing in you’ll go to{" "}
-          <code>/admin/screening-reports/exmp-aaoifi</code>.
-        </p>
       </div>
       <p className="lg-foot">
         Internal tool. Sign-ins are logged.{" "}
-        <a href="#" data-act="site">
+        <Link href="/" data-act="site">
           Back to the public site
-        </a>
+        </Link>
       </p>
     </div>
-  )
+  );
 }
