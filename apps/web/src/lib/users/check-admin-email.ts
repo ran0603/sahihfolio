@@ -1,5 +1,5 @@
 import { db } from "@sahihfolio/database";
-import { adminUsers } from "@sahihfolio/database/schema";
+import { user } from "@sahihfolio/database/schema";
 import { and, eq, sql } from "drizzle-orm";
 
 export async function isAdminEmailAllowed(email: string): Promise<boolean> {
@@ -7,16 +7,16 @@ export async function isAdminEmailAllowed(email: string): Promise<boolean> {
 
   if (!normalizedEmail) return false;
 
-  const [user] = await db
-    .select({ id: adminUsers.id })
-    .from(adminUsers)
+  const [existingUser] = await db
+    .select({ id: user.id })
+    .from(user)
     .where(
       and(
-        eq(sql`lower(${adminUsers.email})`, normalizedEmail),
-        eq(adminUsers.status, "active"),
+        eq(sql`lower(${user.email})`, normalizedEmail),
+        eq(user.emailVerified, true),
       ),
     )
     .limit(1);
 
-  return Boolean(user);
+  return Boolean(existingUser);
 }

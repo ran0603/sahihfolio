@@ -6,7 +6,8 @@ export type AdminRole = "admin" | "editor" | "viewer";
 export type AdminUser = {
   id: string;
   email: string;
-  name?: string;
+  name: string;
+  image?: string;
   role: AdminRole;
 };
 
@@ -32,7 +33,8 @@ export async function getCurrentAdminUser(): Promise<AdminUser | null> {
   return {
     id: session.user.id,
     email: session.user.email,
-    name: session.user.name ?? undefined,
+    name: session.user.name,
+    image: session.user.image ?? undefined,
     role,
   };
 }

@@ -11,7 +11,7 @@ export function AdminSignInForm() {
   );
   const searchParams = useSearchParams();
 
-  const callbackURL = searchParams.get("next") ?? "/admin/screening-reports";
+  const callbackURL = searchParams.get("next") ?? "/admin";
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

@@ -1,28 +1,19 @@
 import React from "react";
-import { ThemeToggle } from "components/theme-toggle";
 import { Clock, WifiOff, X } from "lucide-react";
 import { requireAdminRole } from "src/lib/auth/require-admin-role";
+import "./admin.css";
+import AdminHeader from "components/admin-header";
 
 export default async function AdminDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  await requireAdminRole("viewer");
+  const user = await requireAdminRole("viewer");
+  const isUser = !!user.id;
   return (
     <>
-      <header className="nav adm-top">
-        <div className="adm-top-in">
-          <a className="logo" href="#">
-            <span className="mono">Sf</span>
-            <span className="lt">Sahihfolio</span>
-          </a>
-          <span className="adm-tag">Admin</span>
-          <div className="nav-r">
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <AdminHeader isUser={isUser} user={user} />
       <div className="banners">
         <div className="banner b-warn" role="status" data-sb="session" hidden>
           <div className="banner-in adm-bi">

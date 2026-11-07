@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { magicLink, admin } from "better-auth/plugins";
 import { db, schema } from "@sahihfolio/database";
-import { isAdminEmailAllowed } from "@/lib/admin-users";
+import { isAdminEmailAllowed } from "src/lib/users/check-admin-email";
 import { sendAdminInviteEmail } from "../email/send-admin-invite-email";
 
 export const auth = betterAuth({
