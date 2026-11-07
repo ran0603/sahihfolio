@@ -6,6 +6,11 @@ import { isAdminEmailAllowed } from "@/lib/admin-users";
 import { sendAdminInviteEmail } from "../email/send-admin-invite-email";
 
 export const auth = betterAuth({
+  advanced: {
+    database: {
+      generateId: "uuid",
+    },
+  },
   database: drizzleAdapter(db, {
     provider: "pg",
     schema,
