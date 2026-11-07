@@ -7,3 +7,4 @@ export * from "./audit-logs";
 export * from "./provider-sources";
 export * from "./result-snapshots";
 export * from "./email-captures";
+export * from "./admin-users";

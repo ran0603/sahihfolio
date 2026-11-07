@@ -1,12 +1,15 @@
 import React from "react";
 import { ThemeToggle } from "components/theme-toggle";
 import { Clock, WifiOff, X } from "lucide-react";
+import { requireAdminRole } from "@/lib/auth/require-admin-role";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await requireAdminRole("viewer");
+
   return (
     <>
       <header className="nav adm-top">

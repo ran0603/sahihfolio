@@ -10,10 +10,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@better-auth/drizzle-adapter": "^1.7.18",
     "@sahihfolio/config": "workspace:*",
     "@sahihfolio/database": "workspace:*",
     "@sahihfolio/shared": "workspace:*",
     "@sahihfolio/ui": "workspace:*",
+    "better-auth": "^1.7.17",
     "lucide-react": "^1.58.0",
     "next": "16.3.8",
     "next-themes": "^0.4.6",
