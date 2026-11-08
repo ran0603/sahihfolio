@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { authClient } from "@/lib/auth/auth-client";
 import { useSearchParams } from "next/navigation";
-import { CircleX, Info } from "node_modules/lucide-react/dist/lucide-react";
+import { CircleX, Info } from "lucide-react";
 
 export function AdminSignInForm() {
   const [email, setEmail] = useState("");
@@ -62,12 +62,6 @@ export function AdminSignInForm() {
           onClick={() => setStatus("idle")}
         >
           Use a different email
-        </button>
-      </div>
-      <div className="lg-demo">
-        <span>Prototype</span>
-        <button type="button" className="link-btn" data-act="openlink">
-          Open the email link
         </button>
       </div>
     </div>

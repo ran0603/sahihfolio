@@ -1,4 +1,4 @@
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { auth } from "./index";
 
 export type AdminRole = "admin" | "editor" | "viewer";
@@ -9,6 +9,7 @@ export type AdminUser = {
   name: string;
   image?: string;
   role: AdminRole;
+  expiresAt: Date;
 };
 
 const ROLE_VALUES: AdminRole[] = ["admin", "editor", "viewer"];
@@ -36,5 +37,6 @@ export async function getCurrentAdminUser(): Promise<AdminUser | null> {
     name: session.user.name,
     image: session.user.image ?? undefined,
     role,
+    expiresAt: session.session.expiresAt,
   };
 }
