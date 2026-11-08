@@ -34,7 +34,7 @@ export function AdminSignInForm() {
       <h1 tabIndex={-1}>Check your email</h1>
       <p className="lg-lead">
         If <b>{email}</b> has admin access, a sign-in link is on its way. It
-        works once and expires in 15 minutes.
+        works once and expires in 5 minutes.
       </p>
       <div className="alert a-info flat" role="status">
         <Info className="ic a-ic" width={20} height={20} strokeWidth={1.5} />
@@ -74,13 +74,20 @@ export function AdminSignInForm() {
       <p className="lg-sub">
         Sahihfolio internal tools. We’ll email you a link that works once.
       </p>
-      {status === "error" && (<div className="alert a-error flat" role="alert">
-        <CircleX className="ic a-ic" width={20} height={20} strokeWidth={1.5} />
-        <div className="a-body">
-          <strong>We couldn’t send the link</strong>
-          <p>Nothing was sent. Check your connection, then try again.</p>
+      {status === "error" && (
+        <div className="alert a-error flat" role="alert">
+          <CircleX
+            className="ic a-ic"
+            width={20}
+            height={20}
+            strokeWidth={1.5}
+          />
+          <div className="a-body">
+            <strong>We couldn’t send the link</strong>
+            <p>Nothing was sent. Check your connection, then try again.</p>
+          </div>
         </div>
-      </div>)}
+      )}
       <div className="lf">
         <div className="fld">
           <label className="lbl" htmlFor="m1-le">

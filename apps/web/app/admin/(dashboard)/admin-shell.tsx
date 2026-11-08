@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AdminUser } from "@/lib/auth/get-current-admin-user";
+import { authClient } from "@/lib/auth/auth-client";
 
 export default function AdminShell({
   user,
@@ -26,8 +28,22 @@ export default function AdminShell({
   user: AdminUser;
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const isUser = !!user.id;
+
+  async function handleSignOut() {
+    try {
+      setIsSigningOut(true);
+      await authClient.signOut();
+      router.push("/admin/sign-in?next=" + window.location.pathname);
+      router.refresh();
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+      setIsSigningOut(false);
+    }
+  }
 
   return (
     <>
@@ -145,7 +161,8 @@ export default function AdminShell({
                       className="up-i"
                       role="menuitem"
                       data-act="signout"
-                      hidden
+                      onClick={handleSignOut}
+                      disabled={isSigningOut}
                     >
                       <LogOut
                         className="ic"
@@ -153,7 +170,7 @@ export default function AdminShell({
                         height="18"
                         aria-hidden="true"
                       />{" "}
-                      Sign out
+                      {isSigningOut ? "Signing out…" : "Sign out"}
                     </button>
                   </div>
                 </div>
@@ -229,11 +246,21 @@ export default function AdminShell({
               <FileText className="ic" width="20" height="20" />
               Screening reports
             </Link>
-            <Link className="si" href="/admin/securities" data-act="navto" data-n="Securities">
+            <Link
+              className="si"
+              href="/admin/securities"
+              data-act="navto"
+              data-n="Securities"
+            >
               <Database className="ic" width="20" height="20" />
               Securities
             </Link>
-            <Link className="si" href="#" data-act="navto" data-n="Methodologies">
+            <Link
+              className="si"
+              href="#"
+              data-act="navto"
+              data-n="Methodologies"
+            >
               <Book className="ic" width="20" height="20" />
               Methodologies
             </Link>
@@ -255,4 +282,3 @@ export default function AdminShell({
     </>
   );
 }
-
