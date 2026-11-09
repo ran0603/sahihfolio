@@ -1,14 +1,12 @@
 import { z } from "zod";
 
 export const sourceTypeSchema = z.enum([
-  "official",
+  "other",
   "regulator",
-  "provider_document",
-  "annual_report",
-  "exchange_filing",
+  "provider",
   "news",
   "research",
-  "other",
+  "official",
 ]);
 
 export const confidenceLevelSchema = z.enum(["high", "medium", "low"]);
@@ -28,4 +26,4 @@ export const providerReviewSchema = z.object({
   confidence: z.enum(["high", "medium", "low"]),
 });
 
-export type SourceInput = z.input<typeof sourceSchema>;
+export type Source = z.infer<typeof sourceSchema>;
