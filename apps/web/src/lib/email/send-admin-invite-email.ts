@@ -1,8 +1,6 @@
 import { Resend } from "resend";
 import { adminSignInEmail } from "./admin-invite-email";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 type SendAdminInviteEmailInput = {
   to: string;
   signInUrl: string;
