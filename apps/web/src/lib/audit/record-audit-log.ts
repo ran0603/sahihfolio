@@ -1,18 +1,26 @@
 import { db } from "@sahihfolio/database";
 import { auditLogs } from "@sahihfolio/database/schema";
 
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | Date
+  | null
+  | JsonValue[]
+  | { [key: string]: JsonValue };
+
+export type AuditLogChange = {
+  before: JsonValue | undefined;
+  after: JsonValue | undefined;
+};
+
 export type AuditLogInput = {
   actorId: string;
   action: string;
   entityType: string;
   entityId: string;
-  changedFields: Record<
-    string,
-    {
-      before: unknown;
-      after: unknown;
-    }
-  >;
+  changedFields: Record<string, AuditLogChange>;
   createdAt?: Date;
 };
 

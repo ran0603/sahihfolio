@@ -1,16 +1,5 @@
 import { z } from "zod";
-import { sourceTypeSchema, sourceSchema } from "./source";
-
-export const regulatoryNoteSourceSchema = z.object({
-  label: z.string().trim().min(1, "Source label is required"),
-  url: z.string().trim().url("Enter a valid source URL"),
-  sourceType: sourceTypeSchema,
-  retrievedAt: z
-    .string()
-    .trim()
-    .datetime({ message: "Enter a valid ISO date-time string" }),
-  confidence: z.enum(["high", "medium", "low"]),
-});
+import { sourceSchema } from "./source";
 
 export const regulatoryNoteSchema = z.object({
   category: z.enum([
@@ -23,12 +12,11 @@ export const regulatoryNoteSchema = z.object({
   ]),
   summary: z.string().trim().min(1, "Enter a regulatory note summary"),
   appliesTo: z.array(z.string().trim().min(1)).default([]),
-  source: regulatoryNoteSourceSchema,
+  source: sourceSchema,
   detail: z.string().trim().optional(),
 });
 
 export type RegulatoryNote = z.infer<typeof regulatoryNoteSchema>;
-export type RegulatoryNoteSource = z.infer<typeof regulatoryNoteSourceSchema>;
 
 export const restrictionSchema = z.object({
   type: z.enum([

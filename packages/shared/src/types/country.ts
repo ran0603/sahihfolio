@@ -1,16 +1,13 @@
-import {
-  regulatoryNoteSchema,
-  restrictionSchema,
-} from "@sahihfolio/shared/provider-data";
+import { RegulatoryNote, Restriction } from "../schemas";
 import { Provider } from "./provider";
 
 export interface CountryProfile {
   countryCode: string;
   name: string;
   currency: string;
-  regulatoryNotes: (typeof regulatoryNoteSchema._output)[];
+  regulatoryNotes: RegulatoryNote[];
   supportedProviders: Provider[];
-  restrictions: (typeof restrictionSchema._output)[];
+  restrictions: Restriction[];
   lastReviewedAt: string | Date;
   sourceUrls: string[];
 }
