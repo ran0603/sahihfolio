@@ -19,8 +19,13 @@ export async function sendAdminInviteEmail({
   }
 
   if (!process.env.RESEND_API_KEY) {
+    if (process.env.NODE_ENV === "test") {
+      return;
+    }
     throw new Error("RESEND_API_KEY is not configured.");
   }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const { subject, html, text } = adminSignInEmail({
     signInUrl,
