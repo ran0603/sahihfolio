@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-export function Footer() {
+export function SiteFooter() {
   const pathname = usePathname();
 
   if (pathname === "/find" || pathname?.startsWith("/find/")) {

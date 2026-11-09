@@ -1,6 +1,9 @@
 import posthog from "posthog-js";
 
-type AnalyticsProperties = Record<string, string | number | boolean | undefined>;
+type AnalyticsProperties = Record<
+  string,
+  string | number | boolean | undefined
+>;
 
 export function track(
   event: string,

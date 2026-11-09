@@ -1,32 +1,36 @@
 import { redirect } from "next/navigation";
-import { getCurrentAdminUser } from "./get-current-admin-user.js";
+import {
+  AdminUser,
+  getCurrentAdminUser,
+  type AdminRole,
+} from "./get-current-admin-user";
 
-export type AdminRole = "admin" | "editor" | "viewer";
-
-export type AdminUser = {
-  id: string;
-  email: string;
-  role: AdminRole;
-};
-
-const roleRank: Record<AdminRole, number> = {
+const ROLE_RANK: Record<AdminRole, number> = {
   viewer: 1,
   editor: 2,
   admin: 3,
 };
 
 export async function requireAdminRole(
-  allowedRoles: AdminRole[],
+  minimumRole: AdminRole = "viewer",
 ): Promise<AdminUser> {
   const user = await getCurrentAdminUser();
 
   if (!user) {
-    redirect("/admin/login");
+    redirect("/admin/sign-in");
   }
 
-  if (!allowedRoles.includes(user.role)) {
-    throw new Error("You do not have permission to perform this action.");
+  if (ROLE_RANK[user.role] < ROLE_RANK[minimumRole]) {
+    redirect("/admin/sign-in?error=unauthorized");
   }
 
   return user;
+}
+
+export async function requireAdmin(): Promise<AdminUser> {
+  return requireAdminRole("admin");
+}
+
+export async function requireEditor(): Promise<AdminUser> {
+  return requireAdminRole("editor");
 }

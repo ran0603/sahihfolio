@@ -1,5 +1,5 @@
 import { db } from "./index";
-import { countries, screeningReports, users } from "./schema";
+import { countries, screeningReports, user } from "./schema";
 
 type CountryInsert = typeof countries.$inferInsert;
 
@@ -199,7 +199,7 @@ export async function seed() {
   ];
 
   await db
-    .insert(users)
+    .insert(user)
     .values([
       {
         email: "admin@sahihfolio.com",

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Menu, X } from "lucide-react";
-import Link from "node_modules/next/link";
+import { ChevronRight, Menu } from "lucide-react";
+import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 
 const navItems = [
@@ -12,7 +12,7 @@ const navItems = [
   { label: "Disclosures", href: "/disclosures" },
 ];
 
-export function Header() {
+export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (

@@ -16,7 +16,7 @@ import {
   pgEnum,
   boolean,
 } from "drizzle-orm/pg-core";
-import { users } from "./users";
+import { user } from "./users";
 import { ProviderType } from "@sahihfolio/shared";
 
 export const reviewStatusEnum = pgEnum("review_status", [
@@ -78,7 +78,7 @@ export const providers = pgTable(
       withTimezone: true,
     }).notNull(),
     reviewStatus: reviewStatusEnum("review_status").notNull().default("draft"),
-    reviewedBy: uuid("reviewed_by").references(() => users.id),
+    reviewedBy: uuid("reviewed_by").references(() => user.id),
     reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
     reviewWindowDays: integer("review_window_days").notNull().default(180),
     createdAt: timestamp("created_at", { withTimezone: true })

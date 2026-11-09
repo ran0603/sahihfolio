@@ -4,7 +4,11 @@ import { useEffect, useRef } from "react";
 import { track } from "@/lib/analytics";
 import { ResultSnapshot } from "@/lib/results/get-result-snapshot";
 
-export default function DataViewTracker({ snapshot }: { snapshot: ResultSnapshot }) {
+export default function DataViewTracker({
+  snapshot,
+}: {
+  snapshot: ResultSnapshot;
+}) {
   const trackedPublicId = useRef<string | null>(null);
 
   useEffect(() => {

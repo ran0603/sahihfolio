@@ -13,6 +13,7 @@ export type AuditLogInput = {
       after: unknown;
     }
   >;
+  createdAt?: Date;
 };
 
 export async function recordAuditLog(input: AuditLogInput) {
@@ -22,5 +23,6 @@ export async function recordAuditLog(input: AuditLogInput) {
     entityType: input.entityType,
     entityId: input.entityId,
     changedFields: input.changedFields,
+    createdAt: new Date(),
   });
 }

@@ -15,12 +15,7 @@ export function ThemeToggle() {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return (
-      <button
-        aria-label="Toggle theme"
-        className="h-10 w-10 rounded-lg border"
-      />
-    );
+    return <button aria-label="Toggle theme" className="icon-btn on-dark" />;
   }
 
   const isDark = resolvedTheme === "dark";
@@ -34,7 +29,7 @@ export function ThemeToggle() {
         setTheme(next);
         setThemeCookie(next);
       }}
-      className={isDark ? "icon-btn on-dark" : "icon-btn on-light"}
+      className="icon-btn on-dark"
       data-act="theme"
     >
       {isDark ? <Sun /> : <Moon />}
