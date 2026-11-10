@@ -18,6 +18,15 @@ import {
 import { requireAdminRole } from "@/lib/auth/require-admin-role";
 import { recordAuditLog } from "../audit/record-audit-log";
 
+function parseLines(value: FormDataEntryValue | null) {
+  if (typeof value !== "string") return [];
+
+  return value
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
 function parseJsonArraySafe(
   value: FormDataEntryValue | null,
 ): { success: true; data: unknown[] } | { success: false; error: string } {
@@ -42,6 +51,10 @@ function parseJsonArraySafe(
       error: "Regulatory notes must be valid JSON.",
     };
   }
+}
+
+export async function getCountries() {
+  return await db.select().from(countries);
 }
 
 export async function createCountry(_prev: unknown, formData: FormData) {
@@ -259,13 +272,4 @@ export async function archiveCountry(_prev: unknown, formData: FormData) {
     status: "success" as const,
     message: "Country archived.",
   };
-}
-
-function parseLines(value: FormDataEntryValue | null) {
-  if (typeof value !== "string") return [];
-
-  return value
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
 }
