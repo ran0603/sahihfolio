@@ -47,5 +47,5 @@ export const countries = pgTable(
   ],
 );
 
-export type CountryRow = typeof countries.$inferSelect;
-export type NewCountryRow = typeof countries.$inferInsert;
+export type Country = typeof countries.$inferSelect;
+export type NewCountry = typeof countries.$inferInsert;
