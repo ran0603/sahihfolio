@@ -1,7 +1,17 @@
 import { eq } from "drizzle-orm";
 import { db } from "@sahihfolio/database";
-import { countries, providers } from "@sahihfolio/database/schema";
-import type { CountryProfile, Provider } from "@sahihfolio/shared";
+import {
+  auditLogs,
+  countries,
+  providers,
+  user,
+} from "@sahihfolio/database/schema";
+import type {
+  AuditLog,
+  CountryProfile,
+  Provider,
+  User,
+} from "@sahihfolio/shared";
 
 export async function getCountry(countryCode: string): Promise<CountryProfile> {
   const [country] = await db
@@ -19,14 +29,15 @@ export async function getCountry(countryCode: string): Promise<CountryProfile> {
     .from(providers)
     .where(eq(providers.countries, [countryCode]));
 
+  const auditHistory = await db
+    .select()
+    .from(auditLogs)
+    .where(eq(auditLogs.entityId, country.id))
+    .innerJoin(user, eq(user.id, auditLogs.actorId));
+
   return {
-    countryCode: country.code,
-    name: country.name,
-    currency: country.currency,
-    regulatoryNotes: country.regulatoryNotes,
-    restrictions: country.restrictions,
-    supportedProviders: supportedProviders as unknown as Provider[],
-    sourceUrls: country.regulatoryNotes.map((n) => n.source.url),
-    lastReviewedAt: country.lastReviewedAt,
+    ...country,
+    providers: supportedProviders as unknown as Provider[],
+    history: auditHistory as unknown as (AuditLog & User)[],
   };
 }
