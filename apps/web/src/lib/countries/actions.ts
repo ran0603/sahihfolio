@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { and, eq, ne } from "drizzle-orm";
+import { and, eq, getTableColumns, ne, sql } from "drizzle-orm";
 
-import { db } from "@sahihfolio/database";
+import { Country, db, providers } from "@sahihfolio/database";
 import { countries } from "@sahihfolio/database";
 
 import {
@@ -53,8 +53,21 @@ function parseJsonArraySafe(
   }
 }
 
-export async function getCountries() {
-  return await db.select().from(countries);
+export async function getCountries(): Promise<
+  Array<Country & { totalProviders: number }>
+> {
+  return await db
+    .select({
+      ...getTableColumns(countries),
+      totalProviders: sql<number>`
+    (
+      select count(*)
+      from ${providers}
+      where ${providers.countries} @> to_jsonb(${countries.code}::text)
+    )
+  `.mapWith(Number),
+    })
+    .from(countries);
 }
 
 export async function createCountry(_prev: unknown, formData: FormData) {

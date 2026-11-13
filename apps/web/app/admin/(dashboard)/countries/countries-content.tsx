@@ -56,10 +56,18 @@ const initialFilters = {
   review: "all",
 };
 
+const calculateDaysSince = (date: Date) => {
+  return Number(
+    ((new Date().getTime() - date.getTime()) / (1000 * 60 * 60 * 24)).toFixed(
+      0,
+    ),
+  );
+};
+
 export default function CountriesContent({
   countries,
 }: {
-  countries: Country[];
+  countries: (Country & { totalProviders: number })[];
 }) {
   const [filterValues, setFilterValues] = useState(initialFilters);
   const [showFilters, setShowFilters] = useState(false);
@@ -78,6 +86,29 @@ export default function CountriesContent({
     window.location.href = countryCode
       ? `/admin/countries/${countryCode}/edit`
       : "/admin/countries/new";
+  };
+
+  const [pagination, setPagination] = useState({
+    offset: 0,
+    page: 1,
+    limit: 10,
+    total: countries.length,
+    totalPages: Math.ceil(countries.length / 10),
+  });
+
+  const handlePageChange = (page: number) => {
+    setPagination((prev) => ({
+      ...prev,
+      page,
+    }));
+  };
+
+  const handleLimitChange = (limit: number) => {
+    setPagination((prev) => ({
+      ...prev,
+      limit,
+      page: 1,
+    }));
   };
 
   return (
@@ -201,16 +232,13 @@ export default function CountriesContent({
                 id="m2-s"
                 className="sel fsel"
                 data-k="sort"
+                value={filterValues.sort}
                 onChange={(e) =>
                   setFilterValues({ ...filterValues, sort: e.target.value })
                 }
               >
                 {Object.entries(sortOptions).map(([key, label]) => (
-                  <option
-                    key={"sort_" + key}
-                    value={key}
-                    selected={filterValues.sort === key}
-                  >
+                  <option key={"sort_" + key} value={key}>
                     {label}
                   </option>
                 ))}
@@ -388,13 +416,37 @@ export default function CountriesContent({
                     <span>{country.currency}</span>
                   </div>
                   <div className="c2">
-                    0 providers<small>0 securities · 0 sources</small>
+                    {country.totalProviders} providers
+                    <small>0 securities · 0 sources</small>
                   </div>
                   <div className="c3">
-                    <span className="badge b-warn">Never reviewed</span>
+                    {country.lastReviewedAt ? (
+                      <>
+                        {country.lastReviewedAt.toLocaleDateString()}
+                        <small>
+                          {calculateDaysSince(country.lastReviewedAt)}{" "}
+                          {calculateDaysSince(country.lastReviewedAt) == 1
+                            ? "day"
+                            : "days"}{" "}
+                          ago
+                          {calculateDaysSince(country.lastReviewedAt) > 90 ? (
+                            <>
+                              {" "}
+                              · <span className="stale">Stale</span>
+                            </>
+                          ) : null}
+                        </small>
+                      </>
+                    ) : (
+                      <span className="badge b-warn">Never reviewed</span>
+                    )}
                   </div>
                   <div className="c4">
-                    <span className="badge b-neutral">Draft</span>
+                    <span
+                      className={`badge b-${statusOptions[country.status].state}`}
+                    >
+                      {statusOptions[country.status].label}
+                    </span>
                   </div>
                   <div className="c5">
                     <button
@@ -415,13 +467,15 @@ export default function CountriesContent({
           </ul>
           <div className="pager" hidden>
             <div className="pg-info" role="status" aria-live="polite">
-              Showing 1–10 of 15
+              Showing {pagination.offset + 1}-
+              {Math.min(pagination.offset + pagination.limit, countries.length)}{" "}
+              of {countries.length}
             </div>
             <div className="pg-size">
               <label htmlFor="m2-ps">Per page</label>
-              <select id="m2-ps" className="sel ps">
-                <option selected>10</option>
-                <option>25</option>
+              <select id="m2-ps" className="sel ps" value={pagination.limit} onChange={(e) => handleLimitChange(Number(e.target.value))}>
+                <option value={10}>10</option>
+                <option value={25}>25</option>
               </select>
             </div>
             <div className="btn-row">
@@ -430,7 +484,8 @@ export default function CountriesContent({
                 className="btn btn-secondary btn-sm"
                 data-act="pg"
                 data-p="0"
-                disabled
+                disabled={pagination.page === 1}
+                onClick={() => handlePageChange(pagination.page - 1)}
               >
                 <ChevronLeft
                   className="ic"
@@ -446,6 +501,8 @@ export default function CountriesContent({
                 className="btn btn-secondary btn-sm"
                 data-act="pg"
                 data-p="2"
+                disabled={pagination.page === pagination.totalPages}
+                onClick={() => handlePageChange(pagination.page + 1)}
               >
                 Next{" "}
                 <ChevronRight
