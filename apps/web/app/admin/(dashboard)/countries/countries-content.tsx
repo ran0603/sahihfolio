@@ -20,11 +20,26 @@ const sortOptions: Record<string, string> = {
   prov: "Most providers",
 };
 
-const statusOptions: Record<string, string> = {
-  all: "All",
-  published: "Published",
-  draft: "Draft",
-  archived: "Archived",
+const statusOptions: Record<
+  string,
+  { label: string; state: "pos" | "neg" | "neutral" | "mist" }
+> = {
+  all: {
+    label: "All",
+    state: "neutral",
+  },
+  published: {
+    label: "Published",
+    state: "pos",
+  },
+  draft: {
+    label: "Draft",
+    state: "neutral",
+  },
+  archived: {
+    label: "Archived",
+    state: "mist",
+  },
 };
 
 const reviewOptions: Record<string, string> = {
@@ -61,7 +76,7 @@ export default function CountriesContent({
 
   const handleManageCountry = (countryCode?: string) => {
     window.location.href = countryCode
-      ? `/admin/countries/${countryCode}`
+      ? `/admin/countries/${countryCode}/edit`
       : "/admin/countries/new";
   };
 
@@ -226,13 +241,13 @@ export default function CountriesContent({
                   setFilterValues({ ...filterValues, status: e.target.value })
                 }
               >
-                {Object.entries(statusOptions).map(([key, label]) => (
+                {Object.entries(statusOptions).map(([key, status]) => (
                   <option
                     key={"status_" + key}
                     value={key}
                     selected={filterValues.status === key}
                   >
-                    {label}
+                    {status.label}
                   </option>
                 ))}
               </select>
@@ -297,7 +312,7 @@ export default function CountriesContent({
                       setFilterValues({ ...filterValues, status: "all" })
                     }
                   >
-                    Status: {statusOptions[filterValues.status]}
+                    Status: {statusOptions[filterValues.status].label}
                     <X
                       className="ic"
                       width={14}
@@ -359,6 +374,7 @@ export default function CountriesContent({
           <ul className="sl">
             {countries.map((country) => (
               <li
+                key={country.code}
                 className="sl-r  "
                 data-row={"c-" + country.code.toLowerCase()}
               >

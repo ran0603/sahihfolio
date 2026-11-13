@@ -1,15 +1,9 @@
 import { z } from "zod";
 import { sourceSchema } from "./source";
+import { REGULATORY_NOTE_CATEGORIES } from "../constants/countries";
 
 export const regulatoryNoteSchema = z.object({
-  category: z.enum([
-    "licensing",
-    "investor_protection",
-    "tax",
-    "reporting",
-    "cross_border",
-    "other",
-  ]),
+  category: z.enum(REGULATORY_NOTE_CATEGORIES),
   summary: z.string().trim().min(1, "Enter a regulatory note summary"),
   appliesTo: z.array(z.string().trim().min(1)).default([]),
   source: sourceSchema,
