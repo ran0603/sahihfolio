@@ -219,8 +219,8 @@ export default function CountryNewContent({
           res.errors && "code" in res.errors
             ? res.errors.code?.[0]
             : res.errors && "form" in res.errors
-            ? res.errors.form?.[0]
-            : "Could not create country.";
+              ? res.errors.form?.[0]
+              : "Could not create country.";
         setFormError(msg || "Failed to create country.");
       }
     });
@@ -267,7 +267,9 @@ export default function CountryNewContent({
                 <label className="lbl" htmlFor="m7-code">
                   Country
                 </label>
-                <p className="hint">The code can’t be changed after you create it.</p>
+                <p className="hint">
+                  The code can’t be changed after you create it.
+                </p>
                 <select
                   id="m7-code"
                   className={`sel ${existingCountry ? "invalid" : ""}`}
@@ -281,14 +283,16 @@ export default function CountryNewContent({
                     );
                     return (
                       <option key={k} value={k}>
-                        {n} ({k})
-                        {exists ? " — already added" : ""}
+                        {n} ({k}){exists ? " — already added" : ""}
                       </option>
                     );
                   })}
                 </select>
                 {existingCountry && (
-                  <p className="fine dupn" style={{ display: "flex", gap: "6px", marginTop: "6px" }}>
+                  <p
+                    className="fine dupn"
+                    style={{ display: "flex", gap: "6px", marginTop: "6px" }}
+                  >
                     <Info className="ic" width={16} height={16} />
                     <span>
                       <Link
@@ -340,7 +344,8 @@ export default function CountryNewContent({
                   Last reviewed
                 </label>
                 <p className="hint">
-                  When someone last checked this country’s information. Starts as today.
+                  When someone last checked this country’s information. Starts
+                  as today.
                 </p>
                 <input
                   id="m7-rev"
@@ -632,7 +637,9 @@ export default function CountryNewContent({
                       className="icon-btn"
                       aria-label={`Remove link ${index + 1}`}
                       onClick={() =>
-                        setSourceUrls((prev) => prev.filter((_, i) => i !== index))
+                        setSourceUrls((prev) =>
+                          prev.filter((_, i) => i !== index),
+                        )
                       }
                     >
                       <Trash className="ic" width={20} height={20} />
@@ -658,7 +665,11 @@ export default function CountryNewContent({
               >
                 {isPending ? (
                   <>
-                    <Loader2 className="ic animate-spin" width={16} height={16} />
+                    <Loader2
+                      className="ic animate-spin"
+                      width={16}
+                      height={16}
+                    />
                     Creating…
                   </>
                 ) : (

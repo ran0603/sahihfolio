@@ -58,9 +58,7 @@ function parseJsonArraySafe(
   }
 }
 
-function parseJsonArrayOrLines(
-  value: FormDataEntryValue | null,
-): unknown[] {
+function parseJsonArrayOrLines(value: FormDataEntryValue | null): unknown[] {
   if (value === null || value === undefined) return [];
   if (typeof value !== "string" || value.trim() === "") return [];
 
@@ -200,7 +198,9 @@ export async function createCountry(_prev: unknown, formData: FormData) {
 
 export async function updateCountry(_prev: unknown, formData: FormData) {
   const user = await requireAdminRole("editor");
-  const parsedId = uuidParamSchema.safeParse(formData.get("id"));
+  const parsedId = uuidParamSchema.safeParse({
+    id: formData.get("id") as string,
+  });
 
   if (!parsedId.success) {
     return {

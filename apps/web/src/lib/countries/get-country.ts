@@ -22,7 +22,11 @@ export async function getCountry(idOrCode: string): Promise<CountryProfile> {
   const [country] = await db
     .select()
     .from(countries)
-    .where(isUuid ? eq(countries.id, idOrCode) : eq(countries.code, idOrCode.toUpperCase()))
+    .where(
+      isUuid
+        ? eq(countries.id, idOrCode)
+        : eq(countries.code, idOrCode.toUpperCase()),
+    )
     .limit(1);
 
   if (!country) {
@@ -61,7 +65,9 @@ export async function getCountry(idOrCode: string): Promise<CountryProfile> {
   };
 }
 
-export async function findCountry(idOrCode: string): Promise<CountryProfile | null> {
+export async function findCountry(
+  idOrCode: string,
+): Promise<CountryProfile | null> {
   try {
     return await getCountry(idOrCode);
   } catch {

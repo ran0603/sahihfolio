@@ -2,7 +2,7 @@
 
 import { CountryProfile, Source } from "@sahihfolio/shared";
 import CountryEditForm, { CountryFormData } from "./country-edit-form";
-import { CircleCheck, Pen, Loader2, TriangleAlert, Info } from "lucide-react";
+import { CircleCheck, Pen, Loader2, TriangleAlert, Info, CircleX } from "lucide-react";
 import CountryEditSide from "./country-edit-side";
 import { statusOptions } from "../../../constants";
 import { calculateDaysSince, getDateString } from "src/lib/date-utils";
@@ -43,6 +43,7 @@ export default function CountryEditContent({
     title: string;
     body?: string;
   } | null>(null);
+  const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
 
   const isArchived = country.status === "archived";
 
@@ -50,13 +51,13 @@ export default function CountryEditContent({
     formData.name !== country.name ||
     formData.currency !== country.currency ||
     JSON.stringify(formData.regulatoryNotes) !==
-      JSON.stringify(country.regulatoryNotes || []) ||
+    JSON.stringify(country.regulatoryNotes || []) ||
     JSON.stringify(formData.restrictions) !==
-      JSON.stringify(country.restrictions || []) ||
+    JSON.stringify(country.restrictions || []) ||
     JSON.stringify(formData.sourceUrls) !==
-      JSON.stringify(country.sourceUrls || []) ||
+    JSON.stringify(country.sourceUrls || []) ||
     new Date(lastReviewedAt).toISOString() !==
-      new Date(country.lastReviewedAt).toISOString();
+    new Date(country.lastReviewedAt).toISOString();
 
   const showToast = (
     type: "success" | "error" | "warning" | "info",
@@ -88,10 +89,7 @@ export default function CountryEditContent({
       data.append("code", country.code);
       data.append("name", formData.name);
       data.append("currency", formData.currency);
-      data.append(
-        "regulatoryNotes",
-        JSON.stringify(formData.regulatoryNotes),
-      );
+      data.append("regulatoryNotes", JSON.stringify(formData.regulatoryNotes));
       data.append("restrictions", JSON.stringify(formData.restrictions));
       data.append("sourceUrls", JSON.stringify(formData.sourceUrls));
       data.append("lastReviewedAt", lastReviewedAt.toISOString());
@@ -121,6 +119,7 @@ export default function CountryEditContent({
           res.errors && "form" in res.errors
             ? res.errors.form?.[0]
             : "Could not save country.";
+        setErrors(res.errors);
         showToast("error", "Error saving", errorMsg);
       }
     });
@@ -138,6 +137,7 @@ export default function CountryEditContent({
           "It now appears in the Finder’s country list.",
         );
       } else {
+        setErrors(res.errors);
         showToast("error", "Failed to publish", res.errors?.form?.[0]);
       }
     });
@@ -155,6 +155,7 @@ export default function CountryEditContent({
           "It no longer appears in the Finder.",
         );
       } else {
+        setErrors(res.errors);
         showToast("error", "Failed to update status", res.errors?.form?.[0]);
       }
     });
@@ -174,6 +175,7 @@ export default function CountryEditContent({
           "You can restore it as a draft.",
         );
       } else {
+        setErrors(res.errors);
         showToast("error", "Failed to archive", res.errors?.form?.[0]);
       }
     });
@@ -184,11 +186,7 @@ export default function CountryEditContent({
       const res = await unarchiveCountry(country.id);
       if (res.status === "success") {
         setCountry((prev) => ({ ...prev, status: "draft" }));
-        showToast(
-          "success",
-          `${country.name} restored`,
-          "Restored as draft.",
-        );
+        showToast("success", `${country.name} restored`, "Restored as draft.");
       } else {
         showToast("error", "Failed to restore", res.errors?.form?.[0]);
       }
@@ -258,7 +256,8 @@ export default function CountryEditContent({
                 </span>
               ) : (
                 <span className="svl">
-                  <CircleCheck className="ic" width={14} height={14} /> No changes
+                  <CircleCheck className="ic" width={14} height={14} /> No
+                  changes
                 </span>
               )}
             </span>
@@ -292,7 +291,11 @@ export default function CountryEditContent({
             <Info className="ic" width={20} height={20} />
             <div className="a-body">
               <strong>This country is archived</strong>
-              <span> It isn’t in the Finder, and it can’t be edited. Restore it as a draft to make changes.</span>
+              <span>
+                {" "}
+                It isn’t in the Finder, and it can’t be edited. Restore it as a
+                draft to make changes.
+              </span>
             </div>
             <button
               type="button"
@@ -304,17 +307,27 @@ export default function CountryEditContent({
             </button>
           </div>
         )}
-        {!isArchived && country.status === "published" && daysSinceReview > 90 && (
-          <div className="alert a-warning flat" role="status">
-            <TriangleAlert className="ic" width={20} height={20} />
-            <div className="a-body">
-              <strong>Last reviewed {daysSinceReview} days ago</strong>
-              <span> Check the notes and sources. Then use “Mark as reviewed today”.</span>
+        {!isArchived &&
+          country.status === "published" &&
+          daysSinceReview > 90 && (
+            <div className="alert a-warning flat" role="status">
+              <TriangleAlert className="ic" width={20} height={20} />
+              <div className="a-body">
+                <strong>Last reviewed {daysSinceReview} days ago</strong>
+                <span>
+                  {" "}
+                  Check the notes and sources. Then use “Mark as reviewed
+                  today”.
+                </span>
+              </div>
             </div>
-          </div>
-        )}
+          )}
         {!isArchived && country.status === "published" && isDirty && (
-          <div className="alert a-info flat" role="status" style={{ marginTop: "8px" }}>
+          <div
+            className="alert a-info flat"
+            role="status"
+            style={{ marginTop: "8px" }}
+          >
             <Info className="ic" width={20} height={20} />
             <div className="a-body">
               <strong>This country is published</strong>
@@ -325,6 +338,33 @@ export default function CountryEditContent({
       </section>
 
       <div data-m="form">
+        {errors && <div className="alert a-error flat" role="alert">
+          <CircleX className="ic a-ic" width={20} height={20} />
+          <div className="a-body">
+            <strong>Fix {Object.keys(errors).length} things to save</strong>
+            <ul className="esum">
+              {Object.values(errors).map((error, index) => (
+                <li key={"errors_" + index}>
+                  <button
+                    type="button"
+                    className="link-btn"
+                    data-act="efocus"
+                    data-fp={Object.keys(errors)[index]}
+                    onClick={() => {
+                      const field = Object.keys(errors)[index];
+                      const element = document.querySelector(`[name="${field}"]`);
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                  >
+                    {error}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>}
         <div className="nw">
           <CountryEditForm
             country={{

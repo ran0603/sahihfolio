@@ -10,4 +10,3 @@ export default async function NewCountryPage() {
 
   return <CountryNewContent existingCountries={countries} sources={sources} />;
 }
-

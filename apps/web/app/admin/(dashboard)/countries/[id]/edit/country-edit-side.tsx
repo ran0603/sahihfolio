@@ -97,21 +97,28 @@ export default function CountryEditSide({
         </ul>
         <div className="side-a">
           {confirmAction ? (
-            <div className="qr-cf" role="group" aria-label={`Confirm: ${confirmAction}`}>
+            <div
+              className="qr-cf"
+              role="group"
+              aria-label={`Confirm: ${confirmAction}`}
+            >
               <p>
                 {confirmAction === "publish" && (
                   <>
-                    <b>Publish {country.name}?</b> It appears in the Finder’s country list.
+                    <b>Publish {country.name}?</b> It appears in the Finder’s
+                    country list.
                   </>
                 )}
                 {confirmAction === "draft" && (
                   <>
-                    <b>Move {country.name} to draft?</b> It leaves the Finder. Saved results keep working.
+                    <b>Move {country.name} to draft?</b> It leaves the Finder.
+                    Saved results keep working.
                   </>
                 )}
                 {confirmAction === "archive" && (
                   <>
-                    <b>Archive {country.name}?</b> It leaves the Finder and can’t be edited until restored.
+                    <b>Archive {country.name}?</b> It leaves the Finder and
+                    can’t be edited until restored.
                   </>
                 )}
               </p>
@@ -129,10 +136,10 @@ export default function CountryEditSide({
                   {isBusy
                     ? "Working…"
                     : confirmAction === "publish"
-                    ? "Publish"
-                    : confirmAction === "draft"
-                    ? "Move to draft"
-                    : "Archive"}
+                      ? "Publish"
+                      : confirmAction === "draft"
+                        ? "Move to draft"
+                        : "Archive"}
                 </button>
                 <button
                   type="button"
@@ -162,7 +169,11 @@ export default function CountryEditSide({
                   className="btn btn-secondary btn-sm"
                   data-act="ask-draft"
                   disabled={isBusy}
-                  onClick={() => setConfirmAction ? setConfirmAction("draft") : handleUnpublish()}
+                  onClick={() =>
+                    setConfirmAction
+                      ? setConfirmAction("draft")
+                      : handleUnpublish()
+                  }
                 >
                   <Undo className="ic" width={18} height={18} /> Move to draft
                 </button>
@@ -173,7 +184,11 @@ export default function CountryEditSide({
                   className="btn btn-primary btn-sm"
                   data-act="ask-publish"
                   disabled={isBusy}
-                  onClick={() => setConfirmAction ? setConfirmAction("publish") : handlePublish()}
+                  onClick={() =>
+                    setConfirmAction
+                      ? setConfirmAction("publish")
+                      : handlePublish()
+                  }
                 >
                   Publish
                 </button>
@@ -183,7 +198,11 @@ export default function CountryEditSide({
                 className="btn btn-ghost btn-sm"
                 data-act="ask-arc"
                 disabled={isBusy}
-                onClick={() => setConfirmAction ? setConfirmAction("archive") : handleArchive()}
+                onClick={() =>
+                  setConfirmAction
+                    ? setConfirmAction("archive")
+                    : handleArchive()
+                }
               >
                 <Archive className="ic" width={18} height={18} /> Archive
               </button>

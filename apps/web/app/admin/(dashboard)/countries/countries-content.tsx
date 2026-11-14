@@ -138,8 +138,12 @@ export default function CountriesContent({
         return a.name.localeCompare(b.name);
       }
       if (filterValues.sort === "stale") {
-        const aDate = a.lastReviewedAt ? new Date(a.lastReviewedAt).getTime() : 0;
-        const bDate = b.lastReviewedAt ? new Date(b.lastReviewedAt).getTime() : 0;
+        const aDate = a.lastReviewedAt
+          ? new Date(a.lastReviewedAt).getTime()
+          : 0;
+        const bDate = b.lastReviewedAt
+          ? new Date(b.lastReviewedAt).getTime()
+          : 0;
         return aDate - bDate;
       }
       if (filterValues.sort === "new") {
@@ -189,7 +193,9 @@ export default function CountriesContent({
       const res = await publishCountry(country.id);
       if (res.status === "success") {
         setCountries((prev) =>
-          prev.map((c) => (c.id === country.id ? { ...c, status: "published" } : c)),
+          prev.map((c) =>
+            c.id === country.id ? { ...c, status: "published" } : c,
+          ),
         );
         setConfirmAction(null);
         showToast(
@@ -208,7 +214,9 @@ export default function CountriesContent({
       const res = await unpublishCountry(country.id);
       if (res.status === "success") {
         setCountries((prev) =>
-          prev.map((c) => (c.id === country.id ? { ...c, status: "draft" } : c)),
+          prev.map((c) =>
+            c.id === country.id ? { ...c, status: "draft" } : c,
+          ),
         );
         setConfirmAction(null);
         showToast(
@@ -229,7 +237,9 @@ export default function CountriesContent({
       const res = await archiveCountry(null, form);
       if (res.status === "success") {
         setCountries((prev) =>
-          prev.map((c) => (c.id === country.id ? { ...c, status: "archived" } : c)),
+          prev.map((c) =>
+            c.id === country.id ? { ...c, status: "archived" } : c,
+          ),
         );
         setConfirmAction(null);
         showToast(
@@ -248,14 +258,12 @@ export default function CountriesContent({
       const res = await unarchiveCountry(country.id);
       if (res.status === "success") {
         setCountries((prev) =>
-          prev.map((c) => (c.id === country.id ? { ...c, status: "draft" } : c)),
+          prev.map((c) =>
+            c.id === country.id ? { ...c, status: "draft" } : c,
+          ),
         );
         setConfirmAction(null);
-        showToast(
-          "success",
-          `${country.name} restored`,
-          "Restored as draft.",
-        );
+        showToast("success", `${country.name} restored`, "Restored as draft.");
       } else {
         showToast("error", "Failed to restore", res.errors?.form?.[0]);
       }
@@ -307,9 +315,9 @@ export default function CountriesContent({
             <p className="sumline" role="status">
               {countries.length} countries ·{" "}
               {countries.filter((c) => c.status === "published").length}{" "}
-              published ·{" "}
-              {countries.filter((c) => c.status === "draft").length} drafts ·{" "}
-              {countries.filter((c) => c.status === "archived").length} archived ·{" "}
+              published · {countries.filter((c) => c.status === "draft").length}{" "}
+              drafts · {countries.filter((c) => c.status === "archived").length}{" "}
+              archived ·{" "}
               <b className={staleCountries.length > 0 ? "stl" : ""}>
                 {staleCountries.length} stale
               </b>
@@ -340,7 +348,9 @@ export default function CountriesContent({
             <div className="a-body">
               <strong>
                 {staleCountries.length} published{" "}
-                {staleCountries.length === 1 ? "country hasn’t" : "countries haven’t"}{" "}
+                {staleCountries.length === 1
+                  ? "country hasn’t"
+                  : "countries haven’t"}{" "}
                 been reviewed in 90+ days
               </strong>
               <p>
@@ -508,7 +518,9 @@ export default function CountriesContent({
               <h2 style={{ margin: 0 }}>
                 <b>No countries match</b>
               </h2>
-              <p>Check the spelling, or clear the filters. If it’s new, add it.</p>
+              <p>
+                Check the spelling, or clear the filters. If it’s new, add it.
+              </p>
               <div className="btn-row">
                 <button
                   type="button"
@@ -517,10 +529,7 @@ export default function CountriesContent({
                 >
                   Clear search and filters
                 </button>
-                <Link
-                  href="/admin/countries/new"
-                  className="btn btn-primary"
-                >
+                <Link href="/admin/countries/new" className="btn btn-primary">
                   <Plus className="ic" width={18} height={18} /> Add country
                 </Link>
               </div>
@@ -600,7 +609,8 @@ export default function CountriesContent({
                         <span
                           className={`badge b-${statusOptions[country.status]?.state || "neutral"}`}
                         >
-                          {statusOptions[country.status]?.label || country.status}
+                          {statusOptions[country.status]?.label ||
+                            country.status}
                         </span>
                       </div>
                       <div className="c5">
@@ -628,7 +638,8 @@ export default function CountriesContent({
                             <span className="lbl">Coverage</span>
                             <span>
                               {country.totalProviders} providers · {notesCount}{" "}
-                              notes · {restrCount} restrictions · {srcCount} sources
+                              notes · {restrCount} restrictions · {srcCount}{" "}
+                              sources
                             </span>
                           </div>
                           <div className="tr-a">
@@ -664,9 +675,9 @@ export default function CountriesContent({
                                   <p>
                                     {confirmAction.type === "publish" && (
                                       <>
-                                        <b>Publish {country.name}?</b> It appears in
-                                        the Finder’s country list and people can get
-                                        results for it.
+                                        <b>Publish {country.name}?</b> It
+                                        appears in the Finder’s country list and
+                                        people can get results for it.
                                       </>
                                     )}
                                     {confirmAction.type === "draft" && (
@@ -678,9 +689,9 @@ export default function CountriesContent({
                                     )}
                                     {confirmAction.type === "archive" && (
                                       <>
-                                        <b>Archive {country.name}?</b> It leaves the
-                                        Finder and the admin lists by default. You
-                                        can restore it as a draft.
+                                        <b>Archive {country.name}?</b> It leaves
+                                        the Finder and the admin lists by
+                                        default. You can restore it as a draft.
                                       </>
                                     )}
                                   </p>
@@ -698,7 +709,9 @@ export default function CountriesContent({
                                           handlePublish(country);
                                         else if (confirmAction.type === "draft")
                                           handleUnpublish(country);
-                                        else if (confirmAction.type === "archive")
+                                        else if (
+                                          confirmAction.type === "archive"
+                                        )
                                           handleArchive(country);
                                       }}
                                     >
@@ -742,7 +755,11 @@ export default function CountriesContent({
                                       })
                                     }
                                   >
-                                    <Send className="ic" width={16} height={16} />{" "}
+                                    <Send
+                                      className="ic"
+                                      width={16}
+                                      height={16}
+                                    />{" "}
                                     Publish
                                   </button>
                                   <button
@@ -756,7 +773,11 @@ export default function CountriesContent({
                                       })
                                     }
                                   >
-                                    <Archive className="ic" width={16} height={16} />{" "}
+                                    <Archive
+                                      className="ic"
+                                      width={16}
+                                      height={16}
+                                    />{" "}
                                     Archive
                                   </button>
                                 </div>
@@ -773,7 +794,11 @@ export default function CountriesContent({
                                       })
                                     }
                                   >
-                                    <Undo className="ic" width={16} height={16} />{" "}
+                                    <Undo
+                                      className="ic"
+                                      width={16}
+                                      height={16}
+                                    />{" "}
                                     Move to draft
                                   </button>
                                   <button
@@ -787,7 +812,11 @@ export default function CountriesContent({
                                       })
                                     }
                                   >
-                                    <Archive className="ic" width={16} height={16} />{" "}
+                                    <Archive
+                                      className="ic"
+                                      width={16}
+                                      height={16}
+                                    />{" "}
                                     Archive
                                   </button>
                                 </div>
@@ -799,7 +828,11 @@ export default function CountriesContent({
                                     disabled={isPending}
                                     onClick={() => handleRestore(country)}
                                   >
-                                    <Undo className="ic" width={16} height={16} />{" "}
+                                    <Undo
+                                      className="ic"
+                                      width={16}
+                                      height={16}
+                                    />{" "}
                                     Restore as draft
                                   </button>
                                 </div>
