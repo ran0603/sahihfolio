@@ -10,73 +10,8 @@ import {
 import { TriangleAlert, Trash, Plus, X, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { Country } from "node_modules/@sahihfolio/database/src";
-
-export const appliesToOptions: readonly {
-  value: string;
-  label: string;
-  group: string;
-}[] = [
-  { value: "all", label: "All countries and providers", group: "General" },
-
-  { value: "investor", label: "Investors", group: "Audience" },
-  { value: "retail_investor", label: "Retail investors", group: "Audience" },
-  {
-    value: "institutional_investor",
-    label: "Institutional investors",
-    group: "Audience",
-  },
-
-  { value: "provider", label: "All providers", group: "Provider" },
-  { value: "broker", label: "Brokers", group: "Provider" },
-  { value: "robo_advisor", label: "Robo-advisors", group: "Provider" },
-  {
-    value: "managed_portfolio",
-    label: "Managed portfolios",
-    group: "Provider",
-  },
-  { value: "etf_provider", label: "ETF providers", group: "Provider" },
-
-  { value: "stocks", label: "Stocks", group: "Product" },
-  { value: "etfs", label: "ETFs", group: "Product" },
-  { value: "managed", label: "Managed portfolios", group: "Product" },
-
-  {
-    value: "international_market",
-    label: "International markets",
-    group: "Market",
-  },
-  { value: "local_market", label: "Local market", group: "Market" },
-
-  {
-    value: "foreign_currency",
-    label: "Foreign-currency investments",
-    group: "Currency",
-  },
-  {
-    value: "local_currency",
-    label: "Local-currency investments",
-    group: "Currency",
-  },
-
-  {
-    value: "cross_border",
-    label: "Cross-border investing",
-    group: "Cross-border",
-  },
-  { value: "tax", label: "Tax treatment", group: "Tax" },
-  {
-    value: "reporting",
-    label: "Reporting and disclosures",
-    group: "Reporting",
-  },
-  { value: "account_opening", label: "Account opening", group: "Account" },
-  {
-    value: "withdrawals",
-    label: "Withdrawals and transfers",
-    group: "Account",
-  },
-] as const;
+import { Country } from "@sahihfolio/database";
+import { appliesToOptions } from "./page";
 
 export default function CountryEditForm({
   country,
@@ -551,11 +486,11 @@ export default function CountryEditForm({
                               prev.map((n, i) =>
                                 i === index
                                   ? {
-                                      ...n,
-                                      source: sources.find(
-                                        (s) => s.id === e.target.value,
-                                      ) as Source,
-                                    }
+                                    ...n,
+                                    source: sources.find(
+                                      (s) => s.id === e.target.value,
+                                    ) as Source,
+                                  }
                                   : n,
                               ),
                             )
@@ -592,12 +527,12 @@ export default function CountryEditForm({
                                 prev.map((n, i) =>
                                   i === index
                                     ? {
-                                        ...n,
-                                        source: {
-                                          ...n.source,
-                                          label: e.target.value,
-                                        },
-                                      }
+                                      ...n,
+                                      source: {
+                                        ...n.source,
+                                        label: e.target.value,
+                                      },
+                                    }
                                     : n,
                                 ),
                               )
@@ -637,12 +572,12 @@ export default function CountryEditForm({
                                 prev.map((n, i) =>
                                   i === index
                                     ? {
-                                        ...n,
-                                        source: {
-                                          ...n.source,
-                                          sourceType: e.target.value,
-                                        } as Source,
-                                      }
+                                      ...n,
+                                      source: {
+                                        ...n.source,
+                                        sourceType: e.target.value,
+                                      } as Source,
+                                    }
                                     : n,
                                 ),
                               )
@@ -695,12 +630,12 @@ export default function CountryEditForm({
                               prev.map((n, i) =>
                                 i === index
                                   ? {
-                                      ...n,
-                                      source: {
-                                        ...n.source,
-                                        url: e.target.value,
-                                      } as Source,
-                                    }
+                                    ...n,
+                                    source: {
+                                      ...n.source,
+                                      url: e.target.value,
+                                    } as Source,
+                                  }
                                   : n,
                               ),
                             )
@@ -764,12 +699,12 @@ export default function CountryEditForm({
                                 prev.map((n, i) =>
                                   i === index
                                     ? {
-                                        ...n,
-                                        source: {
-                                          ...n.source,
-                                          retrievedAt: new Date(e.target.value),
-                                        } as Source,
-                                      }
+                                      ...n,
+                                      source: {
+                                        ...n.source,
+                                        retrievedAt: new Date(e.target.value),
+                                      } as Source,
+                                    }
                                     : n,
                                 ),
                               )
@@ -810,12 +745,12 @@ export default function CountryEditForm({
                                 prev.map((n, i) =>
                                   i === index
                                     ? {
-                                        ...n,
-                                        source: {
-                                          ...n.source,
-                                          confidence: e.target.value,
-                                        } as Source,
-                                      }
+                                      ...n,
+                                      source: {
+                                        ...n.source,
+                                        confidence: e.target.value,
+                                      } as Source,
+                                    }
                                     : n,
                                 ),
                               )
@@ -1220,11 +1155,11 @@ export default function CountryEditForm({
                             prev.map((r, i) =>
                               i === index
                                 ? {
-                                    ...r,
-                                    source: sources.find(
-                                      (s) => s.id === e.target.value,
-                                    ) as Source,
-                                  }
+                                  ...r,
+                                  source: sources.find(
+                                    (s) => s.id === e.target.value,
+                                  ) as Source,
+                                }
                                 : r,
                             ),
                           )
@@ -1399,12 +1334,12 @@ export default function CountryEditForm({
                               prev.map((r, i) =>
                                 i === index
                                   ? {
-                                      ...r,
-                                      source: {
-                                        ...r.source,
-                                        retrievedAt: new Date(e.target.value),
-                                      } as Source,
-                                    }
+                                    ...r,
+                                    source: {
+                                      ...r.source,
+                                      retrievedAt: new Date(e.target.value),
+                                    } as Source,
+                                  }
                                   : r,
                               ),
                             )
@@ -1445,12 +1380,12 @@ export default function CountryEditForm({
                               prev.map((r, i) =>
                                 i === index
                                   ? {
-                                      ...r,
-                                      source: {
-                                        ...r.source,
-                                        confidence: e.target.value,
-                                      } as Source,
-                                    }
+                                    ...r,
+                                    source: {
+                                      ...r.source,
+                                      confidence: e.target.value,
+                                    } as Source,
+                                  }
                                   : r,
                               ),
                             )

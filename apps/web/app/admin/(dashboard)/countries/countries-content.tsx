@@ -473,7 +473,12 @@ export default function CountriesContent({
             </div>
             <div className="pg-size">
               <label htmlFor="m2-ps">Per page</label>
-              <select id="m2-ps" className="sel ps" value={pagination.limit} onChange={(e) => handleLimitChange(Number(e.target.value))}>
+              <select
+                id="m2-ps"
+                className="sel ps"
+                value={pagination.limit}
+                onChange={(e) => handleLimitChange(Number(e.target.value))}
+              >
                 <option value={10}>10</option>
                 <option value={25}>25</option>
               </select>
