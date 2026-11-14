@@ -59,5 +59,5 @@ export interface Country {
 
 export interface CountryProfile extends Country {
   providers: Provider[];
-  history: (AuditLog & User)[];
+  history: (AuditLog & { user: User })[];
 }

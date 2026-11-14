@@ -9,7 +9,6 @@ import {
 } from "@sahihfolio/shared";
 import { TriangleAlert, Trash, Plus, X, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 const appliesToOptions: readonly {
   value: string;

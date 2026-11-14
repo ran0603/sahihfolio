@@ -1,8 +1,20 @@
 "use client";
 
-import { CountryProfile, Source, RegulatoryNote, Restriction } from "@sahihfolio/shared";
+import {
+  CountryProfile,
+  Source,
+  RegulatoryNote,
+  Restriction,
+} from "@sahihfolio/shared";
 import CountryEditForm, { CountryFormData } from "./country-edit-form";
-import { CircleCheck, Pen, Loader2, TriangleAlert, Info, CircleX } from "lucide-react";
+import {
+  CircleCheck,
+  Pen,
+  Loader2,
+  TriangleAlert,
+  Info,
+  CircleX,
+} from "lucide-react";
 import CountryEditSide from "./country-edit-side";
 import { statusOptions } from "../../../constants";
 import { calculateDaysSince, getDateString } from "src/lib/date-utils";
@@ -51,13 +63,13 @@ export default function CountryEditContent({
     formData.name !== country.name ||
     formData.currency !== country.currency ||
     JSON.stringify(formData.regulatoryNotes) !==
-    JSON.stringify(country.regulatoryNotes || []) ||
+      JSON.stringify(country.regulatoryNotes || []) ||
     JSON.stringify(formData.restrictions) !==
-    JSON.stringify(country.restrictions || []) ||
+      JSON.stringify(country.restrictions || []) ||
     JSON.stringify(formData.sourceUrls) !==
-    JSON.stringify(country.sourceUrls || []) ||
+      JSON.stringify(country.sourceUrls || []) ||
     new Date(lastReviewedAt).toISOString() !==
-    new Date(country.lastReviewedAt).toISOString();
+      new Date(country.lastReviewedAt).toISOString();
 
   const showToast = (
     type: "success" | "error" | "warning" | "info",
@@ -82,7 +94,7 @@ export default function CountryEditContent({
   const handleSave = async (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
     if (!isDirty || isArchived || isPending) return;
-    setErrors(null)
+    setErrors(null);
 
     startTransition(async () => {
       const data = new FormData();
@@ -100,7 +112,9 @@ export default function CountryEditContent({
       const notesWithIds = formData.regulatoryNotes.map(ensureSourceId);
       const restrictionsWithIds = formData.restrictions.map(ensureSourceId);
       // Clean source URLs: remove empty entries
-      const cleanedSourceUrls = formData.sourceUrls.filter((u) => u.trim().length > 0);
+      const cleanedSourceUrls = formData.sourceUrls.filter(
+        (u) => u.trim().length > 0,
+      );
       data.append("regulatoryNotes", JSON.stringify(notesWithIds));
       data.append("restrictions", JSON.stringify(restrictionsWithIds));
       data.append("sourceUrls", JSON.stringify(cleanedSourceUrls));
@@ -350,33 +364,37 @@ export default function CountryEditContent({
       </section>
 
       <div data-m="form">
-        {errors && <div className="alert a-error flat" role="alert">
-          <CircleX className="ic a-ic" width={20} height={20} />
-          <div className="a-body">
-            <strong>Fix {Object.keys(errors).length} things to save</strong>
-            <ul className="esum">
-              {Object.values(errors).map((error, index) => (
-                <li key={"errors_" + index}>
-                  <button
-                    type="button"
-                    className="link-btn"
-                    data-act="efocus"
-                    data-fp={Object.keys(errors)[index]}
-                    onClick={() => {
-                      const field = Object.keys(errors)[index];
-                      const element = document.querySelector(`[name="${field}"]`);
-                      if (element) {
-                        element.scrollIntoView({ behavior: "smooth" });
-                      }
-                    }}
-                  >
-                    {error}
-                  </button>
-                </li>
-              ))}
-            </ul>
+        {errors && (
+          <div className="alert a-error flat" role="alert">
+            <CircleX className="ic a-ic" width={20} height={20} />
+            <div className="a-body">
+              <strong>Fix {Object.keys(errors).length} things to save</strong>
+              <ul className="esum">
+                {Object.values(errors).map((error, index) => (
+                  <li key={"errors_" + index}>
+                    <button
+                      type="button"
+                      className="link-btn"
+                      data-act="efocus"
+                      data-fp={Object.keys(errors)[index]}
+                      onClick={() => {
+                        const field = Object.keys(errors)[index];
+                        const element = document.querySelector(
+                          `[name="${field}"]`,
+                        );
+                        if (element) {
+                          element.scrollIntoView({ behavior: "smooth" });
+                        }
+                      }}
+                    >
+                      {error}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>}
+        )}
         <div className="nw">
           <CountryEditForm
             country={{

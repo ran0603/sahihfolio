@@ -61,7 +61,7 @@ export async function getCountry(idOrCode: string): Promise<CountryProfile> {
   return {
     ...country,
     providers: supportedProviders as unknown as Provider[],
-    history: auditHistory as unknown as (AuditLog & User)[],
+    history: auditHistory as unknown as (AuditLog & { user: User })[],
   };
 }
 

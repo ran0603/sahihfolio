@@ -174,7 +174,7 @@ export async function createCountry(_prev: unknown, formData: FormData) {
 
   await recordAuditLog({
     actorId: user.id,
-    action: "country.created",
+    action: "created country", //"country.created",
     entityType: "country",
     entityId: created.id,
     changedFields: {
@@ -288,7 +288,7 @@ export async function updateCountry(_prev: unknown, formData: FormData) {
 
   await recordAuditLog({
     actorId: user.id,
-    action: "country.updated",
+    action: "updated country", //"country.updated",
     entityType: "country",
     entityId: parsedId.data.id,
     changedFields: {
@@ -340,7 +340,7 @@ export async function archiveCountry(_prev: unknown, formData: FormData) {
 
   await recordAuditLog({
     actorId: user.id,
-    action: "country.archived",
+    action: "archived country", // "country.archived",
     entityType: "country",
     entityId: parsed.data.id,
     changedFields: {
@@ -392,7 +392,7 @@ export async function publishCountry(id: string) {
 
   await recordAuditLog({
     actorId: user.id,
-    action: "country.published",
+    action: "published country", //"country.published",
     entityType: "country",
     entityId: parsedId.data.id,
     changedFields: {
@@ -443,7 +443,7 @@ export async function unpublishCountry(id: string) {
 
   await recordAuditLog({
     actorId: user.id,
-    action: "country.drafted",
+    action: "drafted country", //"country.drafted",
     entityType: "country",
     entityId: parsedId.data.id,
     changedFields: {
@@ -494,7 +494,7 @@ export async function unarchiveCountry(id: string) {
 
   await recordAuditLog({
     actorId: user.id,
-    action: "country.unarchived",
+    action: "unarchived country", //"country.unarchived",
     entityType: "country",
     entityId: parsedId.data.id,
     changedFields: {

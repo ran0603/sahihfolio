@@ -250,10 +250,12 @@ export default function CountryEditSide({
         <section className="rdy side" aria-labelledby="m7-hs">
           <h2 id="m7-hs">History</h2>
           <ol className="hl">
-            {country.history.map((log) => (
-              <li key={log.id}>
-                <b>{log.name}</b> edited {log.action}
-                <span className="muted">{log.createdAt.toLocaleString()}</span>
+            {country.history.map((log, index) => (
+              <li key={log.entityId + "-" + index}>
+                <p>
+                  <b>{log.user?.name || "Unknown"}</b> {log.action}
+                </p>
+                <span className="muted">{log.createdAt?.toLocaleString()}</span>
               </li>
             ))}
           </ol>
