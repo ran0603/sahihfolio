@@ -12,12 +12,18 @@ export default function CountryEditSide({
   handlePublish,
   handleArchive,
   handleUnarchive,
+  confirmAction,
+  setConfirmAction,
+  isBusy,
 }: {
   country: CountryProfile;
   handleUnpublish: () => void;
   handlePublish: () => void;
   handleArchive: () => void;
   handleUnarchive: () => void;
+  confirmAction?: "publish" | "draft" | "archive" | null;
+  setConfirmAction?: (action: "publish" | "draft" | "archive" | null) => void;
+  isBusy?: boolean;
 }) {
   return (
     <div className="sidecol">
@@ -35,7 +41,7 @@ export default function CountryEditSide({
         </p>
         <ul className="rl">
           {country.lastReviewedAt &&
-          calculateDaysSince(country.lastReviewedAt) > 90 ? (
+          calculateDaysSince(country.lastReviewedAt) <= 90 ? (
             <li className="ok">
               <CircleCheck className="ic" width={18} height={18} />
               <span>
@@ -90,11 +96,60 @@ export default function CountryEditSide({
           )}
         </ul>
         <div className="side-a">
-          {country.status === "archived" ? (
+          {confirmAction ? (
+            <div className="qr-cf" role="group" aria-label={`Confirm: ${confirmAction}`}>
+              <p>
+                {confirmAction === "publish" && (
+                  <>
+                    <b>Publish {country.name}?</b> It appears in the Finder’s country list.
+                  </>
+                )}
+                {confirmAction === "draft" && (
+                  <>
+                    <b>Move {country.name} to draft?</b> It leaves the Finder. Saved results keep working.
+                  </>
+                )}
+                {confirmAction === "archive" && (
+                  <>
+                    <b>Archive {country.name}?</b> It leaves the Finder and can’t be edited until restored.
+                  </>
+                )}
+              </p>
+              <div className="btn-row">
+                <button
+                  type="button"
+                  className={`btn ${confirmAction === "publish" ? "btn-primary" : "btn-secondary"} btn-sm`}
+                  disabled={isBusy}
+                  onClick={() => {
+                    if (confirmAction === "publish") handlePublish();
+                    else if (confirmAction === "draft") handleUnpublish();
+                    else if (confirmAction === "archive") handleArchive();
+                  }}
+                >
+                  {isBusy
+                    ? "Working…"
+                    : confirmAction === "publish"
+                    ? "Publish"
+                    : confirmAction === "draft"
+                    ? "Move to draft"
+                    : "Archive"}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  disabled={isBusy}
+                  onClick={() => setConfirmAction?.(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : country.status === "archived" ? (
             <button
               type="button"
               className="btn btn-secondary btn-sm"
               data-act="restore"
+              disabled={isBusy}
               onClick={handleUnarchive}
             >
               <Undo className="ic" width="18" height="18" /> Restore as draft
@@ -106,7 +161,8 @@ export default function CountryEditSide({
                   type="button"
                   className="btn btn-secondary btn-sm"
                   data-act="ask-draft"
-                  onClick={handleUnpublish}
+                  disabled={isBusy}
+                  onClick={() => setConfirmAction ? setConfirmAction("draft") : handleUnpublish()}
                 >
                   <Undo className="ic" width={18} height={18} /> Move to draft
                 </button>
@@ -116,7 +172,8 @@ export default function CountryEditSide({
                   type="button"
                   className="btn btn-primary btn-sm"
                   data-act="ask-publish"
-                  onClick={handlePublish}
+                  disabled={isBusy}
+                  onClick={() => setConfirmAction ? setConfirmAction("publish") : handlePublish()}
                 >
                   Publish
                 </button>
@@ -125,7 +182,8 @@ export default function CountryEditSide({
                 type="button"
                 className="btn btn-ghost btn-sm"
                 data-act="ask-arc"
-                onClick={handleArchive}
+                disabled={isBusy}
+                onClick={() => setConfirmAction ? setConfirmAction("archive") : handleArchive()}
               >
                 <Archive className="ic" width={18} height={18} /> Archive
               </button>

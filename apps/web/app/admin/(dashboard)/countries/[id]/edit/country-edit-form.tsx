@@ -10,7 +10,6 @@ import {
 import { TriangleAlert, Trash, Plus, X, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { Country } from "@sahihfolio/database";
 
 const appliesToOptions: readonly {
   value: string;
@@ -78,24 +77,60 @@ const appliesToOptions: readonly {
   },
 ] as const;
 
+export interface CountryFormData {
+  name: string;
+  currency: string;
+  regulatoryNotes: RegulatoryNote[];
+  restrictions: Restriction[];
+  sourceUrls: string[];
+}
+
 export default function CountryEditForm({
   country,
   sources,
+  data,
+  onChange,
+  onSubmit,
+  isBusy,
+  disabled,
 }: {
   country: CountryProfile;
   sources: Source[];
+  data: CountryFormData;
+  onChange: (data: CountryFormData) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  isBusy?: boolean;
+  disabled?: boolean;
 }) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [countryName, setCountryName] = useState<string>(country.name);
-  const [countryCurrency, setCountryCurrency] = useState<string>(
-    country.currency,
-  );
-  const [countryRegulatoryNotes, setCountryRegulatoryNotes] = useState<
-    RegulatoryNote[]
-  >(country.regulatoryNotes || []);
-  const [countryRestrictions, setCountryRestrictions] = useState<Restriction[]>(
-    country.restrictions || [],
-  );
+  const countryName = data.name;
+  const countryCurrency = data.currency;
+  const countryRegulatoryNotes = data.regulatoryNotes;
+  const countryRestrictions = data.restrictions;
+  const countrySourceUrls = data.sourceUrls;
+
+  const setCountryName = (name: string) => onChange({ ...data, name });
+  const setCountryCurrency = (currency: string) => onChange({ ...data, currency });
+  const setCountryRegulatoryNotes = (
+    updater: RegulatoryNote[] | ((prev: RegulatoryNote[]) => RegulatoryNote[]),
+  ) => {
+    const next =
+      typeof updater === "function" ? updater(countryRegulatoryNotes) : updater;
+    onChange({ ...data, regulatoryNotes: next });
+  };
+  const setCountryRestrictions = (
+    updater: Restriction[] | ((prev: Restriction[]) => Restriction[]),
+  ) => {
+    const next =
+      typeof updater === "function" ? updater(countryRestrictions) : updater;
+    onChange({ ...data, restrictions: next });
+  };
+  const setCountrySourceUrls = (
+    updater: string[] | ((prev: string[]) => string[]),
+  ) => {
+    const next =
+      typeof updater === "function" ? updater(countrySourceUrls) : updater;
+    onChange({ ...data, sourceUrls: next });
+  };
 
   const addRegulatoryNote = () => {
     setCountryRegulatoryNotes([
@@ -136,102 +171,82 @@ export default function CountryEditForm({
       },
     ]);
   };
-  const [countrySourceUrls, setCountrySourceUrls] = useState<string[]>(
-    country.sourceUrls || [],
-  );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    const updatedCountry: Country = {
-      id: country.id,
-      name: countryName,
-      currency: countryCurrency,
-      sourceUrls: countrySourceUrls,
-      regulatoryNotes: countryRegulatoryNotes,
-      restrictions: countryRestrictions,
-      status: country.status,
-      code: country.code,
-      createdAt: country.createdAt,
-      updatedAt: new Date(),
-      lastReviewedAt: country.lastReviewedAt,
-    };
-    console.log(updatedCountry);
-  };
-
-  return (
-    <form className="nwfw" noValidate onSubmit={handleSubmit}>
-      <div className="nwf">
-        <section className="wz-card">
-          <h2 className="wz-h">Basics</h2>
+  const formBody = (
+    <div className="nwf">
+      <section className="wz-card">
+        <h2 className="wz-h">Basics</h2>
+        <div className="fld">
+          <span className="lbl">Country</span>
+          <p className="ro-v">
+            {country.name} <span className="cc">{country.code}</span>
+            <span className="muted"> · The code can’t be changed.</span>
+          </p>
+        </div>
+        <div className="g2">
           <div className="fld">
-            <span className="lbl">Country</span>
-            <p className="ro-v">
-              {country.name} <span className="cc">{country.code}</span>
+            <label className="lbl" htmlFor="m7-name">
+              Display name
+            </label>
+            <p className="hint" id="m7-name-h">
+              How visitors see it.
+            </p>
+            <input
+              className={`inp ${countryName.trim().length === 0 && "invalid"}`}
+              type="text"
+              id="m7-name"
+              data-p="F.name"
+              aria-describedby="m7-name-e m7-name-h"
+              maxLength={80}
+              autoComplete="off"
+              value={countryName}
+              disabled={disabled}
+              onChange={(e) => setCountryName(e.target.value)}
+            />
+            <p
+              className="fmsg err"
+              data-ef="name"
+              id="m7-name-e"
+              role="alert"
+              hidden={countryName.trim().length > 0}
+            >
+              <TriangleAlert className="ic" width={16} height={16} />
+              <span>Enter a display name.</span>
             </p>
           </div>
-          <div className="g2">
-            <div className="fld">
-              <label className="lbl" htmlFor="m7-name">
-                Display name
-              </label>
-              <p className="hint" id="m7-name-h">
-                How visitors see it.
-              </p>
-              <input
-                className={`inp ${countryName.trim().length === 0 && "invalid"}`}
-                type="text"
-                id="m7-name"
-                data-p="F.name"
-                aria-describedby="m7-name-e m7-name-h"
-                maxLength={80}
-                autoComplete="off"
-                value={countryName}
-                onChange={(e) => setCountryName(e.target.value)}
-              />
-              <p
-                className="fmsg err"
-                data-ef="name"
-                id="m7-name-e"
-                role="alert"
-                hidden={countryName.trim().length > 0}
-              >
-                <TriangleAlert className="ic" width={16} height={16} />
-                <span>Enter a display name.</span>
-              </p>
-            </div>
-            <div className="fld">
-              <label className="lbl" htmlFor="m7-cur">
-                Currency
-              </label>
-              <p className="hint" id="m7-cur-h">
-                A 3-letter code.
-              </p>
-              <input
-                className={`inp up ${countryCurrency.trim().length === 0 && "invalid"}`}
-                type="text"
-                id="m7-cur"
-                data-p="F.cur"
-                aria-describedby="m7-cur-e m7-cur-h"
-                value={countryCurrency}
-                placeholder="MYR"
-                maxLength={3}
-                autoComplete="off"
-                onChange={(e) => setCountryCurrency(e.target.value)}
-              />
-              <p
-                className="fmsg err"
-                data-ef="cur"
-                id="m7-cur-e"
-                role="alert"
-                hidden={countryCurrency.trim().length > 0}
-              >
-                <TriangleAlert className="ic" width={16} height={16} />
-                <span>A currency code is 3 letters, like MYR.</span>
-              </p>
-            </div>
+          <div className="fld">
+            <label className="lbl" htmlFor="m7-cur">
+              Currency
+            </label>
+            <p className="hint" id="m7-cur-h">
+              A 3-letter code.
+            </p>
+            <input
+              className={`inp up ${countryCurrency.trim().length === 0 && "invalid"}`}
+              type="text"
+              id="m7-cur"
+              data-p="F.cur"
+              aria-describedby="m7-cur-e m7-cur-h"
+              value={countryCurrency}
+              placeholder="MYR"
+              maxLength={3}
+              autoComplete="off"
+              disabled={disabled}
+              onChange={(e) => setCountryCurrency(e.target.value.toUpperCase())}
+            />
+            <p
+              className="fmsg err"
+              data-ef="cur"
+              id="m7-cur-e"
+              role="alert"
+              hidden={countryCurrency.trim().length > 0}
+            >
+              <TriangleAlert className="ic" width={16} height={16} />
+              <span>A currency code is 3 letters, like MYR.</span>
+            </p>
           </div>
-        </section>
+        </div>
+      </section>
         <section className="wz-card">
           <h2 className="wz-h">Regulatory notes</h2>
           <p className="hint" style={{ marginTop: "0" }}>
@@ -550,11 +565,11 @@ export default function CountryEditForm({
                               prev.map((n, i) =>
                                 i === index
                                   ? {
-                                      ...n,
-                                      source: sources.find(
-                                        (s) => s.id === e.target.value,
-                                      ) as Source,
-                                    }
+                                    ...n,
+                                    source: sources.find(
+                                      (s) => s.id === e.target.value,
+                                    ) as Source,
+                                  }
                                   : n,
                               ),
                             )
@@ -591,12 +606,12 @@ export default function CountryEditForm({
                                 prev.map((n, i) =>
                                   i === index
                                     ? {
-                                        ...n,
-                                        source: {
-                                          ...n.source,
-                                          label: e.target.value,
-                                        },
-                                      }
+                                      ...n,
+                                      source: {
+                                        ...n.source,
+                                        label: e.target.value,
+                                      },
+                                    }
                                     : n,
                                 ),
                               )
@@ -636,12 +651,12 @@ export default function CountryEditForm({
                                 prev.map((n, i) =>
                                   i === index
                                     ? {
-                                        ...n,
-                                        source: {
-                                          ...n.source,
-                                          sourceType: e.target.value,
-                                        } as Source,
-                                      }
+                                      ...n,
+                                      source: {
+                                        ...n.source,
+                                        sourceType: e.target.value,
+                                      } as Source,
+                                    }
                                     : n,
                                 ),
                               )
@@ -694,12 +709,12 @@ export default function CountryEditForm({
                               prev.map((n, i) =>
                                 i === index
                                   ? {
-                                      ...n,
-                                      source: {
-                                        ...n.source,
-                                        url: e.target.value,
-                                      } as Source,
-                                    }
+                                    ...n,
+                                    source: {
+                                      ...n.source,
+                                      url: e.target.value,
+                                    } as Source,
+                                  }
                                   : n,
                               ),
                             )
@@ -763,12 +778,12 @@ export default function CountryEditForm({
                                 prev.map((n, i) =>
                                   i === index
                                     ? {
-                                        ...n,
-                                        source: {
-                                          ...n.source,
-                                          retrievedAt: new Date(e.target.value),
-                                        } as Source,
-                                      }
+                                      ...n,
+                                      source: {
+                                        ...n.source,
+                                        retrievedAt: new Date(e.target.value),
+                                      } as Source,
+                                    }
                                     : n,
                                 ),
                               )
@@ -809,12 +824,12 @@ export default function CountryEditForm({
                                 prev.map((n, i) =>
                                   i === index
                                     ? {
-                                        ...n,
-                                        source: {
-                                          ...n.source,
-                                          confidence: e.target.value,
-                                        } as Source,
-                                      }
+                                      ...n,
+                                      source: {
+                                        ...n.source,
+                                        confidence: e.target.value,
+                                      } as Source,
+                                    }
                                     : n,
                                 ),
                               )
@@ -1219,11 +1234,11 @@ export default function CountryEditForm({
                             prev.map((r, i) =>
                               i === index
                                 ? {
-                                    ...r,
-                                    source: sources.find(
-                                      (s) => s.id === e.target.value,
-                                    ) as Source,
-                                  }
+                                  ...r,
+                                  source: sources.find(
+                                    (s) => s.id === e.target.value,
+                                  ) as Source,
+                                }
                                 : r,
                             ),
                           )
@@ -1398,12 +1413,12 @@ export default function CountryEditForm({
                               prev.map((r, i) =>
                                 i === index
                                   ? {
-                                      ...r,
-                                      source: {
-                                        ...r.source,
-                                        retrievedAt: new Date(e.target.value),
-                                      } as Source,
-                                    }
+                                    ...r,
+                                    source: {
+                                      ...r.source,
+                                      retrievedAt: new Date(e.target.value),
+                                    } as Source,
+                                  }
                                   : r,
                               ),
                             )
@@ -1444,12 +1459,12 @@ export default function CountryEditForm({
                               prev.map((r, i) =>
                                 i === index
                                   ? {
-                                      ...r,
-                                      source: {
-                                        ...r.source,
-                                        confidence: e.target.value,
-                                      } as Source,
-                                    }
+                                    ...r,
+                                    source: {
+                                      ...r.source,
+                                      confidence: e.target.value,
+                                    } as Source,
+                                  }
                                   : r,
                               ),
                             )
@@ -1572,6 +1587,7 @@ export default function CountryEditForm({
             type="button"
             className="btn btn-secondary btn-sm"
             data-act="add-url"
+            disabled={disabled}
             onClick={() => setCountrySourceUrls([...countrySourceUrls, ""])}
           >
             <Plus className="ic" width={18} height={18} strokeWidth={1.5} />
@@ -1583,9 +1599,9 @@ export default function CountryEditForm({
             type="submit"
             className="btn btn-primary"
             data-act="save"
-            disabled={loading}
+            disabled={disabled || isBusy}
           >
-            Save changes
+            {isBusy ? "Saving…" : "Save changes"}
           </button>
           <Link
             href="/admin/countries"
@@ -1596,6 +1612,17 @@ export default function CountryEditForm({
           </Link>
         </div>
       </div>
+  );
+
+  return (
+    <form className="nwfw" noValidate onSubmit={onSubmit}>
+      {disabled ? (
+        <fieldset className="ro-fs" disabled>
+          {formBody}
+        </fieldset>
+      ) : (
+        formBody
+      )}
     </form>
   );
 }
