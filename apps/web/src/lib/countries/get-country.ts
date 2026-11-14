@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db } from "@sahihfolio/database";
 import {
   auditLogs,
@@ -13,11 +13,16 @@ import type {
   User,
 } from "@sahihfolio/shared";
 
-export async function getCountry(countryCode: string): Promise<CountryProfile> {
+export async function getCountry(idOrCode: string): Promise<CountryProfile> {
+  const isUuid =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+      idOrCode,
+    );
+
   const [country] = await db
     .select()
     .from(countries)
-    .where(eq(countries.code, countryCode))
+    .where(isUuid ? eq(countries.id, idOrCode) : eq(countries.code, idOrCode.toUpperCase()))
     .limit(1);
 
   if (!country) {
@@ -27,17 +32,39 @@ export async function getCountry(countryCode: string): Promise<CountryProfile> {
   const supportedProviders = await db
     .select()
     .from(providers)
-    .where(eq(providers.countries, [countryCode]));
+    .where(sql`${providers.countries} @> to_jsonb(${country.code}::text)`);
 
   const auditHistory = await db
-    .select()
+    .select({
+      id: auditLogs.id,
+      actorId: auditLogs.actorId,
+      action: auditLogs.action,
+      entityType: auditLogs.entityType,
+      entityId: auditLogs.entityId,
+      changedFields: auditLogs.changedFields,
+      createdAt: auditLogs.createdAt,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    })
     .from(auditLogs)
     .where(eq(auditLogs.entityId, country.id))
-    .innerJoin(user, eq(user.id, auditLogs.actorId));
+    .leftJoin(user, eq(user.id, auditLogs.actorId));
 
   return {
     ...country,
     providers: supportedProviders as unknown as Provider[],
     history: auditHistory as unknown as (AuditLog & User)[],
   };
+}
+
+export async function findCountry(idOrCode: string): Promise<CountryProfile | null> {
+  try {
+    return await getCountry(idOrCode);
+  } catch {
+    return null;
+  }
 }

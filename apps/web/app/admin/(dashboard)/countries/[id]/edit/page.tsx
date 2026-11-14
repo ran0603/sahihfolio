@@ -1,5 +1,5 @@
 import { Globe } from "lucide-react";
-import { getCountry } from "@/lib/countries/get-country";
+import { findCountry } from "@/lib/countries/get-country";
 import Link from "next/link";
 import { Suspense } from "react";
 import { getSources } from "@/lib/sources/get-sources";
@@ -12,7 +12,7 @@ export default async function EditCountryPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const country = await getCountry(id);
+  const country = await findCountry(id);
   const sources = await getSources();
 
   if (!country) {
