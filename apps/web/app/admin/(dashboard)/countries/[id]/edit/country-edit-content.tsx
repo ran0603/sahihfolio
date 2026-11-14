@@ -3,7 +3,9 @@
 import { CountryProfile, Source } from "@sahihfolio/shared";
 import CountryEditForm from "./country-edit-form";
 import { CircleCheck } from "lucide-react";
-import { statusOptions } from "./page";
+import CountryEditSide from "./country-edit-side";
+import { statusOptions } from "../../../constants";
+import { getDateString } from "src/lib/date-utils";
 
 export default function CountryEditContent({
   country,
@@ -12,6 +14,14 @@ export default function CountryEditContent({
   country: CountryProfile;
   sources: Source[];
 }) {
+  const handleUnpublish = () => {};
+
+  const handlePublish = () => {};
+
+  const handleArchive = () => {};
+
+  const handleUnarchive = () => {};
+
   return (
     <>
       <section data-m="head">
@@ -34,7 +44,7 @@ export default function CountryEditContent({
                 {statusOptions[country.status].label}
               </span>
               <span className="muted">
-                Last reviewed 20 Oct 2026 by Layla M.
+                Last reviewed {getDateString(country.lastReviewedAt)}
               </span>
             </div>
           </div>
@@ -69,7 +79,13 @@ export default function CountryEditContent({
       <div data-m="form">
         <div className="nw">
           <CountryEditForm country={country} sources={sources} />
-
+          <CountryEditSide
+            country={country}
+            handleUnpublish={handleUnpublish}
+            handlePublish={handlePublish}
+            handleArchive={handleArchive}
+            handleUnarchive={handleUnarchive}
+          />
         </div>
       </div>
     </>

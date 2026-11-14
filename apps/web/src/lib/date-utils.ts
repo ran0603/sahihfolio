@@ -7,3 +7,11 @@ export const getDateString = (dateInput: string | Date) => {
   };
   return date.toLocaleDateString(undefined, dateFormat);
 };
+
+export const calculateDaysSince = (date: Date) => {
+  return Number(
+    ((new Date().getTime() - date.getTime()) / (1000 * 60 * 60 * 24)).toFixed(
+      0,
+    ),
+  );
+};

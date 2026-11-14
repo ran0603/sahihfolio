@@ -12,34 +12,14 @@ import {
 } from "lucide-react";
 import { Country } from "@sahihfolio/database";
 import { useState } from "react";
+import { statusOptions } from "../constants";
+import { calculateDaysSince, getDateString } from "src/lib/date-utils";
 
 const sortOptions: Record<string, string> = {
   name: "Name, A to Z",
   stale: "Stalest review first",
   new: "Recently added",
   prov: "Most providers",
-};
-
-const statusOptions: Record<
-  string,
-  { label: string; state: "pos" | "neg" | "neutral" | "mist" }
-> = {
-  all: {
-    label: "All",
-    state: "neutral",
-  },
-  published: {
-    label: "Published",
-    state: "pos",
-  },
-  draft: {
-    label: "Draft",
-    state: "neutral",
-  },
-  archived: {
-    label: "Archived",
-    state: "mist",
-  },
 };
 
 const reviewOptions: Record<string, string> = {
@@ -54,14 +34,6 @@ const initialFilters = {
   sort: "name",
   status: "all",
   review: "all",
-};
-
-const calculateDaysSince = (date: Date) => {
-  return Number(
-    ((new Date().getTime() - date.getTime()) / (1000 * 60 * 60 * 24)).toFixed(
-      0,
-    ),
-  );
 };
 
 export default function CountriesContent({
@@ -265,16 +237,13 @@ export default function CountriesContent({
                 id="m2-fs"
                 className="sel fsel"
                 data-k="fs"
+                value={filterValues.status}
                 onChange={(e) =>
                   setFilterValues({ ...filterValues, status: e.target.value })
                 }
               >
                 {Object.entries(statusOptions).map(([key, status]) => (
-                  <option
-                    key={"status_" + key}
-                    value={key}
-                    selected={filterValues.status === key}
-                  >
+                  <option key={"status_" + key} value={key}>
                     {status.label}
                   </option>
                 ))}
@@ -422,7 +391,7 @@ export default function CountriesContent({
                   <div className="c3">
                     {country.lastReviewedAt ? (
                       <>
-                        {country.lastReviewedAt.toLocaleDateString()}
+                        {getDateString(country.lastReviewedAt)}
                         <small>
                           {calculateDaysSince(country.lastReviewedAt)}{" "}
                           {calculateDaysSince(country.lastReviewedAt) == 1
