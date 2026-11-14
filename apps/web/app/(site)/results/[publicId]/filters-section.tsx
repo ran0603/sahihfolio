@@ -97,7 +97,7 @@ export default function FiltersSection({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        countryCode: country.countryCode,
+        countryCode: country.code,
         investorType: selectedInvestorType,
         productInterest: selectedProductInterest,
         startingAmount: Number(selectedStartingAmount),
@@ -188,10 +188,7 @@ export default function FiltersSection({
       </ul>
       <p className="fa-note">
         <span>Filters remove options. Preferences only change the order.</span>
-        <Link
-          href={`/find?country=${country.countryCode}`}
-          data-act="change-country"
-        >
+        <Link href={`/find?country=${country.code}`} data-act="change-country">
           Change country
         </Link>
       </p>
@@ -261,24 +258,22 @@ export default function FiltersSection({
               </button>
             </div>
             <div className="chips">
-              {AMOUNTS[COUNTRIES[country.countryCode]?.c]?.s.map(
-                (amount, index) => (
-                  <label className="rchip" key={`start-${index}`}>
-                    <input
-                      type="radio"
-                      name="r9-start"
-                      data-f="start"
-                      value={index}
-                      checked={selectedStartingAmount === index}
-                      onChange={() => setSelectedStartingAmount(index)}
-                    />
-                    <span>
-                      <Check className="ic" width="16" height="16" />
-                      {amount}
-                    </span>
-                  </label>
-                ),
-              )}
+              {AMOUNTS[COUNTRIES[country.code]?.c]?.s.map((amount, index) => (
+                <label className="rchip" key={`start-${index}`}>
+                  <input
+                    type="radio"
+                    name="r9-start"
+                    data-f="start"
+                    value={index}
+                    checked={selectedStartingAmount === index}
+                    onChange={() => setSelectedStartingAmount(index)}
+                  />
+                  <span>
+                    <Check className="ic" width="16" height="16" />
+                    {amount}
+                  </span>
+                </label>
+              ))}
             </div>
           </div>
           <div className="grp" role="radiogroup" aria-labelledby="r9-gr">
@@ -294,24 +289,22 @@ export default function FiltersSection({
               </button>
             </div>
             <div className="chips">
-              {AMOUNTS[COUNTRIES[country.countryCode]?.c]?.r.map(
-                (amount, index) => (
-                  <label className="rchip" key={`recur-${index}`}>
-                    <input
-                      type="radio"
-                      name="r9-recur"
-                      data-f="recur"
-                      value={index}
-                      checked={selectedMonthlyContribution === index}
-                      onChange={() => setSelectedMonthlyContribution(index)}
-                    />
-                    <span>
-                      <Check className="ic" width="16" height="16" />
-                      {amount}
-                    </span>
-                  </label>
-                ),
-              )}
+              {AMOUNTS[COUNTRIES[country.code]?.c]?.r.map((amount, index) => (
+                <label className="rchip" key={`recur-${index}`}>
+                  <input
+                    type="radio"
+                    name="r9-recur"
+                    data-f="recur"
+                    value={index}
+                    checked={selectedMonthlyContribution === index}
+                    onChange={() => setSelectedMonthlyContribution(index)}
+                  />
+                  <span>
+                    <Check className="ic" width="16" height="16" />
+                    {amount}
+                  </span>
+                </label>
+              ))}
             </div>
           </div>
           <div className="grp">

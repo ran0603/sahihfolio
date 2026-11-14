@@ -1,15 +1,7 @@
 import { z } from "zod";
+import { SOURCE_TYPES } from "../constants";
 
-export const sourceTypeSchema = z.enum([
-  "official",
-  "regulator",
-  "provider_document",
-  "annual_report",
-  "exchange_filing",
-  "news",
-  "research",
-  "other",
-]);
+export const sourceTypeSchema = z.enum(SOURCE_TYPES);
 
 export const confidenceLevelSchema = z.enum(["high", "medium", "low"]);
 
@@ -28,4 +20,4 @@ export const providerReviewSchema = z.object({
   confidence: z.enum(["high", "medium", "low"]),
 });
 
-export type SourceInput = z.input<typeof sourceSchema>;
+export type SourceInput = z.infer<typeof sourceSchema>;

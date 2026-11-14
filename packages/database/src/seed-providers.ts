@@ -26,7 +26,7 @@ function source(
     label,
     url,
     sourceType,
-    retrievedAt: "2026-10-16",
+    retrievedAt: new Date("2026-10-16T00:00:00Z"),
     confidence,
   };
 }
@@ -44,38 +44,50 @@ const providerSeed: NewProvider[] = [
         name: "United States",
         access: "direct" as const,
         notes: "US-listed stocks and ETFs.",
-        source: source(
-          "Interactive Brokers products",
-          "https://www.interactivebrokers.com",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers products",
+            "https://www.interactivebrokers.com",
+          ),
+        },
       },
       {
         code: "GB",
         name: "United Kingdom",
         access: "direct" as const,
         notes: "UK-listed securities and eligible international markets.",
-        source: source(
-          "Interactive Brokers products",
-          "https://www.interactivebrokers.com",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers products",
+            "https://www.interactivebrokers.com",
+          ),
+        },
       },
       {
         code: "CA",
         name: "Canada",
         access: "direct" as const,
-        source: source(
-          "Interactive Brokers Canada",
-          "https://www.interactivebrokers.ca",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers Canada",
+            "https://www.interactivebrokers.ca",
+          ),
+        },
       },
       {
         code: "SG",
         name: "Singapore",
         access: "direct" as const,
-        source: source(
-          "Interactive Brokers Singapore",
-          "https://www.interactivebrokers.com.sg",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers Singapore",
+            "https://www.interactivebrokers.com.sg",
+          ),
+        },
       },
     ],
     assetTypes: [
@@ -83,20 +95,26 @@ const providerSeed: NewProvider[] = [
         type: "stocks" as const,
         supported: true,
         notes: "Global equities, subject to market and account eligibility.",
-        source: source(
-          "Interactive Brokers products",
-          "https://www.interactivebrokers.com",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers products",
+            "https://www.interactivebrokers.com",
+          ),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes:
           "US and international ETFs, subject to local product restrictions.",
-        source: source(
-          "Interactive Brokers products",
-          "https://www.interactivebrokers.com",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers products",
+            "https://www.interactivebrokers.com",
+          ),
+        },
       },
       {
         type: "crypto" as const,
@@ -113,10 +131,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "IBKR Lite: USD 0 for eligible US exchange-listed stocks and ETFs, subject to program rules. IBKR Pro: Fixed USD 0.005 per share or Tiered USD 0.0005–0.0035 per share; minimums and exchange, clearing, and regulatory fees may apply.",
         source: {
+          id: crypto.randomUUID(),
           label: "Interactive Brokers pricing",
           url: "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -128,10 +147,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Commission is 0.08 to 0.20 basis points of trade value; currency spreads also apply. Basis point means 0.0001.",
         source: {
+          id: crypto.randomUUID(),
           label: "Interactive Brokers pricing",
           url: "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -143,10 +163,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "IBKR states there are no inactivity fees; IBKR Lite also has no account minimums or maintenance fees.",
         source: {
+          id: crypto.randomUUID(),
           label: "Interactive Brokers pricing",
           url: "https://www.interactivebrokers.com/en/pricing/commissions-home.php",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -156,38 +177,47 @@ const providerSeed: NewProvider[] = [
         requirement: "Valid government-issued identification",
         category: "identity",
         mandatory: true,
-        source: source(
-          "Interactive Brokers account opening",
-          "https://www.interactivebrokers.com",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers account opening",
+            "https://www.interactivebrokers.com",
+          ),
+        },
       },
       {
         requirement: "Proof of residential address",
         category: "residency",
         mandatory: true,
-        source: source(
-          "Interactive Brokers account opening",
-          "https://www.interactivebrokers.com",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers account opening",
+            "https://www.interactivebrokers.com",
+          ),
+        },
       },
       {
         requirement: "Tax identification information",
         category: "tax",
         mandatory: true,
-        source: source(
-          "Interactive Brokers account opening",
-          "https://www.interactivebrokers.com",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Interactive Brokers account opening",
+            "https://www.interactivebrokers.com",
+          ),
+        },
       },
     ],
     halalScreening: {
       supported: false,
       notes:
         "Self-directed broker with broad global market access. Users must independently verify the Shariah status of individual securities.",
-      source: source(
-        "Interactive Brokers",
-        "https://www.interactivebrokers.com",
-      ),
+      source: {
+        ...source("Interactive Brokers", "https://www.interactivebrokers.com"),
+        id: crypto.randomUUID(),
+      },
     },
     minimumInvestment: "No platform minimum; instrument-level minimums apply",
     pros: [
@@ -217,13 +247,19 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Shariah-screened managed portfolios for Malaysia-based investors.",
-        source: source("Wahed Malaysia", "https://wahed.com/my"),
+        source: {
+          ...source("Wahed Malaysia", "https://wahed.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "US",
         name: "United States",
         access: "direct" as const,
-        source: source("Wahed US", "https://wahed.com/us"),
+        source: {
+          ...source("Wahed US", "https://wahed.com/us"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "GB",
@@ -231,7 +267,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Available to eligible UK residents; U.S. citizens are not accepted. Minimum investment is GBP 50.",
-        source: source("Wahed UK FAQs", "https://www.wahed.com/uk/faqs"),
+        source: {
+          ...source("Wahed UK FAQs", "https://www.wahed.com/uk/faqs"),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     assetTypes: [
@@ -239,13 +278,19 @@ const providerSeed: NewProvider[] = [
         type: "managed_portfolio" as const,
         supported: true,
         notes: "Shariah-screened managed portfolios.",
-        source: source("Wahed", "https://wahed.com"),
+        source: {
+          ...source("Wahed", "https://wahed.com"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes: "Portfolios may include Shariah-screened ETFs.",
-        source: source("Wahed", "https://wahed.com"),
+        source: {
+          ...source("Wahed", "https://wahed.com"),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     fees: [
@@ -257,10 +302,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Wahed’s fee depends on the user’s country, account type, and portfolio. Verify the applicable local fee schedule before publishing.",
         source: {
+          id: crypto.randomUUID(),
           label: "Wahed pricing",
           url: "https://wahed.com",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -270,13 +316,19 @@ const providerSeed: NewProvider[] = [
         requirement: "Valid government-issued identification",
         category: "identity",
         mandatory: true,
-        source: source("Wahed account opening", "https://wahed.com"),
+        source: {
+          ...source("Wahed account opening", "https://wahed.com"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         requirement: "Country-specific residency eligibility",
         category: "residency",
         mandatory: true,
-        source: source("Wahed account opening", "https://wahed.com"),
+        source: {
+          ...source("Wahed account opening", "https://wahed.com"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         requirement: "Islamic account",
@@ -284,17 +336,23 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Wahed’s managed portfolios are Shariah-screened and overseen by its Shariah Supervisory Board; account availability and product features vary by country.",
-        source: source(
-          "Wahed Shariah governance framework",
-          "https://www.wahed.com/shariah",
-        ),
+        source: {
+          ...source(
+            "Wahed Shariah governance framework",
+            "https://www.wahed.com/shariah",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     halalScreening: {
       supported: true,
       methodology:
         "Shariah-supervised portfolios; verify the applicable Shariah board and portfolio composition.",
-      source: source("Wahed", "https://wahed.com"),
+      source: {
+        ...source("Wahed", "https://wahed.com"),
+        id: crypto.randomUUID(),
+      },
     },
     minimumInvestment:
       "Country-specific: RM50 for Wahed Malaysia’s Everyday Shariah Account; USD 100 for U.S. managed portfolios; GBP 50 for UK accounts",
@@ -321,21 +379,30 @@ const providerSeed: NewProvider[] = [
         name: "Malaysia",
         access: "direct" as const,
         notes: "Bursa Malaysia equities and Shariah ETFs.",
-        source: source("Rakuten Trade", "https://www.rakutentrade.my"),
+        source: {
+          ...source("Rakuten Trade", "https://www.rakutentrade.my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "US",
         name: "United States",
         access: "direct" as const,
         notes: "US-listed stocks and ETFs.",
-        source: source("Rakuten Trade", "https://www.rakutentrade.my"),
+        source: {
+          ...source("Rakuten Trade", "https://www.rakutentrade.my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "HK",
         name: "Hong Kong",
         access: "direct" as const,
         notes: "HKEX-listed stocks and ETFs, subject to account eligibility.",
-        source: source("Rakuten Trade", "https://www.rakutentrade.my"),
+        source: {
+          ...source("Rakuten Trade", "https://www.rakutentrade.my"),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     assetTypes: [
@@ -343,18 +410,24 @@ const providerSeed: NewProvider[] = [
         type: "stocks" as const,
         supported: true,
         notes: "Bursa Malaysia and US equities.",
-        source: source("Rakuten Trade", "https://www.rakutentrade.my"),
+        source: {
+          ...source("Rakuten Trade", "https://www.rakutentrade.my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes:
           "Bursa Malaysia Shariah ETFs are available; US-listed Shariah ETF access depends on account eligibility and current product availability.",
-        source: source(
-          "Shariah ETFs in Malaysia",
-          "https://www.wahed.com/my/learn/robo/all-you-need-to-know-about-investing-in-shariah-etfs/",
-          "research",
-        ),
+        source: {
+          ...source(
+            "Shariah ETFs in Malaysia",
+            "https://www.wahed.com/my/learn/robo/all-you-need-to-know-about-investing-in-shariah-etfs/",
+            "research",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     fees: [
@@ -367,10 +440,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Tiered brokerage based on trading value; rates, minimums, and market-specific charges vary. New US traders may receive fixed RM1 brokerage on NYSE/NASDAQ trades for up to 3 months under promotion.",
         source: {
+          id: crypto.randomUUID(),
           label: "Rakuten Trade pricing",
           url: "https://www.rakutentrade.my",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -383,10 +457,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Applies to Rakuten Trade’s Contra Account; settlement is required within two days. Confirm current terms and applicable interest calculation.",
         source: {
+          id: crypto.randomUUID(),
           label: "Rakuten Trade pricing",
           url: "https://www.rakutentrade.my",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -396,13 +471,19 @@ const providerSeed: NewProvider[] = [
         requirement: "Malaysian residency or eligible account status",
         category: "residency",
         mandatory: true,
-        source: source("Rakuten Trade", "https://www.rakutentrade.my"),
+        source: {
+          ...source("Rakuten Trade", "https://www.rakutentrade.my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("Rakuten Trade", "https://www.rakutentrade.my"),
+        source: {
+          ...source("Rakuten Trade", "https://www.rakutentrade.my"),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     halalScreening: {
@@ -411,11 +492,14 @@ const providerSeed: NewProvider[] = [
         "No platform-level Shariah screening. Shariah eligibility depends on the individual instrument selected.",
       notes:
         "May provide access to Bursa Malaysia Shariah ETFs and, subject to account and market eligibility, selected US-listed Shariah ETFs. Users must verify each instrument, Shariah methodology, and purification arrangement.",
-      source: source(
-        "Shariah ETFs in Malaysia",
-        "https://www.wahed.com/my/learn/robo/all-you-need-to-know-about-investing-in-shariah-etfs/",
-        "research",
-      ),
+      source: {
+        ...source(
+          "Shariah ETFs in Malaysia",
+          "https://www.wahed.com/my/learn/robo/all-you-need-to-know-about-investing-in-shariah-etfs/",
+          "research",
+        ),
+        id: crypto.randomUUID(),
+      },
     },
     minimumInvestment: "1 Bursa Malaysia board lot",
     pros: [
@@ -445,28 +529,40 @@ const providerSeed: NewProvider[] = [
         name: "Malaysia",
         access: "direct" as const,
         notes: "Bursa Malaysia equities and Shariah ETFs.",
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+        source: {
+          ...source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "US",
         name: "United States",
         access: "direct" as const,
         notes: "US-listed stocks and ETFs.",
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+        source: {
+          ...source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "SG",
         name: "Singapore",
         access: "direct" as const,
         notes: "SGX-listed stocks and ETFs, subject to account eligibility.",
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+        source: {
+          ...source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "HK",
         name: "Hong Kong",
         access: "direct" as const,
         notes: "HKEX-listed stocks and ETFs, subject to account eligibility.",
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+        source: {
+          ...source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "CN",
@@ -474,7 +570,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "China A-share stocks, subject to account eligibility and applicable restrictions.",
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+        source: {
+          ...source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     assetTypes: [
@@ -482,17 +581,23 @@ const providerSeed: NewProvider[] = [
         type: "stocks" as const,
         supported: true,
         notes: "Bursa Malaysia and US equities.",
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+        source: {
+          ...source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes: "Includes Shariah ETF access and a Shariah filter.",
-        source: source(
-          "Shariah ETFs in Malaysia",
-          "https://www.wahed.com/my/learn/robo/all-you-need-to-know-about-investing-in-shariah-etfs/",
-          "research",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Shariah ETFs in Malaysia",
+            "https://www.wahed.com/my/learn/robo/all-you-need-to-know-about-investing-in-shariah-etfs/",
+            "research",
+          ),
+        },
       },
     ],
     fees: [
@@ -505,10 +610,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Promotional 0 commission for MY, US, SG, HK, and China A-share stocks and ETFs. Platform, regulatory, FX, and product-specific fees may apply.",
         source: {
+          id: crypto.randomUUID(),
           label: "Moomoo Malaysia",
           url: "https://www.moomoo.com/my",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -521,10 +627,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Applies to Malaysian IPO subscriptions; availability and eligibility may vary.",
         source: {
+          id: crypto.randomUUID(),
           label: "Moomoo Malaysia",
           url: "https://www.moomoo.com/my",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -537,10 +644,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Promotional zero CDS account fee for Malaysia; confirm current account-opening terms.",
         source: {
+          id: crypto.randomUUID(),
           label: "Moomoo Malaysia",
           url: "https://www.moomoo.com/my",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -553,10 +661,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Competitive margin rate advertised by Moomoo Malaysia; actual rate may vary by market, currency, and account terms.",
         source: {
+          id: crypto.randomUUID(),
           label: "Moomoo Malaysia",
           url: "https://www.moomoo.com/my",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -566,13 +675,19 @@ const providerSeed: NewProvider[] = [
         requirement: "Malaysian residency or eligible account status",
         category: "residency",
         mandatory: true,
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+        source: {
+          ...source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
       {
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+        source: {
+          ...source("Moomoo Malaysia", "https://www.moomoo.com/my"),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     halalScreening: {
@@ -581,10 +696,13 @@ const providerSeed: NewProvider[] = [
         "Provides a built-in filter to search Shariah-compliant stocks. Shariah eligibility for individual securities and ETFs is determined by the applicable index, Shariah board, and fund documentation—not by Moomoo.",
       notes:
         "Third-party research indicates access to Bursa Malaysia Shariah ETFs and selected US-listed Shariah ETFs. Users should verify each instrument’s Shariah methodology, purification arrangements, and current availability.",
-      source: source(
-        "Moomoo Malaysia — Shariah-compliant stocks",
-        "https://www.moomoo.com/my",
-      ),
+      source: {
+        ...source(
+          "Moomoo Malaysia — Shariah-compliant stocks",
+          "https://www.moomoo.com/my",
+        ),
+        id: crypto.randomUUID(),
+      },
     },
     minimumInvestment: "No stated minimum; instrument-level minimums apply",
     pros: [
@@ -611,10 +729,13 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Shariah Global Portfolio available to Malaysia-based investors.",
-        source: source(
-          "StashAway Malaysia",
-          "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "StashAway Malaysia",
+            "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
+          ),
+        },
       },
     ],
     assetTypes: [
@@ -622,20 +743,26 @@ const providerSeed: NewProvider[] = [
         type: "managed_portfolio" as const,
         supported: true,
         notes: "Shariah Global Portfolio.",
-        source: source(
-          "StashAway Malaysia",
-          "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "StashAway Malaysia",
+            "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
+          ),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes:
           "Shariah Global Portfolios may include halal ETFs across equities, sukuk, and gold; investors do not directly select individual ETFs.",
-        source: source(
-          "StashAway — Exploring Islamic Investment in Malaysia",
-          "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "StashAway — Exploring Islamic Investment in Malaysia",
+            "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
+          ),
+        },
       },
     ],
     fees: [
@@ -648,10 +775,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the fee applicable to the selected Shariah Global Portfolio. Fees may vary by portfolio, assets under management, and product. Underlying ETF expenses and other product charges may apply.",
         source: {
+          id: crypto.randomUUID(),
           label: "StashAway Malaysia",
           url: "https://www.stashaway.my",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -664,10 +792,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "0.3% per year to hold a single global equity ETF through StashAway’s ETF Explorer; underlying ETF expenses may also apply.",
         source: {
+          id: crypto.randomUUID(),
           label: "StashAway Malaysia",
           url: "https://www.stashaway.my",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -677,13 +806,19 @@ const providerSeed: NewProvider[] = [
         requirement: "Malaysian residency or eligible account status",
         category: "residency",
         mandatory: true,
-        source: source("StashAway Malaysia", "https://www.stashaway.my"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("StashAway Malaysia", "https://www.stashaway.my"),
+        },
       },
       {
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("StashAway Malaysia", "https://www.stashaway.my"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("StashAway Malaysia", "https://www.stashaway.my"),
+        },
       },
       {
         requirement: "Islamic account",
@@ -691,10 +826,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "StashAway offers Shariah-compliant Global Portfolios, certified by Masryef Advisory. Investors must select the Shariah portfolio; it is not automatically applied to every StashAway account or product.",
-        source: source(
-          "StashAway — Exploring Islamic Investment in Malaysia",
-          "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "StashAway — Exploring Islamic Investment in Malaysia",
+            "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
+          ),
+        },
       },
     ],
     halalScreening: {
@@ -703,10 +841,13 @@ const providerSeed: NewProvider[] = [
         "Shariah-compliant Global Portfolios provide diversified exposure to halal ETFs across equities, sukuk, and gold. Portfolios are certified by Masryef Advisory, an SC-registered Shariah advisory firm, and include purification where required.",
       notes:
         "Islamic treatment applies to the selected Shariah Global Portfolio, not automatically to all StashAway accounts or products. Verify the current portfolio composition, underlying ETFs, certification status, and purification disclosures before investing.",
-      source: source(
-        "StashAway — Exploring Islamic Investment in Malaysia",
-        "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "StashAway — Exploring Islamic Investment in Malaysia",
+          "https://www.stashaway.my/r/exploring-islamic-investment-malaysia",
+        ),
+      },
     },
     minimumInvestment:
       "No platform minimum for managed portfolios; instrument-level and product-specific minimums may apply",
@@ -734,7 +875,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Bursa Malaysia-listed Shariah ETFs with Malaysian, US, and Southeast Asian exposure.",
-        source: source("Eq8 Capital", "https://www.eq8.com.my/"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Eq8 Capital", "https://www.eq8.com.my/"),
+        },
       },
     ],
     assetTypes: [
@@ -743,7 +887,10 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Bursa Malaysia-listed Shariah ETFs, including Malaysian, US, Southeast Asian, and waqf-featured exposure.",
-        source: source("Eq8 Capital", "https://www.eq8.com.my/"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Eq8 Capital", "https://www.eq8.com.my/"),
+        },
       },
     ],
     fees: [
@@ -756,10 +903,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "0.40% per annum for Eq8 Dow Jones Islamic Market Malaysia Titans 25 ETF (EQ8MY25). Management fees vary by ETF; verify each fund’s fee table.",
         source: {
+          id: crypto.randomUUID(),
           label: "Eq8 fund fee and charges",
           url: "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -771,10 +919,11 @@ const providerSeed: NewProvider[] = [
         frequency: "per_year",
         conditions: "0.05% per annum, chargeable to the Fund.",
         source: {
+          id: crypto.randomUUID(),
           label: "Eq8 fund fee and charges",
           url: "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -786,10 +935,11 @@ const providerSeed: NewProvider[] = [
         frequency: "per_year",
         conditions: "0.04% per annum, chargeable to the Fund.",
         source: {
+          id: crypto.randomUUID(),
           label: "Eq8 fund fee and charges",
           url: "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -802,10 +952,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Investors may pay brokerage and other incidental trading charges when buying or selling EQ8MY25 on Bursa Malaysia.",
         source: {
+          id: crypto.randomUUID(),
           label: "Eq8 fund fee and charges",
           url: "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -817,10 +968,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Eq8 ETFs trade on Bursa Malaysia like shares. Some ETFs have a 100-unit board lot; verify the applicable lot size and currency before trading.",
-        source: source(
-          "Eq8 — How to invest",
-          "https://www.eq8.com.my/how-to-invest",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Eq8 — How to invest",
+            "https://www.eq8.com.my/how-to-invest",
+          ),
+        },
       },
     ],
     halalScreening: {
@@ -829,10 +983,13 @@ const providerSeed: NewProvider[] = [
         "Eq8’s Islamic ETFs track Shariah-screened indices, including Dow Jones Islamic Market and MSCI Islamic indices. Fund-level Shariah requirements and oversight are set out in each fund’s deed and prospectus.",
       notes:
         "Islamic status applies to the individual Shariah ETF, not automatically to every Eq8 product or to the brokerage account used to trade it. Verify the current fund documentation, index methodology, and purification arrangements.",
-      source: source(
-        "Eq8 Dow Jones Islamic Market Malaysia Titans 25 ETF",
-        "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Eq8 Dow Jones Islamic Market Malaysia Titans 25 ETF",
+          "https://www.eq8.com.my/eq8-dow-jones-islamic-market-malaysia-titans-25-etf",
+        ),
+      },
     },
     minimumInvestment:
       "One applicable Bursa Malaysia board lot; several Eq8 ETFs use a 100-unit board lot",
@@ -864,10 +1021,13 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Islamic unit trusts available to eligible Malaysia-based and non-resident investors.",
-        source: source(
-          "Public Mutual investor guide",
-          "https://www.publicmutual.com.my/pmb/investor-guide-investment",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Public Mutual investor guide",
+            "https://www.publicmutual.com.my/pmb/investor-guide-investment",
+          ),
+        },
       },
     ],
     assetTypes: [
@@ -876,10 +1036,13 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Islamic equity, mixed-asset/balanced, sukuk, and money-market unit trust funds.",
-        source: source(
-          "Public Mutual Shariah-compliant unit trusts",
-          "https://www.publicmutual.com.my/pmb/shariah-compliant",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Public Mutual Shariah-compliant unit trusts",
+            "https://www.publicmutual.com.my/pmb/shariah-compliant",
+          ),
+        },
       },
     ],
     fees: [
@@ -892,10 +1055,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "1.50% per annum of NAV for PB Islamic Equity Fund. Other Public Mutual funds may differ; verify the selected fund’s Product Highlights Sheet and prospectus.",
         source: {
+          id: crypto.randomUUID(),
           label: "PB Islamic Equity Fund fees and charges",
           url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -908,10 +1072,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Up to 5.0% of NAV per unit; the manager may charge less at its discretion.",
         source: {
+          id: crypto.randomUUID(),
           label: "PB Islamic Equity Fund fees and charges",
           url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -924,10 +1089,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "0.06% per annum of NAV, subject to a minimum of RM18,000 and maximum of RM600,000 per annum.",
         source: {
+          id: crypto.randomUUID(),
           label: "PB Islamic Equity Fund fees and charges",
           url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -940,10 +1106,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Varies by recipient fund, holding period, and whether units are loaded or partial-load; subject to a minimum of RM50 where applicable.",
         source: {
+          id: crypto.randomUUID(),
           label: "PB Islamic Equity Fund fees and charges",
           url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -955,10 +1122,11 @@ const providerSeed: NewProvider[] = [
         frequency: "one_time",
         conditions: "Up to RM50 per transfer.",
         source: {
+          id: crypto.randomUUID(),
           label: "PB Islamic Equity Fund fees and charges",
           url: "https://www.publicmutual.com.my/Product-Highlight?sc=63&langcode=E",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -968,10 +1136,13 @@ const providerSeed: NewProvider[] = [
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source(
-          "Public Mutual investor guide",
-          "https://www.publicmutual.com.my/pmb/investor-guide-investment",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Public Mutual investor guide",
+            "https://www.publicmutual.com.my/pmb/investor-guide-investment",
+          ),
+        },
       },
       {
         requirement: "Eligibility to invest with Public Mutual",
@@ -979,10 +1150,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Individuals aged 18 and above, including Malaysians and non-residents, may invest. Online registration is limited to Malaysian residents aged 18 or above with a local bank account; non-residents should register through a consultant, branch, or customer-service centre.",
-        source: source(
-          "Public Mutual investor guide",
-          "https://www.publicmutual.com.my/pmb/investor-guide-investment",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Public Mutual investor guide",
+            "https://www.publicmutual.com.my/pmb/investor-guide-investment",
+          ),
+        },
       },
       {
         requirement: "Islamic fund selection",
@@ -990,10 +1164,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Public Mutual offers more than 60 Shariah-compliant unit trust funds across Islamic equity, mixed-asset/balanced, sukuk, and money-market categories. Investors must select an Islamic fund; not all Public Mutual funds are Shariah-compliant.",
-        source: source(
-          "Public Mutual Shariah-compliant unit trusts",
-          "https://www.publicmutual.com.my/pmb/shariah-compliant",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Public Mutual Shariah-compliant unit trusts",
+            "https://www.publicmutual.com.my/pmb/shariah-compliant",
+          ),
+        },
       },
     ],
     halalScreening: {
@@ -1002,10 +1179,13 @@ const providerSeed: NewProvider[] = [
         "Islamic unit trusts are advised by ZICO Shariah Advisory Services Sdn Bhd, an SC-registered Shariah adviser. Funds invest in accordance with the applicable Shariah mandate, including reclassification and purification processes.",
       notes:
         "Islamic status is fund-specific. Verify the selected fund’s prospectus, Product Highlights Sheet, Shariah adviser, investment mandate, and purification disclosures before investing.",
-      source: source(
-        "Public Mutual Shariah adviser",
-        "https://www.publicmutual.com.my/pmb/shariah-adviser",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Public Mutual Shariah adviser",
+          "https://www.publicmutual.com.my/pmb/shariah-adviser",
+        ),
+      },
     },
     minimumInvestment:
       "Fund-specific: commonly RM1,000 initial investment for unit trusts; selected Islamic funds may allow RM100 via Public Mutual Online; PRS Islamic funds may have lower contribution minimums",
@@ -1038,10 +1218,13 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Islamic unit trusts, wholesale funds, private mandates, and the BEST digital investment service for Malaysia-based investors.",
-        source: source(
-          "BIMB Investment funds",
-          "https://bimbinvestment.com.my/funds",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "BIMB Investment funds",
+            "https://bimbinvestment.com.my/funds",
+          ),
+        },
       },
     ],
     assetTypes: [
@@ -1050,10 +1233,13 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Islamic equity, mixed-asset, fixed-income, money-market, SRI, and waqf-featured funds.",
-        source: source(
-          "BIMB Investment funds",
-          "https://bimbinvestment.com.my/funds",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "BIMB Investment funds",
+            "https://bimbinvestment.com.my/funds",
+          ),
+        },
       },
     ],
     fees: [
@@ -1066,10 +1252,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Fund-specific. BEST portfolio management fee is 0.5% per year for money-market funds and 1.5% per year for other portfolios. Check the selected fund’s prospectus and Product Highlights Sheet.",
         source: {
+          id: crypto.randomUUID(),
           label: "BIMB Investment prospectus",
           url: "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1082,10 +1269,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Charged on NAV and may vary by fund; confirm the applicable rate in the fund’s prospectus.",
         source: {
+          id: crypto.randomUUID(),
           label: "BIMB Investment prospectus",
           url: "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1098,10 +1286,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "May include fund administration and related operating charges; review the selected fund’s fee disclosure.",
         source: {
+          id: crypto.randomUUID(),
           label: "BIMB Investment prospectus",
           url: "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1114,10 +1303,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "May apply on unit purchases; confirm whether the selected fund and distribution channel charge a sales fee.",
         source: {
+          id: crypto.randomUUID(),
           label: "BIMB Investment prospectus",
           url: "https://www.bimbinvestment.com.my/public/files/254476511f425013e64f824e953d3b01d9a9c64f1369633080584dbd105d59fd.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1127,7 +1317,10 @@ const providerSeed: NewProvider[] = [
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("BIMB Investment", "https://bimbinvestment.com.my/"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("BIMB Investment", "https://bimbinvestment.com.my/"),
+        },
       },
       {
         requirement: "Eligibility to invest through the selected channel",
@@ -1135,10 +1328,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Availability, documentation, and onboarding requirements differ between Bank Islam branch/relationship-manager channels and the BEST digital service. Verify eligibility directly before applying.",
-        source: source(
-          "BIMB Investment BEST",
-          "https://bimbinvestment.com.my/best",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "BIMB Investment BEST",
+            "https://bimbinvestment.com.my/best",
+          ),
+        },
       },
       {
         requirement: "Islamic investment",
@@ -1146,10 +1342,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "BIMB Investment’s funds and BEST-listed investments are Shariah-compliant. BIMB Securities Sdn Bhd is the appointed Shariah Adviser and reviews fund investments monthly.",
-        source: source(
-          "BIMB Investment Shariah adviser",
-          "https://bimbinvestment.com.my/shariah-adviser",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "BIMB Investment Shariah adviser",
+            "https://bimbinvestment.com.my/shariah-adviser",
+          ),
+        },
       },
     ],
     halalScreening: {
@@ -1158,10 +1357,13 @@ const providerSeed: NewProvider[] = [
         "BIMB Securities Sdn Bhd is appointed Shariah Adviser for BIMB Investment’s funds and private mandates. It reviews investments monthly to support Shariah compliance, while the fund manager retains ultimate responsibility for compliance.",
       notes:
         "Islamic status applies to BIMB Investment’s Shariah-compliant funds and BEST-listed investments. Verify the selected fund’s prospectus, Shariah mandate, purification arrangements, and current fund documentation.",
-      source: source(
-        "BIMB Investment Shariah adviser",
-        "https://bimbinvestment.com.my/shariah-adviser",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "BIMB Investment Shariah adviser",
+          "https://bimbinvestment.com.my/shariah-adviser",
+        ),
+      },
     },
     minimumInvestment:
       "Fund- and channel-specific: BIMB Opportunities Fund starts from RM500 initial and RM200 additional; BEST starts from RM10; Makmur myWakaf Fund has used RM200 initial investment",
@@ -1194,10 +1396,13 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Islamic unit trusts, wholesale funds, and discretionary portfolio mandates available in Malaysia.",
-        source: source(
-          "Maybank Asset Management list of funds",
-          "https://www.maybank-am.com.my/list-of-funds",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Maybank Asset Management list of funds",
+            "https://www.maybank-am.com.my/list-of-funds",
+          ),
+        },
       },
     ],
     assetTypes: [
@@ -1206,10 +1411,13 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Islamic equity, balanced, fixed-income/sukuk, money-market, and discretionary portfolio offerings.",
-        source: source(
-          "Maybank Asset Management Islamic funds",
-          "https://www.maybank-am.com/web/islamic/list-of-funds",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Maybank Asset Management Islamic funds",
+            "https://www.maybank-am.com/web/islamic/list-of-funds",
+          ),
+        },
       },
     ],
     fees: [
@@ -1222,10 +1430,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "0.28% per annum of the NAV of Class A for Maybank Income Flow-I Fund. Other Maybank Islamic funds may differ; verify the selected fund’s Product Highlights Sheet and prospectus.",
         source: {
+          id: crypto.randomUUID(),
           label: "Maybank Income Flow-I Fund",
           url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1237,10 +1446,11 @@ const providerSeed: NewProvider[] = [
         frequency: "one_time",
         conditions: "Up to 0.50% of the NAV per unit.",
         source: {
+          id: crypto.randomUUID(),
           label: "Maybank Income Flow-I Fund",
           url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1253,10 +1463,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "0.05% per annum of the NAV of the Fund, excluding foreign custodian fees and charges.",
         source: {
+          id: crypto.randomUUID(),
           label: "Maybank Income Flow-I Fund",
           url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1269,10 +1480,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "RM10.00 per switch; confirm eligibility and any fund-specific switching terms.",
         source: {
+          id: crypto.randomUUID(),
           label: "Maybank Income Flow-I Fund",
           url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1284,10 +1496,11 @@ const providerSeed: NewProvider[] = [
         frequency: "per_trade",
         conditions: "RM10.00 per transfer.",
         source: {
+          id: crypto.randomUUID(),
           label: "Maybank Income Flow-I Fund",
           url: "https://www.maybank-am.com.my/list-of-funds/-/fund/view_entry/493",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1297,10 +1510,13 @@ const providerSeed: NewProvider[] = [
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source(
-          "Maybank Asset Management list of funds",
-          "https://www.maybank-am.com.my/list-of-funds",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Maybank Asset Management list of funds",
+            "https://www.maybank-am.com.my/list-of-funds",
+          ),
+        },
       },
       {
         requirement: "Eligibility to invest through the selected channel",
@@ -1308,10 +1524,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Maybank AM’s Malaysian unit trust and wholesale fund offerings are available in Malaysia. Applications must be submitted through the applicable Maybank AM process; discretionary mandates may have separate eligibility requirements.",
-        source: source(
-          "Maybank Asset Management list of funds",
-          "https://www.maybank-am.com.my/list-of-funds",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Maybank Asset Management list of funds",
+            "https://www.maybank-am.com.my/list-of-funds",
+          ),
+        },
       },
       {
         requirement: "Islamic fund selection",
@@ -1319,10 +1538,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Maybank AM offers Shariah-compliant unit trusts and other Islamic investment solutions. Investors must select an Islamic fund or mandate; not all Maybank AM products are Shariah-compliant.",
-        source: source(
-          "Maybank Asset Management Islamic",
-          "https://www.maybank-am.com/web/islamic/",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Maybank Asset Management Islamic",
+            "https://www.maybank-am.com/web/islamic/",
+          ),
+        },
       },
     ],
     halalScreening: {
@@ -1331,10 +1553,13 @@ const providerSeed: NewProvider[] = [
         "Islamic funds are certified as Shariah-compliant by the appointed Shariah Adviser. Maybank Islamic Berhad advises several Islamic funds, while Amanie Advisors Sdn Bhd advises other Maybank AM Shariah funds.",
       notes:
         "Islamic status is fund-specific. Verify the selected fund’s prospectus, Product Highlights Sheet, Shariah adviser, investment mandate, and purification disclosures before investing.",
-      source: source(
-        "Maybank Asset Management Shariah advisers",
-        "https://www.maybank-am.com.my/our-people",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Maybank Asset Management Shariah advisers",
+          "https://www.maybank-am.com.my/our-people",
+        ),
+      },
     },
     minimumInvestment:
       "Fund-specific; verify the selected fund’s Product Highlights Sheet. Maybank Shariah Enhanced Cash Fund has no stated minimum on its fund page",
@@ -1367,10 +1592,13 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Islamic unit trusts, PRS funds, EPF i-Invest options, and wholesale funds available in Malaysia.",
-        source: source(
-          "Principal Malaysia Islamic Solutions",
-          "https://www.principal.com.my/en/islamic-solutions",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Principal Malaysia Islamic Solutions",
+            "https://www.principal.com.my/en/islamic-solutions",
+          ),
+        },
       },
     ],
     assetTypes: [
@@ -1379,10 +1607,13 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Islamic money-market, sukuk, balanced, global multi-asset, responsible-equity, and wholesale fund-of-funds offerings.",
-        source: source(
-          "Principal Malaysia Islamic Solutions",
-          "https://www.principal.com.my/en/islamic-solutions",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Principal Malaysia Islamic Solutions",
+            "https://www.principal.com.my/en/islamic-solutions",
+          ),
+        },
       },
     ],
     fees: [
@@ -1395,10 +1626,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the annual management fee for the selected Principal fund and share class in its Product Highlights Sheet and prospectus. The Principal Islamic Money Market Fund report confirms a management fee is charged but does not state the percentage rate.",
         source: {
+          id: crypto.randomUUID(),
           label: "Principal Islamic Money Market Fund annual report",
           url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1411,10 +1643,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the annual trustee fee for the selected fund and share class in its Product Highlights Sheet and prospectus.",
         source: {
+          id: crypto.randomUUID(),
           label: "Principal Islamic Money Market Fund annual report",
           url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1427,10 +1660,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify whether the selected fund charges an application fee and the applicable rate by purchase channel.",
         source: {
+          id: crypto.randomUUID(),
           label: "Principal Islamic Money Market Fund annual report",
           url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1443,10 +1677,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the switching fee and eligibility rules in the selected fund’s prospectus and Product Highlights Sheet.",
         source: {
+          id: crypto.randomUUID(),
           label: "Principal Islamic Money Market Fund annual report",
           url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1459,10 +1694,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the transfer fee in the selected fund’s prospectus and Product Highlights Sheet.",
         source: {
+          id: crypto.randomUUID(),
           label: "Principal Islamic Money Market Fund annual report",
           url: "https://www.principal.com.my/sites/default/files/fund-documents/Malaysia%20Site/en_Principal_Islamic_Money_Market_Fund_IR.pdf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1472,7 +1708,10 @@ const providerSeed: NewProvider[] = [
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("Principal Malaysia", "https://www.principal.com.my"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Principal Malaysia", "https://www.principal.com.my"),
+        },
       },
       {
         requirement: "Eligibility to invest through the selected channel",
@@ -1480,10 +1719,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Eligibility, documentation, and minimums differ by fund, share class, and channel. EPF i-Invest funds require EPF eligibility and may have a higher minimum investment.",
-        source: source(
-          "Principal Islamic Global Multi-Asset Fund",
-          "https://www.principal.com.my/en/igma-myr",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Principal Islamic Global Multi-Asset Fund",
+            "https://www.principal.com.my/en/igma-myr",
+          ),
+        },
       },
       {
         requirement: "Islamic fund selection",
@@ -1491,10 +1733,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Principal Malaysia offers Shariah-compliant Islamic Solutions across money-market, sukuk, balanced, global multi-asset, and responsible-equity funds. Investors must select an Islamic fund; not all Principal products are Shariah-compliant.",
-        source: source(
-          "Principal Malaysia Islamic Solutions",
-          "https://www.principal.com.my/en/islamic-solutions",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Principal Malaysia Islamic Solutions",
+            "https://www.principal.com.my/en/islamic-solutions",
+          ),
+        },
       },
     ],
     halalScreening: {
@@ -1503,10 +1748,13 @@ const providerSeed: NewProvider[] = [
         "Principal’s Islamic funds are managed under Shariah principles and advised by Amanie Advisors Sdn Bhd, an SC-registered Shariah advisory company. The adviser reviews compliance reports and transaction reports and certifies Shariah compliance in fund reports.",
       notes:
         "Islamic status is fund-specific. Verify the selected fund’s prospectus, Product Highlights Sheet, Shariah adviser, investment mandate, and purification disclosures before investing.",
-      source: source(
-        "Principal Islamic — Shariah adviser",
-        "https://www.principalislamic.com/en/about-us/expertise-experience-islamic",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Principal Islamic — Shariah adviser",
+          "https://www.principalislamic.com/en/about-us/expertise-experience-islamic",
+        ),
+      },
     },
     minimumInvestment:
       "Fund-specific: RM100 initial and additional investment for selected retail Islamic funds; RM500 for Principal Islamic Lifetime Balanced Fund; RM5,000 for selected wholesale Islamic funds",
@@ -1539,10 +1787,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Islamic unit trusts, PRS funds, EPF i-Invest options, alternative funds, and portfolio-management services for Malaysia-based investors.",
-        source: source(
-          "Kenanga Investors",
-          "https://www.kenangainvestors.com.my",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Kenanga Investors", "https://www.kenangainvestors.com.my"),
+        },
       },
     ],
     assetTypes: [
@@ -1551,10 +1799,13 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Islamic equity, balanced, fixed-income/sukuk, money-market, global Islamic, Asia-Pacific Islamic, absolute-return, and waqf-featured funds.",
-        source: source(
-          "Kenanga Investors Shariah adviser",
-          "https://www.kenangainvestors.com.my/shariah-adviser",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Kenanga Investors Shariah adviser",
+            "https://www.kenangainvestors.com.my/shariah-adviser",
+          ),
+        },
       },
     ],
     fees: [
@@ -1567,10 +1818,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "1.50% per annum of NAV for Kenanga Syariah Growth Fund. Other Kenanga Islamic funds may differ; verify the selected fund’s Product Highlights Sheet and prospectus.",
         source: {
+          id: crypto.randomUUID(),
           label: "Kenanga Syariah Growth Fund",
           url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1583,10 +1835,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Up to 5.50% of NAV per unit for cash investments; up to 3.00% for EPF investments. Applies to all unit classes.",
         source: {
+          id: crypto.randomUUID(),
           label: "Kenanga Syariah Growth Fund",
           url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1599,10 +1852,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "0.05% per annum of NAV; the NAV used for the trustee fee includes that day’s trustee fee.",
         source: {
+          id: crypto.randomUUID(),
           label: "Kenanga Syariah Growth Fund",
           url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1614,10 +1868,11 @@ const providerSeed: NewProvider[] = [
         frequency: "per_trade",
         conditions: "No exit fee is charged for redemptions.",
         source: {
+          id: crypto.randomUUID(),
           label: "Kenanga Syariah Growth Fund",
           url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1630,10 +1885,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "No switching fee is charged; confirm eligibility and recipient-fund terms.",
         source: {
+          id: crypto.randomUUID(),
           label: "Kenanga Syariah Growth Fund",
           url: "https://www.kenangainvestors.com.my/kenanga-syariah-growth-fund",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1643,10 +1899,10 @@ const providerSeed: NewProvider[] = [
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source(
-          "Kenanga Investors",
-          "https://www.kenangainvestors.com.my",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Kenanga Investors", "https://www.kenangainvestors.com.my"),
+        },
       },
       {
         requirement: "Eligibility to invest through the selected channel",
@@ -1654,10 +1910,10 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Eligibility and documentation differ by product and channel. Unit trusts, PRS funds, EPF i-Invest, private wealth, and alternative funds may have separate requirements; verify directly before applying.",
-        source: source(
-          "Kenanga Investors",
-          "https://www.kenangainvestors.com.my",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Kenanga Investors", "https://www.kenangainvestors.com.my"),
+        },
       },
       {
         requirement: "Islamic fund selection",
@@ -1665,10 +1921,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Kenanga Investors offers Shariah-compliant unit trusts and PRS funds across equity, balanced, fixed-income, money-market, global, Asia-Pacific, absolute-return, and waqf categories. Investors must select an Islamic fund; not all Kenanga products are Shariah-compliant.",
-        source: source(
-          "Kenanga Investors Shariah adviser",
-          "https://www.kenangainvestors.com.my/shariah-adviser",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Kenanga Investors Shariah adviser",
+            "https://www.kenangainvestors.com.my/shariah-adviser",
+          ),
+        },
       },
     ],
     halalScreening: {
@@ -1677,10 +1936,13 @@ const providerSeed: NewProvider[] = [
         "Kenanga Investment Bank Berhad is the appointed Shariah Adviser for Kenanga’s Islamic unit trust and PRS funds. It reviews fund investments monthly, reviews compliance and transaction reports, and certifies Shariah compliance in periodic fund reports.",
       notes:
         "Islamic status is fund-specific. Verify the selected fund’s prospectus, Product Highlights Sheet, Shariah adviser, investment mandate, and purification disclosures before investing.",
-      source: source(
-        "Kenanga Investors Shariah adviser",
-        "https://www.kenangainvestors.com.my/shariah-adviser",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Kenanga Investors Shariah adviser",
+          "https://www.kenangainvestors.com.my/shariah-adviser",
+        ),
+      },
     },
     minimumInvestment:
       "Fund-specific: commonly RM1,000 initial and RM100 additional for retail Islamic unit trusts; RM5,000 initial for selected alternative Islamic funds",
@@ -1713,10 +1975,13 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Islamic unit trusts, PRS funds, EPF i-Invest options, wholesale funds, and private wealth solutions available in Malaysia.",
-        source: source(
-          "AHAM Capital list of funds",
-          "https://aham.com.my/invest-with-us/list-of-funds",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "AHAM Capital list of funds",
+            "https://aham.com.my/invest-with-us/list-of-funds",
+          ),
+        },
       },
     ],
     assetTypes: [
@@ -1725,7 +1990,10 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Islamic equity, money-market, sukuk/fixed-income, gold, global multi-thematic, and fund-of-funds offerings through AIIMAN Asset Management.",
-        source: source("AIIMAN Asset Management", "https://aiiman.com/"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("AIIMAN Asset Management", "https://aiiman.com/"),
+        },
       },
     ],
     fees: [
@@ -1738,10 +2006,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the annual management fee in the AHAM AIIMAN Quantum Fund prospectus and Product Highlights Sheet. Retail Islamic funds may differ by fund and share class.",
         source: {
+          id: crypto.randomUUID(),
           label: "AHAM Aiiman Quantum Fund",
           url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1754,10 +2023,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the applicable sales charge by purchase channel. The fund page identifies sales charge as a disclosed fee category; do not apply a generic 5.50%–6.50% range without confirming the current fund documents.",
         source: {
+          id: crypto.randomUUID(),
           label: "AHAM Aiiman Quantum Fund",
           url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1770,10 +2040,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the annual trustee/custodian fee in the fund’s prospectus and Product Highlights Sheet.",
         source: {
+          id: crypto.randomUUID(),
           label: "AHAM Aiiman Quantum Fund",
           url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1786,10 +2057,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the switching fee and eligibility rules in the fund’s prospectus and Product Highlights Sheet.",
         source: {
+          id: crypto.randomUUID(),
           label: "AHAM Aiiman Quantum Fund",
           url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1802,10 +2074,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the transfer fee in the fund’s prospectus and Product Highlights Sheet.",
         source: {
+          id: crypto.randomUUID(),
           label: "AHAM Aiiman Quantum Fund",
           url: "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -1815,7 +2088,10 @@ const providerSeed: NewProvider[] = [
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("AHAM Capital", "https://aham.com.my/"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("AHAM Capital", "https://aham.com.my/"),
+        },
       },
       {
         requirement: "Eligibility to invest through the selected channel",
@@ -1823,10 +2099,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Eligibility, documentation, and minimums differ by fund, share class, and channel. EPF i-Invest purchases require EPF eligibility and may have different sales-charge limits.",
-        source: source(
-          "AHAM Aiiman Quantum Fund",
-          "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
-        ),
+        source: {
+          ...source(
+            "AHAM Aiiman Quantum Fund",
+            "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
       {
         requirement: "Islamic fund selection",
@@ -1834,7 +2113,10 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "AHAM Capital offers Shariah-compliant funds through AIIMAN Asset Management, including equity, money-market, gold, global multi-thematic, and fund-of-funds products. Investors must select an Islamic fund; not all AHAM products are Shariah-compliant.",
-        source: source("AIIMAN Asset Management", "https://aiiman.com/"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("AIIMAN Asset Management", "https://aiiman.com/"),
+        },
       },
     ],
     halalScreening: {
@@ -1843,10 +2125,13 @@ const providerSeed: NewProvider[] = [
         "AIIMAN’s Shariah-compliant funds are advised by Amanie Advisors Sdn Bhd, an SC-registered Shariah advisory firm. Amanie reviews Shariah compliance and fund investments; AHAM states that portfolio holdings are screened against the SC Shariah Advisory Council compliant list.",
       notes:
         "Islamic status is fund-specific. Verify the selected fund’s prospectus, Product Highlights Sheet, Shariah adviser, investment mandate, and purification disclosures before investing.",
-      source: source(
-        "AHAM Aiiman Quantum Fund — Shariah adviser",
-        "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "AHAM Aiiman Quantum Fund — Shariah adviser",
+          "https://aiiman.com/invest-with-us/list-of-funds/aeqfhif/",
+        ),
+      },
     },
     minimumInvestment:
       "Fund-specific: commonly RM1,000 initial and RM100 additional for retail Islamic funds; selected global Islamic funds may use USD 100 minimums",
@@ -1879,7 +2164,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "NYSE-listed Shariah-compliant ETFs, including SPUS, SPSK, SPRE, SPTE, and SPWO.",
-        source: source("SP Funds", "https://www.sp-funds.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("SP Funds", "https://www.sp-funds.com"),
+        },
       },
       {
         code: "MY",
@@ -1887,7 +2175,10 @@ const providerSeed: NewProvider[] = [
         access: "indirect" as const,
         notes:
           "Access depends on whether the investor’s brokerage supports trading the relevant NYSE-listed ETF and applicable cross-border restrictions.",
-        source: source("SP Funds", "https://www.sp-funds.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("SP Funds", "https://www.sp-funds.com"),
+        },
       },
     ],
     assetTypes: [
@@ -1896,7 +2187,10 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Shariah-compliant ETFs covering US large-cap equities, global sukuk, global REITs, global technology, and international developed/emerging-market equities.",
-        source: source("SP Funds", "https://www.sp-funds.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("SP Funds", "https://www.sp-funds.com"),
+        },
       },
     ],
     fees: [
@@ -1909,10 +2203,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Expense ratio for SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS). Verify the current expense ratio for each SP Funds ETF before publishing.",
         source: {
+          id: crypto.randomUUID(),
           label: "SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS)",
           url: "https://www.sp-funds.com/spus/",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1924,10 +2219,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Brokerage commissions, FX conversion, bid-ask spreads, and other trading costs may apply. SPUS’s 30-day median spread was 0.02% as of the fund page date.",
         source: {
+          id: crypto.randomUUID(),
           label: "SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS)",
           url: "https://www.sp-funds.com/spus/",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -1940,7 +2236,10 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "SP Funds ETFs trade on NYSE. Malaysian investors need a brokerage account that supports US-listed securities; availability, trading hours, currency conversion, and fees depend on the broker.",
-        source: source("SP Funds", "https://www.sp-funds.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("SP Funds", "https://www.sp-funds.com"),
+        },
       },
     ],
     halalScreening: {
@@ -1949,10 +2248,13 @@ const providerSeed: NewProvider[] = [
         "SP Funds offers Shariah-compliant ETFs screened under AAOIFI-aligned principles. SPUS tracks the S&P 500 Sharia Industry Exclusions Index, comprising approximately 200 S&P 500 companies that meet Shariah business-activity and financial-ratio criteria.",
       notes:
         "Islamic status applies to the individual ETF, not automatically to every brokerage account or SP Funds product. Verify each fund’s prospectus, index methodology, Shariah oversight, holdings, and published purification factor before investing.",
-      source: source(
-        "SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS)",
-        "https://www.sp-funds.com/spus/",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "SP Funds S&P 500 Sharia Industry Exclusions ETF (SPUS)",
+          "https://www.sp-funds.com/spus/",
+        ),
+      },
     },
     minimumInvestment:
       "One ETF share or the investor’s brokerage minimum; fractional-share availability depends on the broker",
@@ -1985,7 +2287,10 @@ const providerSeed: NewProvider[] = [
         access: "indirect",
         notes:
           "UCITS-listed Islamic ETFs may be accessible through eligible UK brokers.",
-        source: source("Amundi", "https://www.amundi.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amundi", "https://www.amundi.com"),
+        },
       },
       {
         code: "SG",
@@ -1993,7 +2298,10 @@ const providerSeed: NewProvider[] = [
         access: "indirect",
         notes:
           "Access depends on whether the investor’s brokerage supports the relevant listing.",
-        source: source("Amundi", "https://www.amundi.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amundi", "https://www.amundi.com"),
+        },
       },
       {
         code: "MY",
@@ -2001,7 +2309,10 @@ const providerSeed: NewProvider[] = [
         access: "indirect",
         notes:
           "Access depends on whether the investor’s brokerage supports the relevant listing.",
-        source: source("Amundi", "https://www.amundi.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amundi", "https://www.amundi.com"),
+        },
       },
     ],
     assetTypes: [
@@ -2010,7 +2321,10 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Islamic UCITS ETFs with global Shariah-screened equity exposure.",
-        source: source("Amundi", "https://www.amundi.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amundi", "https://www.amundi.com"),
+        },
       },
     ],
     fees: [
@@ -2022,10 +2336,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Verify the ongoing charges figure (OCF) or expense ratio for the selected Amundi ETF in its official fund page, KID, or factsheet. It may vary by share class, currency, and distribution channel.",
         source: {
+          id: crypto.randomUUID(),
           label: "Amundi",
           url: "https://www.amundi.com",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -2036,7 +2351,10 @@ const providerSeed: NewProvider[] = [
           "Brokerage account with access to the relevant ETF listing",
         category: "brokerage",
         mandatory: true,
-        source: source("Amundi", "https://www.amundi.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amundi", "https://www.amundi.com"),
+        },
       },
     ],
     halalScreening: {
@@ -2044,7 +2362,10 @@ const providerSeed: NewProvider[] = [
       methodology: undefined,
       notes:
         "No Amundi Islamic or Shariah-compliant ETF could be verified in the available sources. Do not treat Amundi’s general ETF range as Shariah-compliant.",
-      source: source("Amundi", "https://www.amundi.com"),
+      source: {
+        id: crypto.randomUUID(),
+        ...source("Amundi", "https://www.amundi.com"),
+      },
     },
     minimumInvestment: "One ETF share or applicable brokerage minimum",
     pros: [
@@ -2074,10 +2395,13 @@ const providerSeed: NewProvider[] = [
         access: "indirect" as const,
         notes:
           "UCITS Islamic ETFs, including iShares MSCI World Islamic UCITS ETF (ISWD), may be accessible through eligible UK brokers.",
-        source: source(
-          "iShares MSCI World Islamic UCITS ETF",
-          "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
-        ),
+        source: {
+          ...source(
+            "iShares MSCI World Islamic UCITS ETF",
+            "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
       {
         code: "US",
@@ -2085,7 +2409,10 @@ const providerSeed: NewProvider[] = [
         access: "indirect" as const,
         notes:
           "Islamic ETF access depends on the investor’s broker and the relevant fund’s US listing or cross-listing availability.",
-        source: source("iShares", "https://www.ishares.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("iShares", "https://www.ishares.com"),
+        },
       },
       {
         code: "MY",
@@ -2093,7 +2420,10 @@ const providerSeed: NewProvider[] = [
         access: "indirect" as const,
         notes:
           "Access depends on whether the investor’s brokerage supports the relevant UCITS or US listing and applicable cross-border restrictions.",
-        source: source("iShares", "https://www.ishares.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("iShares", "https://www.ishares.com"),
+        },
       },
     ],
     assetTypes: [
@@ -2102,10 +2432,13 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Islamic UCITS ETFs tracking MSCI Islamic indexes, including developed-market and emerging-market equity exposure.",
-        source: source(
-          "iShares MSCI World Islamic UCITS ETF",
-          "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
-        ),
+        source: {
+          ...source(
+            "iShares MSCI World Islamic UCITS ETF",
+            "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     fees: [
@@ -2118,10 +2451,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Total expense ratio for iShares MSCI World Islamic UCITS ETF (ISWD), USD distributing share class. Verify the expense ratio, share class, and listing venue for each iShares MSCI Islamic UCITS ETF.",
         source: {
+          id: crypto.randomUUID(),
           label: "iShares MSCI World Islamic UCITS ETF",
           url: "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2133,10 +2467,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Brokerage commissions, exchange fees, taxes, FX conversion, bid-ask spreads, and premiums/discounts to NAV may apply. ISWD trades on the London Stock Exchange; secondary-market trading is through an intermediary.",
         source: {
+          id: crypto.randomUUID(),
           label: "iShares MSCI World Islamic UCITS ETF",
           url: "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
           sourceType: "provider",
-          retrievedAt: "2026-11-04T00:00:00Z",
+          retrievedAt: new Date("2026-11-04T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2149,10 +2484,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "iShares Islamic ETFs trade on exchanges such as LSE and SIX. Malaysian investors need a broker that supports the relevant overseas listing; availability, currency conversion, and fees depend on the broker.",
-        source: source(
-          "iShares MSCI World Islamic UCITS ETF",
-          "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
-        ),
+        source: {
+          ...source(
+            "iShares MSCI World Islamic UCITS ETF",
+            "https://www.ishares.com/uk/individual/en/products/251394/ishares-msci-world-islamic-ucits-etf",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     halalScreening: {
@@ -2161,10 +2499,13 @@ const providerSeed: NewProvider[] = [
         "iShares Islamic ETFs track MSCI Islamic indexes, which apply Shariah-based business-activity and financial-ratio screens and are overseen by MSCI’s Shariah advisers’ committee.",
       notes:
         "Islamic status applies to the individual ETF, not automatically to every iShares product or brokerage account. Verify the fund’s prospectus, index methodology, Shariah oversight, holdings, and purification disclosures before investing.",
-      source: source(
-        "MSCI Islamic Index Series methodology",
-        "https://www.msci.com/documents/10199/8a59e89f-5134-de21-6a03-082ecfaa9e42",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "MSCI Islamic Index Series methodology",
+          "https://www.msci.com/documents/10199/8a59e89f-5134-de21-6a03-082ecfaa9e42",
+        ),
+      },
     },
     minimumInvestment:
       "One ETF share or the investor’s brokerage minimum; fractional-share availability depends on the broker",
@@ -2197,10 +2538,13 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Managed Halal portfolio available to eligible Canadian investors; compatible with eligible personal and registered accounts.",
-        source: source(
-          "Wealthsimple Halal investing",
-          "https://www.wealthsimple.com/en-ca/halal",
-        ),
+        source: {
+          ...source(
+            "Wealthsimple Halal investing",
+            "https://www.wealthsimple.com/en-ca/halal",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     assetTypes: [
@@ -2209,20 +2553,26 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Fully managed Halal portfolio using Wealthsimple Shariah World Equity Index ETF (WSHR), physical-gold ETF exposure, and non-interest-bearing cash depending on risk level.",
-        source: source(
-          "Wealthsimple — Understanding halal investing",
-          "https://help.wealthsimple.com/hc/en-ca/articles/360058456273-Understanding-halal-investing",
-        ),
+        source: {
+          ...source(
+            "Wealthsimple — Understanding halal investing",
+            "https://help.wealthsimple.com/hc/en-ca/articles/360058456273-Understanding-halal-investing",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes:
           "The managed Halal portfolio includes Wealthsimple’s Shariah-compliant WSHR ETF and may include a physical-gold ETF.",
-        source: source(
-          "Wealthsimple — Understanding halal investing",
-          "https://help.wealthsimple.com/hc/en-ca/articles/360058456273-Understanding-halal-investing",
-        ),
+        source: {
+          ...source(
+            "Wealthsimple — Understanding halal investing",
+            "https://help.wealthsimple.com/hc/en-ca/articles/360058456273-Understanding-halal-investing",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     fees: [
@@ -2235,10 +2585,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Approximate MER for Wealthsimple’s Halal managed portfolio. It includes a Wealthsimple Shariah-compliant ETF for which Wealthsimple receives part of the MER directly from the investment.",
         source: {
+          id: crypto.randomUUID(),
           label: "Wealthsimple managed investing MER fees",
           url: "https://help.wealthsimple.com/hc/en-ca/articles/360056584334-Management-expense-ratio-MER-fees-for-managed-investing-portfolios",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2251,10 +2602,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Wealthsimple management fee by client tier: Core 0.5%, Premium 0.4%, Generation starting at 0.4% and as low as 0.2%.",
         source: {
+          id: crypto.randomUUID(),
           label: "Wealthsimple managed investing MER fees",
           url: "https://help.wealthsimple.com/hc/en-ca/articles/360056584334-Management-expense-ratio-MER-fees-for-managed-investing-portfolios",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2266,10 +2618,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Managed portfolios may incur currency-conversion fees; see Wealthsimple’s Managed Investing Fee Schedule for the applicable rate.",
         source: {
+          id: crypto.randomUUID(),
           label: "Wealthsimple managed investing MER fees",
           url: "https://help.wealthsimple.com/hc/en-ca/articles/360056584334-Management-expense-ratio-MER-fees-for-managed-investing-portfolios",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2279,19 +2632,25 @@ const providerSeed: NewProvider[] = [
         requirement: "Canadian residency and account eligibility",
         category: "residency",
         mandatory: true,
-        source: source(
-          "Wealthsimple Halal investing",
-          "https://www.wealthsimple.com/en-ca/halal",
-        ),
+        source: {
+          ...source(
+            "Wealthsimple Halal investing",
+            "https://www.wealthsimple.com/en-ca/halal",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
       {
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source(
-          "Wealthsimple Halal investing",
-          "https://www.wealthsimple.com/en-ca/halal",
-        ),
+        source: {
+          ...source(
+            "Wealthsimple Halal investing",
+            "https://www.wealthsimple.com/en-ca/halal",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
       {
         requirement: "Islamic account",
@@ -2299,10 +2658,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Wealthsimple offers a dedicated Halal managed portfolio. Investors must select the Halal portfolio; Wealthsimple’s other managed portfolios are not automatically Shariah-compliant.",
-        source: source(
-          "Wealthsimple — Understanding halal investing",
-          "https://help.wealthsimple.com/hc/en-ca/articles/360058456273-Understanding-halal-investing",
-        ),
+        source: {
+          ...source(
+            "Wealthsimple — Understanding halal investing",
+            "https://help.wealthsimple.com/hc/en-ca/articles/360058456273-Understanding-halal-investing",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     halalScreening: {
@@ -2311,10 +2673,13 @@ const providerSeed: NewProvider[] = [
         "The Halal portfolio uses WSHR, which tracks the Dow Jones Islamic Market Developed Markets Quality and Low Volatility Index. Holdings are screened by Ratings Intelligence Partners, exclude prohibited industries and excessive leverage, and include quarterly dividend-purification information.",
       notes:
         "The portfolio may also include physical-gold ETF exposure certified under AAOIFI’s Shariah Standard on Gold and non-interest-bearing cash, depending on risk level. Verify the current portfolio composition, certification, and purification disclosures before investing.",
-      source: source(
-        "Wealthsimple — Understanding halal investing",
-        "https://help.wealthsimple.com/hc/en-ca/articles/360058456273-Understanding-halal-investing",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Wealthsimple — Understanding halal investing",
+          "https://help.wealthsimple.com/hc/en-ca/articles/360058456273-Understanding-halal-investing",
+        ),
+      },
     },
     minimumInvestment: "No account minimum",
     pros: [
@@ -2346,7 +2711,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Manzil Invest/Corex offers Shariah-compliant managed portfolios to eligible Canadian investors, with registered and non-registered account options.",
-        source: source("Manzil — Halal finance hub", "https://www.manzil.ca"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Manzil — Halal finance hub", "https://www.manzil.ca"),
+        },
       },
     ],
     assetTypes: [
@@ -2355,10 +2723,13 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Diversified Shariah-compliant managed portfolios across geographies and asset classes, using AAOIFI-aligned compliance standards.",
-        source: source(
-          "Manzil Corex Halal Portfolio asset-class holdings",
-          "https://help.manzil.ca/hc/en-us/articles/10297598108955-Corex-Halal-Portfolio-Asset-Class-Holdings",
-        ),
+        source: {
+          ...source(
+            "Manzil Corex Halal Portfolio asset-class holdings",
+            "https://help.manzil.ca/hc/en-us/articles/10297598108955-Corex-Halal-Portfolio-Asset-Class-Holdings",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     fees: [
@@ -2371,10 +2742,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "0.60% of assets under management, charged monthly on average daily invested account value. Includes custody and trade execution; provincial sales tax applies. No fee on cash held during liquidation.",
         source: {
+          id: crypto.randomUUID(),
           label: "Manzil Invest fee schedule",
           url: "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2387,10 +2759,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Indirect MER on third-party products varies by model portfolio and is charged within the products rather than as a separate account line item.",
         source: {
+          id: crypto.randomUUID(),
           label: "Manzil Invest fee schedule",
           url: "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2403,10 +2776,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "May apply on select third-party products when returns exceed a specified benchmark; included in the product MER rather than billed separately.",
         source: {
+          id: crypto.randomUUID(),
           label: "Manzil Invest fee schedule",
           url: "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2419,10 +2793,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Applicable account fees are set by CI Investment Services; consult its administrative charges schedule for the current list.",
         source: {
+          id: crypto.randomUUID(),
           label: "Manzil Invest fee schedule",
           url: "https://help.manzil.ca/hc/en-us/articles/9879308592795-Fee-Schedule-for-Manzil-Invest",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2432,7 +2807,10 @@ const providerSeed: NewProvider[] = [
         requirement: "Canadian residency and account eligibility",
         category: "residency",
         mandatory: true,
-        source: source("Manzil — Halal finance hub", "https://www.manzil.ca"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Manzil — Halal finance hub", "https://www.manzil.ca"),
+        },
       },
       {
         requirement: "Identity and KYC verification",
@@ -2440,10 +2818,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Corex requires personal and financial information during sign-up; politically exposed persons and close associates must provide additional disclosures.",
-        source: source(
-          "Manzil — What information do I need to sign up?",
-          "https://help.manzil.ca/hc/en-us/articles/9872219110043-What-information-do-I-need-to-sign-up",
-        ),
+        source: {
+          ...source(
+            "Manzil — What information do I need to sign up?",
+            "https://help.manzil.ca/hc/en-us/articles/9872219110043-What-information-do-I-need-to-sign-up",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
       {
         requirement: "Islamic account",
@@ -2451,10 +2832,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Manzil Invest/Corex provides Shariah-compliant managed portfolios. Investors must select the Halal portfolio; Manzil’s other products, such as home financing and wills, are separate services.",
-        source: source(
-          "Manzil Corex Halal Portfolio asset-class holdings",
-          "https://help.manzil.ca/hc/en-us/articles/10297598108955-Corex-Halal-Portfolio-Asset-Class-Holdings",
-        ),
+        source: {
+          ...source(
+            "Manzil Corex Halal Portfolio asset-class holdings",
+            "https://help.manzil.ca/hc/en-us/articles/10297598108955-Corex-Halal-Portfolio-Asset-Class-Holdings",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     halalScreening: {
@@ -2463,10 +2847,13 @@ const providerSeed: NewProvider[] = [
         "Corex Halal Portfolios use diversified investment products that meet Shariah compliance standards set by AAOIFI. Manzil states that its products are reviewed by its Shariah Supervisory Board and an external independent Shariah supervisory board.",
       notes:
         "The portfolios exclude interest-bearing instruments such as bonds and GICs, and managers estimate purification amounts under AAOIFI standards; clients remain responsible for donating any purification amount. Verify the current portfolio holdings, certificates, and purification disclosures before investing.",
-      source: source(
-        "Manzil Corex Halal Portfolio asset-class holdings",
-        "https://help.manzil.ca/hc/en-us/articles/10297598108955-Corex-Halal-Portfolio-Asset-Class-Holdings",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Manzil Corex Halal Portfolio asset-class holdings",
+          "https://help.manzil.ca/hc/en-us/articles/10297598108955-Corex-Halal-Portfolio-Asset-Class-Holdings",
+        ),
+      },
     },
     minimumInvestment:
       "No minimum is stated in Manzil’s available Canadian fee and sign-up documentation; verify the current minimum during onboarding",
@@ -2500,7 +2887,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Canadian-listed securities and registered accounts, subject to account eligibility.",
-        source: source("Questrade", "https://www.questrade.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Questrade", "https://www.questrade.com"),
+        },
       },
       {
         code: "US",
@@ -2508,7 +2898,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "US-listed stocks and ETFs, including Shariah-screened ETFs where available through the account.",
-        source: source("Questrade", "https://www.questrade.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Questrade", "https://www.questrade.com"),
+        },
       },
     ],
     assetTypes: [
@@ -2517,18 +2910,24 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Self-directed equity trading; users must independently verify the Shariah eligibility of individual securities.",
-        source: source("Questrade", "https://www.questrade.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Questrade", "https://www.questrade.com"),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes:
           "Access to US-listed Shariah-screened ETFs such as SPUS and HLAL, subject to account and listing availability.",
-        source: source(
-          "Best halal investing apps in Canada",
-          "https://lifemoney.ca/blog/best-halal-investing-apps-canada-2026",
-          "research",
-        ),
+        source: {
+          id: crypto.randomUUID(),
+          ...source(
+            "Best halal investing apps in Canada",
+            "https://lifemoney.ca/blog/best-halal-investing-apps-canada-2026",
+            "research",
+          ),
+        },
       },
     ],
     fees: [
@@ -2541,10 +2940,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Zero commission on stocks, ETFs, fractional shares, and US equity options. Regulatory, exchange, account-specific, and other product charges may apply.",
         source: {
+          id: crypto.randomUUID(),
           label: "Questrade",
           url: "https://www.questrade.com",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2556,10 +2956,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "US-listed Shariah ETFs are USD-denominated. Confirm Questrade’s current currency-conversion spread and whether USD balances can be held to reduce conversion frequency.",
         source: {
+          id: crypto.randomUUID(),
           label: "Questrade",
           url: "https://www.questrade.com",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -2569,13 +2970,19 @@ const providerSeed: NewProvider[] = [
         requirement: "Canadian residency or eligible account status",
         category: "residency",
         mandatory: true,
-        source: source("Questrade", "https://www.questrade.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Questrade", "https://www.questrade.com"),
+        },
       },
       {
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("Questrade", "https://www.questrade.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Questrade", "https://www.questrade.com"),
+        },
       },
     ],
     halalScreening: {
@@ -2583,11 +2990,14 @@ const providerSeed: NewProvider[] = [
       methodology: undefined,
       notes:
         "Self-directed broker with no built-in Shariah screening or managed Halal portfolio. Users may access Shariah-screened ETFs such as SPUS and HLAL, but must independently verify each security, ETF, and purification disclosure.",
-      source: source(
-        "Best halal investing apps in Canada",
-        "https://lifemoney.ca/blog/best-halal-investing-apps-canada-2026",
-        "research",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Best halal investing apps in Canada",
+          "https://lifemoney.ca/blog/best-halal-investing-apps-canada-2026",
+          "research",
+        ),
+      },
     },
     minimumInvestment:
       "No stated platform minimum; instrument-level minimums and brokerage requirements apply",
@@ -2620,7 +3030,10 @@ const providerSeed: NewProvider[] = [
         access: "indirect" as const,
         notes:
           "Shariah-screened fund guidance for eligible UK investors; investments are held in the user’s own Trading 212 or Alpaca brokerage account.",
-        source: source("Amal Invest", "https://amalinvest.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amal Invest", "https://amalinvest.com"),
+        },
       },
     ],
     assetTypes: [
@@ -2629,7 +3042,10 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Provides guided Grow and Save portfolio allocations using Shariah-screened and purified mutual-fund holdings; Amal does not custody assets or execute trades.",
-        source: source("Amal Invest", "https://amalinvest.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amal Invest", "https://amalinvest.com"),
+        },
       },
     ],
     fees: [
@@ -2642,10 +3058,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "USD 249 one-time for Standard lifetime access; USD 999 one-time for Pro. No Amal subscription or percentage-of-assets fee. Brokerage fees, fund expenses, FX conversion, and other broker or fund charges may apply.",
         source: {
+          id: crypto.randomUUID(),
           label: "Amal Invest",
           url: "https://amalinvest.com",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2657,20 +3074,29 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Amal does not hold client assets. Users must open and fund their own brokerage account; Amal provides screening, portfolio guidance, and rebalancing instructions.",
-        source: source("Amal Invest", "https://amalinvest.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amal Invest", "https://amalinvest.com"),
+        },
       },
       {
         requirement: "UK residency or eligible account status",
         category: "residency",
         mandatory: true,
-        source: source("Amal Invest", "https://amalinvest.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amal Invest", "https://amalinvest.com"),
+        },
       },
       {
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
         notes: "KYC is completed by the connected brokerage, not by Amal.",
-        source: source("Amal Invest", "https://amalinvest.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Amal Invest", "https://amalinvest.com"),
+        },
       },
       {
         requirement: "Islamic screening",
@@ -2678,10 +3104,13 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Amal’s platform, Shariah screening methodology, and operational flow were reviewed by Amanah Advisors, which issued a Shariah compliance certificate. Holdings are screened bi-monthly, with annual audit.",
-        source: source(
-          "Amal Invest Shariah compliance certificate",
-          "https://amalinvest.com/Amal-Invest-shariah-certificate-2026.pdf",
-        ),
+        source: {
+          ...source(
+            "Amal Invest Shariah compliance certificate",
+            "https://amalinvest.com/Amal-Invest-shariah-certificate-2026.pdf",
+          ),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     halalScreening: {
@@ -2690,10 +3119,13 @@ const providerSeed: NewProvider[] = [
         "Amal applies continuous Shariah screening to holdings, re-screens every stock bi-monthly, and automatically sells and reinvests when a holding becomes non-compliant. Amanah Advisors reviewed the platform and issued a Shariah compliance certificate.",
       notes:
         "Amal also offers an optional BDS-based ‘genocide-free’ exclusion filter. This is an additional ethical exclusion layer, not a substitute for Shariah screening. Verify the current certificate, methodology, holdings, and purification arrangements before relying on the service.",
-      source: source(
-        "Amal Invest Shariah compliance certificate",
-        "https://amalinvest.com/Amal-Invest-shariah-certificate-2026.pdf",
-      ),
+      source: {
+        id: crypto.randomUUID(),
+        ...source(
+          "Amal Invest Shariah compliance certificate",
+          "https://amalinvest.com/Amal-Invest-shariah-certificate-2026.pdf",
+        ),
+      },
     },
     minimumInvestment:
       "No Amal minimum; the connected brokerage and selected funds may impose their own minimums",
@@ -2728,7 +3160,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "UK investors can access Shariah-screened private-market funds, including IF-ISA-eligible opportunities where available.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
       {
         code: "US",
@@ -2736,7 +3171,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "Cur8 says investors can participate from outside the UK, including the US, subject to additional onboarding and local regulatory checks.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
     ],
     assetTypes: [
@@ -2745,28 +3183,40 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Shariah-screened private-equity and venture-capital opportunities; long lock-up periods and high risk apply.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
       {
         type: "other" as const,
         supported: true,
         notes:
           "Property-backed fixed-income and private-credit opportunities with varying liquidity windows.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
       {
         type: "other" as const,
         supported: true,
         notes:
           "Shariah-screened real-estate and property-backed investment opportunities.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
       {
         type: "sukuk" as const,
         supported: true,
         notes:
           "Sukuk opportunities may be available through Cur8’s private-market offerings.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
     ],
     fees: [
@@ -2779,10 +3229,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Varies by fund and investment. Review the individual Cur8 campaign and offering documents for the applicable management fee.",
         source: {
+          id: crypto.randomUUID(),
           label: "Cur8 Capital",
           url: "https://cur8.capital",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -2795,10 +3246,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "May apply depending on the fund’s return hurdle, crystallisation terms, and offering documents. Verify the individual campaign before investing.",
         source: {
+          id: crypto.randomUUID(),
           label: "Cur8 Capital",
           url: "https://cur8.capital",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -2808,7 +3260,10 @@ const providerSeed: NewProvider[] = [
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
       {
         requirement: "Investor suitability and eligibility checks",
@@ -2816,7 +3271,10 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Cur8 is a high-risk private-markets platform. Investors must complete onboarding and suitability checks; non-UK residents may face additional regulatory checks.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
       {
         requirement: "Islamic investment",
@@ -2824,7 +3282,10 @@ const providerSeed: NewProvider[] = [
         mandatory: true,
         notes:
           "Cur8 screens every investment for Shariah compliance, ethics, and impact. Islamic treatment is investment-specific; investors should review each fund’s Shariah governance and offering documents.",
-        source: source("Cur8 Capital", "https://cur8.capital"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Cur8 Capital", "https://cur8.capital"),
+        },
       },
     ],
     halalScreening: {
@@ -2833,7 +3294,10 @@ const providerSeed: NewProvider[] = [
         "Cur8 applies Shariah, ethical, and impact screening to investments on its platform. It offers private equity, venture capital, private credit/fixed income, real estate, and sukuk opportunities.",
       notes:
         "Islamic status and Shariah governance are fund-specific. Verify each opportunity’s offering documents, Shariah screening process, liquidity terms, fees, and risk disclosures before investing.",
-      source: source("Cur8 Capital", "https://cur8.capital"),
+      source: {
+        id: crypto.randomUUID(),
+        ...source("Cur8 Capital", "https://cur8.capital"),
+      },
     },
     minimumInvestment:
       "From GBP 5,000 for eligible funds; individual opportunities may have higher minimums",
@@ -2868,7 +3332,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "UAE-based investors can trade US stocks and ETFs through Sarwa Trade; managed investing and savings products are also offered.",
-        source: source("Sarwa", "https://www.sarwa.co"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Sarwa", "https://www.sarwa.co"),
+        },
       },
     ],
     assetTypes: [
@@ -2877,21 +3344,30 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Thousands of US-listed stocks through Sarwa Trade; users must independently verify Shariah eligibility of individual securities.",
-        source: source("Sarwa", "https://www.sarwa.co"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Sarwa", "https://www.sarwa.co"),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes:
           "US-listed ETFs through Sarwa Trade; Shariah eligibility depends on the selected ETF.",
-        source: source("Sarwa", "https://www.sarwa.co"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Sarwa", "https://www.sarwa.co"),
+        },
       },
       {
         type: "crypto" as const,
         supported: true,
         notes:
           "Crypto trading is offered through Sarwa; crypto is generally not Shariah-compliant for Islamic investing purposes.",
-        source: source("Sarwa", "https://www.sarwa.co"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Sarwa", "https://www.sarwa.co"),
+        },
       },
     ],
     fees: [
@@ -2904,10 +3380,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Zero commission on US stocks and ETFs through Sarwa Trade. Regulatory, exchange, FX, and other account charges may apply.",
         source: {
+          id: crypto.randomUUID(),
           label: "Sarwa",
           url: "https://www.sarwa.co",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2920,10 +3397,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "No withdrawal fees for AED accounts, as advertised by Sarwa.",
         source: {
+          id: crypto.randomUUID(),
           label: "Sarwa",
           url: "https://www.sarwa.co",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2936,10 +3414,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "No transfer costs for AED accounts, as advertised by Sarwa.",
         source: {
+          id: crypto.randomUUID(),
           label: "Sarwa",
           url: "https://www.sarwa.co",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "high",
         },
       },
@@ -2951,10 +3430,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "US-listed securities are USD-denominated. Confirm the applicable AED-to-USD conversion cost and whether USD balances can be held.",
         source: {
+          id: crypto.randomUUID(),
           label: "Sarwa",
           url: "https://www.sarwa.co",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -2964,13 +3444,19 @@ const providerSeed: NewProvider[] = [
         requirement: "UAE residency or eligible account status",
         category: "residency",
         mandatory: true,
-        source: source("Sarwa", "https://www.sarwa.co"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Sarwa", "https://www.sarwa.co"),
+        },
       },
       {
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("Sarwa", "https://www.sarwa.co"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Sarwa", "https://www.sarwa.co"),
+        },
       },
     ],
     halalScreening: {
@@ -2978,7 +3464,10 @@ const providerSeed: NewProvider[] = [
       methodology: undefined,
       notes:
         "Sarwa states that it does not hold an Islamic Window endorsement from the ADGM Financial Services Regulatory Authority. Its platform includes conventional equities, ETFs, crypto, and savings products; users must independently verify whether any specific investment meets their Shariah requirements.",
-      source: source("Sarwa", "https://www.sarwa.co"),
+      source: {
+        id: crypto.randomUUID(),
+        ...source("Sarwa", "https://www.sarwa.co"),
+      },
     },
     minimumInvestment:
       "No stated platform minimum; instrument-level and product-specific minimums may apply",
@@ -3011,7 +3500,10 @@ const providerSeed: NewProvider[] = [
         access: "direct" as const,
         notes:
           "UAE and GCC investors can access US stocks and ETFs, local stocks, options, and physical gold through Baraka.",
-        source: source("Baraka", "https://www.getbaraka.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Baraka", "https://www.getbaraka.com"),
+        },
       },
     ],
     assetTypes: [
@@ -3020,27 +3512,39 @@ const providerSeed: NewProvider[] = [
         supported: true,
         notes:
           "Self-directed US and local stock investing, with a Sharia Filter for eligible equities.",
-        source: source("Baraka", "https://www.getbaraka.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Baraka", "https://www.getbaraka.com"),
+        },
       },
       {
         type: "etfs" as const,
         supported: true,
         notes:
           "US-listed ETF investing; Shariah screening applies to individual equities and ETFs only.",
-        source: source("Baraka", "https://www.getbaraka.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Baraka", "https://www.getbaraka.com"),
+        },
       },
       {
         type: "other" as const,
         supported: true,
         notes:
           "Options trading is available, but Shariah screening does not extend to options.",
-        source: source("Baraka", "https://www.getbaraka.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Baraka", "https://www.getbaraka.com"),
+        },
       },
       {
         type: "other" as const,
         supported: true,
         notes: "Physical-gold investing is available through the platform.",
-        source: source("Baraka", "https://www.getbaraka.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Baraka", "https://www.getbaraka.com"),
+        },
       },
     ],
     fees: [
@@ -3053,10 +3557,11 @@ const providerSeed: NewProvider[] = [
         conditions:
           "Baraka offers US stocks, ETFs, local stocks, options, and physical gold. Verify current commissions, FX conversion, regulatory charges, and account-specific fees before publishing.",
         source: {
+          id: crypto.randomUUID(),
           label: "Baraka",
           url: "https://www.getbaraka.com",
           sourceType: "provider",
-          retrievedAt: "2026-10-16T00:00:00Z",
+          retrievedAt: new Date("2026-10-16T00:00:00Z"),
           confidence: "medium",
         },
       },
@@ -3066,13 +3571,19 @@ const providerSeed: NewProvider[] = [
         requirement: "UAE residency or eligible account status",
         category: "residency",
         mandatory: true,
-        source: source("Baraka", "https://www.getbaraka.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Baraka", "https://www.getbaraka.com"),
+        },
       },
       {
         requirement: "Identity and KYC verification",
         category: "identity",
         mandatory: true,
-        source: source("Baraka", "https://www.getbaraka.com"),
+        source: {
+          id: crypto.randomUUID(),
+          ...source("Baraka", "https://www.getbaraka.com"),
+        },
       },
       {
         requirement: "Islamic Window account",
@@ -3080,7 +3591,10 @@ const providerSeed: NewProvider[] = [
         mandatory: false,
         notes:
           "Baraka holds a DFSA Islamic Window endorsement and offers Shariah-compliant services to eligible clients through its Islamic Window, overseen by its Shariah Supervisory Board. Investors should confirm how to enable or access the Islamic Window before trading.",
-        source: source("Baraka", "https://www.getbaraka.com"),
+        source: {
+          ...source("Baraka", "https://www.getbaraka.com"),
+          id: crypto.randomUUID(),
+        },
       },
     ],
     halalScreening: {
@@ -3089,7 +3603,10 @@ const providerSeed: NewProvider[] = [
         "Baraka provides a Sharia Filter for halal stock selection. Its Islamic Window is overseen by a Shariah Supervisory Board, while Shariah screening data is supplied by a third-party data provider.",
       notes:
         "Shariah screening applies to individual equities and ETFs only; it does not extend to bonds or options. Screening data is for reference, may not reflect the latest financial position, and is not a fatwa or personal religious advice. Clients remain responsible for ensuring investments match their religious obligations.",
-      source: source("Baraka", "https://www.getbaraka.com"),
+      source: {
+        id: crypto.randomUUID(),
+        ...source("Baraka", "https://www.getbaraka.com"),
+      },
     },
     minimumInvestment:
       "No minimum stated on Baraka’s public site; verify current account and instrument-level minimums",

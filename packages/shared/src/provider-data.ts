@@ -1,53 +1,5 @@
 import { z } from "zod";
-
-export const sourceSchema = z.object({
-  label: z.string().min(1),
-  url: z.string().url(),
-  sourceType: z.enum([
-    "official",
-    "regulator",
-    "provider",
-    "news",
-    "research",
-    "other",
-  ]),
-  retrievedAt: z.string().datetime(),
-  confidence: z.enum(["high", "medium", "low"]).default("medium"),
-});
-
-export const regulatoryNoteSchema = z.object({
-  category: z.enum([
-    "licensing",
-    "investor_protection",
-    "tax",
-    "reporting",
-    "cross_border",
-    "other",
-  ]),
-  summary: z.string().min(1),
-  detail: z.string().optional(),
-  appliesTo: z.array(z.string()).default([]), // e.g. ["retail", "non_resident"]
-  source: sourceSchema,
-});
-
-export const restrictionSchema = z.object({
-  type: z.enum([
-    "residency",
-    "citizenship",
-    "age",
-    "sanctions",
-    "product",
-    "market",
-    "currency",
-    "tax",
-    "brokerage",
-    "other",
-  ]),
-  summary: z.string().min(1),
-  severity: z.enum(["blocking", "conditional", "informational"]),
-  appliesTo: z.array(z.string()).default([]),
-  source: sourceSchema,
-});
+import { sourceSchema } from "./schemas/source";
 
 export const feeSchema = z.object({
   kind: z.enum([

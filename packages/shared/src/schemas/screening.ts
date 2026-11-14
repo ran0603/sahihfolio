@@ -4,6 +4,7 @@ import {
   METHODOLOGIES,
   REPORT_STATUSES,
 } from "../constants/screening";
+import { sourceSchema } from "./source";
 
 export const screeningQuerySchema = z.object({
   q: z.string().min(1).max(50),
@@ -37,19 +38,7 @@ export const createScreeningReportSchema = z.object({
     thresholds: z.record(z.number()),
     details: z.string(),
   }),
-  sources: z.array(
-    z.object({
-      label: z.string(),
-      url: z.string().url(),
-      sourceType: z.enum([
-        "annual_report",
-        "regulatory_filing",
-        "scholarly_fatwa",
-        "data_vendor",
-      ]),
-      retrievedAt: z.string(),
-    }),
-  ),
+  sources: z.array(sourceSchema),
   reviewedBy: z.string().optional(),
 });
 

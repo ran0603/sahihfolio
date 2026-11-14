@@ -106,7 +106,7 @@ export default function SaveAndShareAside({
             </label>
             <input
               id="r9-em"
-              className="inp save-em "
+              className={`inp save-em ${emailError && "invalid"}`}
               type="email"
               placeholder="you@example.com"
               autoComplete="email"
