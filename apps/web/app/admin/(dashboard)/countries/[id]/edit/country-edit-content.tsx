@@ -1,6 +1,6 @@
 "use client";
 
-import { CountryProfile, Source } from "@sahihfolio/shared";
+import { CountryProfile, Source, RegulatoryNote, Restriction } from "@sahihfolio/shared";
 import CountryEditForm, { CountryFormData } from "./country-edit-form";
 import { CircleCheck, Pen, Loader2, TriangleAlert, Info, CircleX } from "lucide-react";
 import CountryEditSide from "./country-edit-side";
@@ -82,6 +82,7 @@ export default function CountryEditContent({
   const handleSave = async (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
     if (!isDirty || isArchived || isPending) return;
+    setErrors(null)
 
     startTransition(async () => {
       const data = new FormData();
@@ -89,9 +90,20 @@ export default function CountryEditContent({
       data.append("code", country.code);
       data.append("name", formData.name);
       data.append("currency", formData.currency);
-      data.append("regulatoryNotes", JSON.stringify(formData.regulatoryNotes));
-      data.append("restrictions", JSON.stringify(formData.restrictions));
-      data.append("sourceUrls", JSON.stringify(formData.sourceUrls));
+      // Ensure each regulatory note and restriction has a source.id
+      const ensureSourceId = (item: RegulatoryNote | Restriction) => {
+        if (!item.source?.id) {
+          item.source = { ...item.source, id: crypto.randomUUID() };
+        }
+        return item;
+      };
+      const notesWithIds = formData.regulatoryNotes.map(ensureSourceId);
+      const restrictionsWithIds = formData.restrictions.map(ensureSourceId);
+      // Clean source URLs: remove empty entries
+      const cleanedSourceUrls = formData.sourceUrls.filter((u) => u.trim().length > 0);
+      data.append("regulatoryNotes", JSON.stringify(notesWithIds));
+      data.append("restrictions", JSON.stringify(restrictionsWithIds));
+      data.append("sourceUrls", JSON.stringify(cleanedSourceUrls));
       data.append("lastReviewedAt", lastReviewedAt.toISOString());
       data.append("status", country.status);
 
