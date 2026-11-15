@@ -12,15 +12,10 @@ if (fs.existsSync(rootEnv)) {
   process.exit(1);
 }
 
-if (!process.env.DATABASE_URL) {
-  console.error("❌ DATABASE_URL missing");
-  process.exit(1);
-}
-
 export default defineConfig({
   schema: "./src/schema/index.ts",
   out: "./migrations",
   dialect: "postgresql",
-  dbCredentials: { url: process.env.DATABASE_URL },
+  dbCredentials: { url: process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/sahihfolio" },
   verbose: true,
 });

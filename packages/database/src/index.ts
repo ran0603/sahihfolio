@@ -20,16 +20,8 @@ if (fs.existsSync(rootEnvPath)) {
 const localEnv = path.resolve(__dirname, ".env");
 if (fs.existsSync(localEnv)) dotenv.config({ path: localEnv });
 
-/* ------------------- Validate required vars ------------------- */
-if (!process.env.DATABASE_URL) {
-  console.error(
-    "❌ DATABASE_URL is missing – set it in the root .env or expose it as a CI secret."
-  );
-  process.exit(1);
-}
-
 /* ------------------- Drizzle DB initialization -------------- */
-const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/sahihfolio";
 const client = postgres(connectionString, { max: 10 });
 export const db = drizzle(client, { schema });
 

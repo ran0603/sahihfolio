@@ -34,6 +34,7 @@ jobs:
       EMAIL_FROM: "Sahihfolio <results@sahihfolio.com>"
       NEXT_PUBLIC_APP_URL: http://localhost:3000
       NEXT_TELEMETRY_DISABLED: 1
+      NODE_ENV: "test"
 
     steps:
       - uses: actions/checkout@v4
