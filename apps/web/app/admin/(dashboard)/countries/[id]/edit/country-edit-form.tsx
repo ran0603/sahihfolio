@@ -536,11 +536,11 @@ export default function CountryEditForm({
                           prev.map((n, i) =>
                             i === index
                               ? {
-                                ...n,
-                                source: sources.find(
-                                  (s) => s.id === e.target.value,
-                                ) as Source,
-                              }
+                                  ...n,
+                                  source: sources.find(
+                                    (s) => s.id === e.target.value,
+                                  ) as Source,
+                                }
                               : n,
                           ),
                         )
@@ -577,12 +577,12 @@ export default function CountryEditForm({
                             prev.map((n, i) =>
                               i === index
                                 ? {
-                                  ...n,
-                                  source: {
-                                    ...n.source,
-                                    label: e.target.value,
-                                  },
-                                }
+                                    ...n,
+                                    source: {
+                                      ...n.source,
+                                      label: e.target.value,
+                                    },
+                                  }
                                 : n,
                             ),
                           )
@@ -622,12 +622,12 @@ export default function CountryEditForm({
                             prev.map((n, i) =>
                               i === index
                                 ? {
-                                  ...n,
-                                  source: {
-                                    ...n.source,
-                                    sourceType: e.target.value,
-                                  } as Source,
-                                }
+                                    ...n,
+                                    source: {
+                                      ...n.source,
+                                      sourceType: e.target.value,
+                                    } as Source,
+                                  }
                                 : n,
                             ),
                           )
@@ -680,12 +680,12 @@ export default function CountryEditForm({
                           prev.map((n, i) =>
                             i === index
                               ? {
-                                ...n,
-                                source: {
-                                  ...n.source,
-                                  url: e.target.value,
-                                } as Source,
-                              }
+                                  ...n,
+                                  source: {
+                                    ...n.source,
+                                    url: e.target.value,
+                                  } as Source,
+                                }
                               : n,
                           ),
                         )
@@ -739,12 +739,12 @@ export default function CountryEditForm({
                             prev.map((n, i) =>
                               i === index
                                 ? {
-                                  ...n,
-                                  source: {
-                                    ...n.source,
-                                    retrievedAt: new Date(e.target.value),
-                                  } as Source,
-                                }
+                                    ...n,
+                                    source: {
+                                      ...n.source,
+                                      retrievedAt: new Date(e.target.value),
+                                    } as Source,
+                                  }
                                 : n,
                             ),
                           )
@@ -785,12 +785,12 @@ export default function CountryEditForm({
                             prev.map((n, i) =>
                               i === index
                                 ? {
-                                  ...n,
-                                  source: {
-                                    ...n.source,
-                                    confidence: e.target.value,
-                                  } as Source,
-                                }
+                                    ...n,
+                                    source: {
+                                      ...n.source,
+                                      confidence: e.target.value,
+                                    } as Source,
+                                  }
                                 : n,
                             ),
                           )
@@ -1189,11 +1189,11 @@ export default function CountryEditForm({
                           prev.map((r, i) =>
                             i === index
                               ? {
-                                ...r,
-                                source: sources.find(
-                                  (s) => s.id === e.target.value,
-                                ) as Source,
-                              }
+                                  ...r,
+                                  source: sources.find(
+                                    (s) => s.id === e.target.value,
+                                  ) as Source,
+                                }
                               : r,
                           ),
                         )
@@ -1363,12 +1363,12 @@ export default function CountryEditForm({
                             prev.map((r, i) =>
                               i === index
                                 ? {
-                                  ...r,
-                                  source: {
-                                    ...r.source,
-                                    retrievedAt: new Date(e.target.value),
-                                  } as Source,
-                                }
+                                    ...r,
+                                    source: {
+                                      ...r.source,
+                                      retrievedAt: new Date(e.target.value),
+                                    } as Source,
+                                  }
                                 : r,
                             ),
                           )
@@ -1409,12 +1409,12 @@ export default function CountryEditForm({
                             prev.map((r, i) =>
                               i === index
                                 ? {
-                                  ...r,
-                                  source: {
-                                    ...r.source,
-                                    confidence: e.target.value,
-                                  } as Source,
-                                }
+                                    ...r,
+                                    source: {
+                                      ...r.source,
+                                      confidence: e.target.value,
+                                    } as Source,
+                                  }
                                 : r,
                             ),
                           )

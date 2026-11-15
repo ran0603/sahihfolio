@@ -3,19 +3,19 @@ import * as dotenv from "dotenv";
 import * as fs from "fs";
 import path from "path";
 
-const rootEnv = path.resolve(__dirname, "../../.env");
-if (fs.existsSync(rootEnv)) {
-  dotenv.config({ path: rootEnv });
-  console.log(`✅ Loaded root .env from ${rootEnv}`);
-} else {
-  console.error(`❌ .env not found at ${rootEnv}`);
-  process.exit(1);
-}
+// Load from the monorepo root so the package works whether run directly
+// (from packages/database) or via `pnpm db:migrate` from the repo root.
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+dotenv.config({ path: path.resolve(__dirname, ".env") }); // local override
 
 export default defineConfig({
   schema: "./src/schema/index.ts",
   out: "./migrations",
   dialect: "postgresql",
-  dbCredentials: { url: process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/sahihfolio" },
+  dbCredentials: {
+    url:
+      process.env.DATABASE_URL ||
+      "postgresql://postgres:postgres@localhost:5432/sahihfolio",
+  },
   verbose: true,
 });

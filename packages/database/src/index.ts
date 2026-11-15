@@ -21,7 +21,9 @@ const localEnv = path.resolve(__dirname, ".env");
 if (fs.existsSync(localEnv)) dotenv.config({ path: localEnv });
 
 /* ------------------- Drizzle DB initialization -------------- */
-const connectionString = process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/sahihfolio";
+const connectionString =
+  process.env.DATABASE_URL ||
+  "postgresql://postgres:postgres@localhost:5432/sahihfolio";
 const client = postgres(connectionString, { max: 10 });
 export const db = drizzle(client, { schema });
 
