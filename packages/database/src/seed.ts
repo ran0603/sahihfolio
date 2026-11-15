@@ -1,32 +1,25 @@
 import { db } from "./index";
 import { countries, screeningReports, user } from "./schema";
+import { SourceInput } from "@sahihfolio/shared";
 
 type CountryInsert = typeof countries.$inferInsert;
 
-const REVIEWED_AT = new Date("2026-10-15T00:00:00.000Z");
-const RETRIEVED_AT = "2026-10-15T00:00:00.000Z";
-
-type Source = {
-  label: string;
-  url: string;
-  sourceType:
-    "official" | "regulator" | "provider" | "news" | "research" | "other";
-  retrievedAt: string;
-  confidence: "high" | "medium" | "low";
-};
+const REVIEWED_AT = new Date("2026-10-15T00:00:00Z");
+const RETRIEVED_AT = new Date("2026-10-15T00:00:00Z");
 
 function source(
   label: string,
   url: string,
-  sourceType: Source["sourceType"] = "official",
-): Source {
+  sourceType: SourceInput["sourceType"] = "official",
+) {
   return {
+    id: crypto.randomUUID(),
     label,
     url,
     sourceType,
     retrievedAt: RETRIEVED_AT,
     confidence: "high",
-  };
+  } as SourceInput;
 }
 
 export async function seed() {
@@ -247,9 +240,10 @@ export async function seed() {
         },
         sources: [
           {
+            id: crypto.randomUUID(),
             label: "Apple Inc. Form 10-K SEC filing",
             url: "https://www.sec.gov/edgar/browse/?CIK=320193",
-            sourceType: "regulatory_filing",
+            sourceType: "regulator",
             retrievedAt: RETRIEVED_AT,
           },
         ],

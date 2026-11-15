@@ -12,7 +12,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:migrate": "drizzle-kit migrate --config ./drizzle.config.ts",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx src/seed.ts",
     "db:seed:providers": "tsx src/seed-providers.ts"

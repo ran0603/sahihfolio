@@ -1,12 +1,10 @@
 export const SOURCE_TYPES = [
-  "official",
+  "other",
   "regulator",
-  "provider_document",
-  "annual_report",
-  "exchange_filing",
+  "provider",
   "news",
   "research",
-  "other",
+  "official",
 ] as const;
 
 export type SourceType = (typeof SOURCE_TYPES)[number];

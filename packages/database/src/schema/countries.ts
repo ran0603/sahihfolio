@@ -1,15 +1,12 @@
-import {
-  regulatoryNoteSchema,
-  restrictionSchema,
-} from "@sahihfolio/shared/provider-data";
+import { RegulatoryNote, Restriction } from "@sahihfolio/shared";
 import {
   pgTable,
-  varchar,
   text,
   timestamp,
   jsonb,
   index,
   uuid,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 export const countries = pgTable(
@@ -21,14 +18,16 @@ export const countries = pgTable(
     currency: text("currency").notNull(),
 
     regulatoryNotes: jsonb("regulatory_notes")
-      .$type<(typeof regulatoryNoteSchema._output)[]>()
+      .$type<RegulatoryNote[]>()
       .notNull()
       .default([]),
 
     restrictions: jsonb("restrictions")
-      .$type<(typeof restrictionSchema._output)[]>()
+      .$type<Restriction[]>()
       .notNull()
       .default([]),
+
+    sourceUrls: jsonb("source_urls").$type<string[]>().notNull().default([]),
 
     status: text("status").notNull().default("draft"),
     lastReviewedAt: timestamp("last_reviewed_at", {
@@ -41,8 +40,12 @@ export const countries = pgTable(
       .notNull()
       .defaultNow(),
   },
-  (table) => [index("countries_code_idx").on(table.code)],
+  (table) => [
+    uniqueIndex("countries_code_unique").on(table.code),
+    index("countries_status_idx").on(table.status),
+    index("countries_name_idx").on(table.name),
+  ],
 );
 
-export type CountryRow = typeof countries.$inferSelect;
-export type NewCountryRow = typeof countries.$inferInsert;
+export type Country = typeof countries.$inferSelect;
+export type NewCountry = typeof countries.$inferInsert;

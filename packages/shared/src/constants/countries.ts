@@ -5,6 +5,15 @@ export interface SupportedCountry {
   region: string;
 }
 
+export const REGULATORY_NOTE_CATEGORIES = [
+  "licensing",
+  "investor_protection",
+  "tax",
+  "reporting",
+  "cross_border",
+  "other",
+] as const;
+
 export const SUPPORTED_COUNTRIES: SupportedCountry[] = [
   {
     code: "US",

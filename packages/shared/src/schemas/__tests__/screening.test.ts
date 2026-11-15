@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   screeningQuerySchema,
   createScreeningReportSchema,
+  CreateScreeningReportInput,
 } from "../screening";
 
 // ---------------------------------------------------------------------------
@@ -32,10 +33,11 @@ const validReport = {
   },
   sources: [
     {
+      id: crypto.randomUUID(),
       label: "Apple Annual Report 2023",
       url: "https://investor.apple.com/annual-reports",
-      sourceType: "annual_report" as const,
-      retrievedAt: "2024-01-01",
+      sourceType: "official",
+      retrievedAt: new Date("2024-01-01"),
     },
   ],
 };
@@ -188,10 +190,11 @@ describe("createScreeningReportSchema", () => {
 
   it("accepts multiple sources", () => {
     const extraSource = {
+      id: crypto.randomUUID(),
       label: "AAOIFI Standard",
       url: "https://aaoifi.com/standard",
-      sourceType: "scholarly_fatwa" as const,
-      retrievedAt: "2024-02-01",
+      sourceType: "news",
+      retrievedAt: new Date("2024-02-01"),
     };
     const result = createScreeningReportSchema.safeParse({
       ...validReport,

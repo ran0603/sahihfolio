@@ -1,13 +1,7 @@
 import { pgEnum, pgTable, timestamp, uuid, text } from "drizzle-orm/pg-core";
+import { SOURCE_TYPES } from "@sahihfolio/shared";
 
-export const sourceTypeEnum = pgEnum("source_type", [
-  "official",
-  "regulator",
-  "provider_document",
-  "news",
-  "research",
-  "other",
-]);
+export const sourceTypeEnum = pgEnum("source_type", SOURCE_TYPES);
 
 export const confidenceEnum = pgEnum("confidence", ["high", "medium", "low"]);
 

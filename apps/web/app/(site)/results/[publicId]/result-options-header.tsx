@@ -18,8 +18,8 @@ export default function ResultOptionsHeader({
   return (
     <section data-m="head" className="res-head">
       <h1 tabIndex={-1}>
-        We found {country.supportedProviders.length} option
-        {country.supportedProviders.length !== 1 ? "s" : ""} for{" "}
+        We found {country.providers.length} option
+        {country.providers.length !== 1 ? "s" : ""} for{" "}
         {getProductInterestLabel(snapshot.input.productInterest)} in{" "}
         {country.name}.
       </h1>

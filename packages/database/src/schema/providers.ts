@@ -3,7 +3,6 @@ import {
   assetTypeSchema,
   feeSchema,
   accountRequirementSchema,
-  sourceSchema,
 } from "@sahihfolio/shared/provider-data";
 import {
   pgTable,
@@ -18,6 +17,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { user } from "./users";
 import { ProviderType } from "@sahihfolio/shared";
+import { sourceSchema } from "@sahihfolio/shared";
 
 export const reviewStatusEnum = pgEnum("review_status", [
   "draft",

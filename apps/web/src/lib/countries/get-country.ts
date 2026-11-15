@@ -1,13 +1,32 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db } from "@sahihfolio/database";
-import { countries, providers } from "@sahihfolio/database/schema";
-import type { CountryProfile, Provider } from "@sahihfolio/shared";
+import {
+  auditLogs,
+  countries,
+  providers,
+  user,
+} from "@sahihfolio/database/schema";
+import type {
+  AuditLog,
+  CountryProfile,
+  Provider,
+  User,
+} from "@sahihfolio/shared";
 
-export async function getCountry(countryCode: string): Promise<CountryProfile> {
+export async function getCountry(idOrCode: string): Promise<CountryProfile> {
+  const isUuid =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+      idOrCode,
+    );
+
   const [country] = await db
     .select()
     .from(countries)
-    .where(eq(countries.code, countryCode))
+    .where(
+      isUuid
+        ? eq(countries.id, idOrCode)
+        : eq(countries.code, idOrCode.toUpperCase()),
+    )
     .limit(1);
 
   if (!country) {
@@ -17,16 +36,41 @@ export async function getCountry(countryCode: string): Promise<CountryProfile> {
   const supportedProviders = await db
     .select()
     .from(providers)
-    .where(eq(providers.countries, [countryCode]));
+    .where(sql`${providers.countries} @> to_jsonb(${country.code}::text)`);
+
+  const auditHistory = await db
+    .select({
+      id: auditLogs.id,
+      actorId: auditLogs.actorId,
+      action: auditLogs.action,
+      entityType: auditLogs.entityType,
+      entityId: auditLogs.entityId,
+      changedFields: auditLogs.changedFields,
+      createdAt: auditLogs.createdAt,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    })
+    .from(auditLogs)
+    .where(eq(auditLogs.entityId, country.id))
+    .leftJoin(user, eq(user.id, auditLogs.actorId));
 
   return {
-    countryCode: country.code,
-    name: country.name,
-    currency: country.currency,
-    regulatoryNotes: country.regulatoryNotes,
-    restrictions: country.restrictions,
-    supportedProviders: supportedProviders as unknown as Provider[],
-    sourceUrls: country.regulatoryNotes.map((n) => n.source.url),
-    lastReviewedAt: country.lastReviewedAt,
+    ...country,
+    providers: supportedProviders as unknown as Provider[],
+    history: auditHistory as unknown as (AuditLog & { user: User })[],
   };
+}
+
+export async function findCountry(
+  idOrCode: string,
+): Promise<CountryProfile | null> {
+  try {
+    return await getCountry(idOrCode);
+  } catch {
+    return null;
+  }
 }

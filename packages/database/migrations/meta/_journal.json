@@ -43,6 +43,13 @@
       "when": 1794160702799,
       "tag": "0005_boring_thor_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1794247040987,
+      "tag": "0006_brief_scalphunter",
+      "breakpoints": true
     }
   ]
 }

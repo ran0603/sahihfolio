@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "sahihfolio",
+  "compatibility_date": "2026-11-14",
+  "observability": {
+    "enabled": true
+  },
+  "main": ".open-next/worker.js",
+  "assets": {
+    "directory": ".open-next/dist/assets",
+    "binding": "ASSETS"
+  }
+}

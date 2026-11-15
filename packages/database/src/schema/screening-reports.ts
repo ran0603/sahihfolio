@@ -1,3 +1,4 @@
+import { SourceInput, sourceSchema } from "@sahihfolio/shared";
 import { pgTable, varchar, text, timestamp, jsonb } from "drizzle-orm/pg-core";
 
 export const screeningReports = pgTable("screening_reports", {
@@ -30,17 +31,7 @@ export const screeningReports = pgTable("screening_reports", {
       details: string;
     }>()
     .notNull(),
-  sources: jsonb("sources")
-    .$type<
-      Array<{
-        label: string;
-        url: string;
-        sourceType: string;
-        retrievedAt: string;
-      }>
-    >()
-    .default([])
-    .notNull(),
+  sources: jsonb("sources").$type<Array<SourceInput>>().default([]).notNull(),
   reviewedBy: varchar("reviewed_by", { length: 100 }),
   reviewedAt: timestamp("reviewed_at", { withTimezone: true })
     .defaultNow()

@@ -5,14 +5,19 @@ import type { MatchInput } from "../matching/types";
 import type { CountryProfile, Provider } from "../types";
 
 const malaysia: CountryProfile = {
-  countryCode: "MY",
+  code: "MY",
   name: "Malaysia",
   currency: "MYR",
   regulatoryNotes: [],
-  supportedProviders: [],
+  providers: [],
   restrictions: [],
   lastReviewedAt: new Date("2026-10-01T00:00:00Z"),
   sourceUrls: ["https://example.com/my"],
+  history: [],
+  id: crypto.randomUUID(),
+  status: "published",
+  createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
 function makeProvider(overrides: Partial<Provider> = {}): Provider {

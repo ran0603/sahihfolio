@@ -17,7 +17,7 @@ export async function sendResultSavedEmail({
   }
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   const resultUrl = `${appUrl}/results/${resultPublicId}`;
   const unsubscribeUrl = `${appUrl}/unsubscribe?token=${unsubscribeToken}`;
 

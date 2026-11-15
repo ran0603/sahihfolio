@@ -14,12 +14,41 @@ import {
   ChevronDown,
   LogOut,
   Search,
+  Globe,
 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AdminUser } from "@/lib/auth/get-current-admin-user";
 import { authClient } from "@/lib/auth/auth-client";
+
+const menuItems = [
+  {
+    title: "Dashboard",
+    href: "/admin",
+    icon: <LayoutDashboard className="ic" width="20" height="20" />,
+  },
+  {
+    title: "Screening reports",
+    href: "/admin/screening-reports",
+    icon: <FileText className="ic" width="20" height="20" />,
+  },
+  {
+    title: "Securities",
+    href: "/admin/securities",
+    icon: <Database className="ic" width="20" height="20" />,
+  },
+  {
+    title: "Countries",
+    href: "/admin/countries",
+    icon: <Globe className="ic" width="20" height="20" />,
+  },
+  {
+    title: "Methodologies",
+    href: "/admin/methodologies",
+    icon: <Book className="ic" width="20" height="20" />,
+  },
+];
 
 export default function AdminShell({
   user,
@@ -28,10 +57,13 @@ export default function AdminShell({
   user: AdminUser;
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const isUser = !!user.id;
+
+  // if (pathname === "/find" || pathname?.startsWith("/find/")) {
 
   async function handleSignOut() {
     try {
@@ -227,43 +259,19 @@ export default function AdminShell({
       <div className="adm-app">
         <aside className="adm-side" aria-label="Admin sections">
           <nav aria-label="Admin">
-            <Link
-              className="si"
-              href="/admin"
-              data-act="navto"
-              data-n="Dashboard"
-              aria-current="page"
-            >
-              <LayoutDashboard className="ic" width="20" height="20" />
-              Dashboard
-            </Link>
-            <Link
-              className="si"
-              href="/admin/screening-reports"
-              data-act="navto"
-              data-n="Screening reports"
-            >
-              <FileText className="ic" width="20" height="20" />
-              Screening reports
-            </Link>
-            <Link
-              className="si"
-              href="/admin/securities"
-              data-act="navto"
-              data-n="Securities"
-            >
-              <Database className="ic" width="20" height="20" />
-              Securities
-            </Link>
-            <Link
-              className="si"
-              href="#"
-              data-act="navto"
-              data-n="Methodologies"
-            >
-              <Book className="ic" width="20" height="20" />
-              Methodologies
-            </Link>
+            {menuItems.map((item) => (
+              <Link
+                key={item.href}
+                className="si"
+                href={item.href}
+                data-act="navto"
+                data-n={item.title}
+                aria-current={pathname === item.href ? "page" : "false"}
+              >
+                {item.icon}
+                {item.title}
+              </Link>
+            ))}
           </nav>
           <div className="side-foot">
             <Link className="si" href="/" data-act="site">
