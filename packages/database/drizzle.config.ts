@@ -14,8 +14,7 @@ export default defineConfig({
   dialect: "postgresql",
   dbCredentials: {
     url:
-      process.env.DATABASE_URL ||
-      "postgresql://postgres:postgres@localhost:5432/sahihfolio",
+      process.env.DATABASE_URL!
   },
   verbose: true,
 });

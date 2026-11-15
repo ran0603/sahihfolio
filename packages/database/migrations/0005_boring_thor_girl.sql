@@ -53,7 +53,7 @@ CREATE TABLE "verification" (
 --> statement-breakpoint
 ALTER TABLE "users" DISABLE ROW LEVEL SECURITY;--> statement-breakpoint
 DROP TABLE "users" CASCADE;--> statement-breakpoint
-ALTER TABLE "providers" DROP CONSTRAINT "providers_reviewed_by_users_id_fk";
+ALTER TABLE "providers" DROP CONSTRAINT IF EXISTS "providers_reviewed_by_users_id_fk";
 --> statement-breakpoint
 ALTER TABLE "audit_logs" DROP CONSTRAINT "audit_logs_actor_id_users_id_fk";
 --> statement-breakpoint

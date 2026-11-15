@@ -4,16 +4,8 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
 import { providers } from "./schema";
-import * as dotenv from "dotenv";
-import * as fs from "fs";
-import path from "path";
-const rootEnv = path.resolve(__dirname, "../../.env");
-if (fs.existsSync(rootEnv)) dotenv.config({ path: rootEnv });
 
-const client = postgres(
-  process.env.DATABASE_URL ||
-    "postgresql://postgres:postgres@localhost:5432/sahihfolio",
-);
+const client = postgres(process.env.DATABASE_URL!);
 const db = drizzle(client);
 
 const lastReviewedAt = new Date("2026-10-16T00:00:00Z");
